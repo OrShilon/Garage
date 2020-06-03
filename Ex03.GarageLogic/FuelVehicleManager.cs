@@ -10,7 +10,7 @@ namespace Ex03.GarageLogic
     {
         public static float GetFuelLeft(Vehicle i_vehicle)
         {
-            return i_vehicle.m_FuelOrBatteryLeft; //test
+            return i_vehicle.m_FuelOrBatteryLeft; //testhfjhyfhfh
         }
 
         public static float GetMaxFuelPossible(Vehicle i_vehicle)
