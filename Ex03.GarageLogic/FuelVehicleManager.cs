@@ -11,6 +11,8 @@ namespace Ex03.GarageLogic
         public static float GetFuelLeft(Vehicle i_vehicle)
         {
             return i_vehicle.m_FuelOrBatteryLeft;
+            Console.WriteLine();
+            Console.WriteLine();
         }
 
         public static float GetMaxFuelPossible(Vehicle i_vehicle)
