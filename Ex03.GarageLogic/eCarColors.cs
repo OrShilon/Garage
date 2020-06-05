@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace Ex03.GarageLogic
 {
-    abstract class FuelVehicle : Vehicle
+    enum eCarColors
     {
-        internal eFuelTypes m_FuelType;
+        red,
+        white,
+        black,
+        silver
     }
-
-
 }

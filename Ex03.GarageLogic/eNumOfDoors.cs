@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace Ex03.GarageLogic
 {
-    abstract class FuelVehicle : Vehicle
+    enum eNumOfDoors
     {
-        internal eFuelTypes m_FuelType;
+        Two = 2,
+        Three,
+        Four,
+        Five
     }
-
-
 }
