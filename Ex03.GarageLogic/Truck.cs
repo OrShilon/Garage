@@ -14,16 +14,11 @@ namespace Ex03.GarageLogic
         internal const byte m_NumOfWheels = 16;
         internal const byte m_MaxAirPressure = 28;
 
-        public Truck(string i_VehicleModel, string i_LicencePlate, float i_FuelLeft, int i_NumOfWheels, bool i_CarryDangerousMaterials, float i_CargoVolume)
+        public Truck(string i_VehicleModel, string i_LicencePlate, float i_FuelLeft, bool i_CarryDangerousMaterials, float i_CargoVolume) :
+            base(i_VehicleModel, i_LicencePlate, i_FuelLeft, m_MaxFuel, m_NumOfWheels, eFuelTypes.Soler)
         {
             m_CarryDangerousMaterials = i_CarryDangerousMaterials;
             m_CargoVolume = i_CargoVolume;
-            m_VehicleModel = i_VehicleModel;
-            m_LicencePlate = i_LicencePlate;
-            m_FuelOrBatteryLeft = i_FuelLeft;
-            m_Wheels = new Wheel[m_NumOfWheels];
-            m_MaxFuelOrBattery = m_MaxFuel;
-            m_FuelType = eFuelTypes.Soler;
         }
 
         public void GenerateWheels(string i_WheelMaker, string i_CurrentAirPressure)
