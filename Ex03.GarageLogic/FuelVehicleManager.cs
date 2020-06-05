@@ -11,8 +11,6 @@ namespace Ex03.GarageLogic
         public static float GetFuelLeft(Vehicle i_vehicle)
         {
             return i_vehicle.m_FuelOrBatteryLeft;
-            Console.ReadLine();// fuck you nigges
-
         }
 
         public static float GetMaxFuelPossible(Vehicle i_vehicle)
@@ -25,7 +23,7 @@ namespace Ex03.GarageLogic
             switch(i_FuelVehicle.m_FuelType)
             {
                 case eFuelTypes.Octan95:
-                    //add fuel.....כככככככ//
+                    //add fuel.....
                     break;
                 case eFuelTypes.Octan96:
                     //add fuel.....
@@ -34,7 +32,7 @@ namespace Ex03.GarageLogic
                     //add fuel.....
                     break;
                 case eFuelTypes.Soler:
-                    //add fuel.....למה היה שם 2 עם אותו
+                    //add fuel.....
                     break;
                 default:
                     //not a match! return exeption that the type of fuel is not match

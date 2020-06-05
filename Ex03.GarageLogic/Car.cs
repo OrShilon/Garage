@@ -12,9 +12,10 @@ namespace Ex03.GarageLogic
         internal int m_NumOfDoors;
         internal const float m_MaxFuel = 2.1f;
         internal const byte m_NumOfWheels = 4;
+
         public Car(string i_VehicleModel, string i_LicencePlate, float i_FuelLeft, string i_Color, int i_NumOfDoors)
         {
-            m_Color = i_Color;//
+            m_Color = i_Color;
             m_NumOfDoors = i_NumOfDoors;
             m_VehicleModel = i_VehicleModel;
             m_LicencePlate = i_LicencePlate;
