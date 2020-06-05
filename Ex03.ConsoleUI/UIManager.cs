@@ -40,7 +40,7 @@ namespace Ex03.ConsoleUI
         //Recharge,
         //DisplayVehicleDetails
 
-        private void GarageOptionsForCustomer()
+        public static void GarageOptionsForCustomer()
         {
             string messege = string.Format(@"1) I would like to check in a new vehicle
 2) Display the current license plates that are in the garage
@@ -52,4 +52,5 @@ namespace Ex03.ConsoleUI
 Type in the corresponding number to your visit purpose please");
         }
     }
+
 }
