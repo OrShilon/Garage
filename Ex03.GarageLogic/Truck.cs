@@ -18,7 +18,7 @@ namespace Ex03.GarageLogic
             m_CarryDangerousMaterials = i_CarryDangerousMaterials;
             m_CargoVolume = i_CargoVolume;
             m_VehicleModel = i_VehicleModel;
-            m_LicencePlate = i_LicencePlate;//
+            m_LicencePlate = i_LicencePlate;
             m_FuelOrBatteryLeft = i_FuelLeft;
             m_Wheels = new Wheel[m_NumOfWheels];
             m_MaxFuelOrBattery = m_MaxFuel;

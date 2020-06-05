@@ -25,7 +25,7 @@ namespace Ex03.GarageLogic
             switch(i_FuelVehicle.m_FuelType)
             {
                 case eFuelTypes.Octan95:
-                    //add fuel.....כככככככ//
+                    //add fuel.....
                     break;
                 case eFuelTypes.Octan96:
                     //add fuel.....
@@ -34,7 +34,7 @@ namespace Ex03.GarageLogic
                     //add fuel.....
                     break;
                 case eFuelTypes.Soler:
-                    //add fuel.....למה היה שם 2 עם אותו
+                    //add fuel.....
                     break;
                 default:
                     //not a match! return exeption that the type of fuel is not match
