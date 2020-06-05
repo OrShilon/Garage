@@ -17,11 +17,5 @@ namespace Ex03.GarageLogic
         }
     }
 
-    enum eFuelTypes
-    {
-        Octan95,
-        Octan96,
-        Octan98,
-        Soler
-    }
+
 }
