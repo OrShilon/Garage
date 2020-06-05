@@ -23,6 +23,7 @@ namespace Ex03.GarageLogic
             m_Wheels = new Wheel[i_NumOfWheels];
         }
     }
+    }
 
 
 }
