@@ -15,7 +15,7 @@ namespace Ex03.GarageLogic
         public Motorcycle(string i_VehicleModel, string i_LicencePlate, float i_FuelLeft, int i_NumOfWheels, string i_LicenseType, int i_EngineVolume)
         {
             m_LicenseType = i_LicenseType;
-            m_EngineVolume = i_EngineVolume;//
+            m_EngineVolume = i_EngineVolume;
             m_VehicleModel = i_VehicleModel;
             m_LicencePlate = i_LicencePlate;
             m_FuelOrBatteryLeft = i_FuelLeft;
