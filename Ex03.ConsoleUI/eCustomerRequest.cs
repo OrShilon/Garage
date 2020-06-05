@@ -8,7 +8,7 @@ namespace Ex03.ConsoleUI
 {
     enum eCustomerRequest
     {
-        AddmitingNewCar,
+        AddmitingNewCar = 1,
         DisplayGarageLicensePlates,
         ChangeCarStatus,
         FillAir,

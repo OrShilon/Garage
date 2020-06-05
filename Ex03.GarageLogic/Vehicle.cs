@@ -14,7 +14,7 @@ namespace Ex03.GarageLogic
         internal float m_MaxFuelOrBattery;
         internal Wheel[] m_Wheels;
 
-        public Vehicle(string i_VehicleModel, string i_LicencePlate, float i_FuelOrBatteryLeft, float i_MaxFuelOrBattery, int i_NumOfWheels)
+        public Vehicle(string i_VehicleModel, string i_LicencePlate, float i_FuelOrBatteryLeft, float i_MaxFuelOrBattery, byte i_NumOfWheels)
         {
             m_VehicleModel = i_VehicleModel;
             m_LicencePlate = i_LicencePlate;
@@ -23,7 +23,4 @@ namespace Ex03.GarageLogic
             m_Wheels = new Wheel[i_NumOfWheels];
         }
     }
-    }
-
-
 }

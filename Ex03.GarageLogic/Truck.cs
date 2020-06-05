@@ -10,11 +10,9 @@ namespace Ex03.GarageLogic
     {
         internal bool m_CarryDangerousMaterials; // false - not carring dangerous materials, true otherwise
         internal float m_CargoVolume;
-        internal const float m_MaxFuel = 120f;
-        internal const byte m_NumOfWheels = 16;
         internal const byte m_MaxAirPressure = 28;
 
-        public Truck(string i_VehicleModel, string i_LicencePlate, float i_FuelLeft, bool i_CarryDangerousMaterials, float i_CargoVolume) :
+        public Truck(string i_VehicleModel, string i_LicencePlate, float i_FuelLeft, float i_MaxFuel, byte i_NumOfWheels, bool i_CarryDangerousMaterials, float i_CargoVolume) :
             base(i_VehicleModel, i_LicencePlate, i_FuelLeft, m_MaxFuel, m_NumOfWheels, eFuelTypes.Soler)
         {
             m_CarryDangerousMaterials = i_CarryDangerousMaterials;
