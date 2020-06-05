@@ -10,13 +10,13 @@ namespace Ex03.GarageLogic
     {
         private string m_WheelMaker;
         private string m_CurrentAirPressure;
-        private string m_MaxAirPressure;
+        private byte m_MaxAirPressure;
 
-        public Wheel(string i_WheelMaker, string i_CurrentAirPressure, string i_MaxAirPressure)
+        public Wheel(string i_WheelMaker, string i_CurrentAirPressure, byte i_MaxAirPressure)
         {
-            this.m_WheelMaker = i_WheelMaker;
-            this.m_CurrentAirPressure = i_CurrentAirPressure;//
-            this.m_MaxAirPressure = i_MaxAirPressure;
+            m_WheelMaker = i_WheelMaker;
+            m_CurrentAirPressure = i_CurrentAirPressure;//
+            m_MaxAirPressure = i_MaxAirPressure;
         }
     }
 }
