@@ -11,10 +11,9 @@ namespace Ex03.GarageLogic
     {
         internal string m_LicenseType;
         internal int m_EngineVolume;
-        internal const float m_MaxBattery = 1.2f;
-        internal const byte m_NumOfWheels = 2;
-        public ElectricMotorcycle(string i_VehicleModel, string i_LicencePlate, float i_BatteryLeft, string i_LicenseType, int i_EngineVolume) :
-            base(i_VehicleModel, i_LicencePlate, i_BatteryLeft, m_MaxBattery, m_NumOfWheels)
+
+        public ElectricMotorcycle(string i_VehicleModel, string i_LicencePlate, float i_BatteryLeft, float i_MaxBattery, byte i_NumOfwheels, string i_LicenseType, int i_EngineVolume) :
+            base(i_VehicleModel, i_LicencePlate, i_BatteryLeft, i_MaxBattery, i_NumOfwheels)
         {
             m_LicenseType = i_LicenseType;
             m_EngineVolume = i_EngineVolume;

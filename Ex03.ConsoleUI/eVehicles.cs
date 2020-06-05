@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Ex03.ConsoleUI
 {
-    class Program
+    enum eVehicles
     {
-        static void Main(string[] args)
-        {
-            UIManager.GarageOptionsForCustomer();
-            Console.ReadLine();
-        }
+        Car = 1,
+        ElectricCar,
+        Motorcycle,
+        ElectricMotorcycle,
+        Truck
     }
 }

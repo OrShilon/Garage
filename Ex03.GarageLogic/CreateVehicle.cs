@@ -6,51 +6,45 @@ using System.Threading.Tasks;
 
 namespace Ex03.GarageLogic
 {
-    class CreateVehicle
+    public class CreateVehicle
     {
-        class CreateVehicle
+        internal const float m_CarMaxFuel = 2.1f;
+        internal const byte m_CarNumOfWheels = 4;
+        internal const float m_CarMaxBattery = 2.1f;
+        internal const float m_MotorcycleMaxFuel = 7f;
+        internal const byte m_MotorcycleNumOfWheels = 2;
+        internal const float m_MotorcycleMaxBattery = 1.2f;
+        internal const float m_TruckMaxFuel = 120f;
+        internal const byte m_TruckNumOfWheels = 16;
+
+        public static Car CreateCar(string i_VehicleModel, string i_LicencePlate, float i_FuelLeft, string i_Color, byte i_NumOfDoors)
         {
-            public const float k_CapacityOfFuelEngineCar = 38f;
-            public const float k_CapacityTimeOfElectricEngineCar = 3.3f;
-            public const float k_CapacityOfFuelEngineMotorcycle = 7.2f;
-            public const float k_CapacityTimeOfElectricEngineMotorcycle = 1.9f;
-            public const float k_CapacityOfFuelEngineTruck = 135f;
-            public const float k_CarWheelMaxAirPressure = 30f;
-            public const float k_MotorcycleWheelMaxAirPressure = 31f;
-            public const float k_TruckWheelMaxAirPressure = 28f;
-            public const int k_NumOfCarWheels = 4;
-            public const int k_NumOfMotorcycleWheels = 2;
-            public const int k_NumOfTruckWheels = 16;
+            Car car = new Car(i_VehicleModel, i_LicencePlate, i_FuelLeft, m_CarMaxFuel, m_CarNumOfWheels, i_Color, i_NumOfDoors);
+            return car;
+        }
 
-            private static Car CreateCar(string i_VehicleModel, string i_LicencePlate, float i_FuelLeft, string i_Color, int i_NumOfDoors)
-            {
-                Car car = new Car(i_VehicleModel, i_LicencePlate, i_FuelLeft, i_Color, i_NumOfDoors);
-                return car;
-            }
+        public static ElectricCar CreateElectricCar(string i_VehicleModel, string i_LicencePlate, float i_BatteryLeft, string i_Color, int i_NumOfDoors)
+        {
+            ElectricCar electricCar = new ElectricCar(i_VehicleModel, i_LicencePlate, i_BatteryLeft, m_CarMaxBattery, i_Color, m_CarNumOfWheels, i_NumOfDoors);
+            return electricCar;
+        }
 
-            public static ElectricCar CreateElectricCar(string i_VehicleModel, string i_LicencePlate, float i_FuelLeft, string i_Color, int i_NumOfDoors)
-            {
-                ElectricCar electricCar = new ElectricCar(i_VehicleModel, i_LicencePlate, i_FuelLeft, i_Color, i_NumOfDoors);
-                return electricCar;
-            }
+        public static Motorcycle CreateMotorcycle(string i_VehicleModel, string i_LicencePlate, float i_FuelLeft, string i_LicenseType, int i_EngineVolume)
+        {
+            Motorcycle motorcycle = new Motorcycle(i_VehicleModel, i_LicencePlate, i_FuelLeft, m_MotorcycleMaxFuel, m_MotorcycleNumOfWheels, i_LicenseType, i_EngineVolume);
+            return motorcycle;
+        }
 
-            public static Motorcycle CreateMotorcycle(string i_VehicleModel, string i_LicencePlate, float i_FuelLeft, string i_LicenseType, int i_EngineVolume)
-            {
-                Motorcycle motorcycle = new Motorcycle(i_VehicleModel, i_LicencePlate, i_FuelLeft, i_LicenseType, i_EngineVolume);
-                return motorcycle;
-            }
+        public static ElectricMotorcycle CreateElectricMotorcycle(string i_VehicleModel, string i_LicencePlate, float i_BatteryLeft, string i_LicenseType, int i_EngineVolume)
+        {
+            ElectricMotorcycle electricMotorcycle = new ElectricMotorcycle(i_VehicleModel, i_LicencePlate, i_BatteryLeft, m_MotorcycleMaxBattery, m_MotorcycleNumOfWheels, i_LicenseType, i_EngineVolume);
+            return electricMotorcycle;
+        }
 
-            public static ElectricMotorcycle reateElectricMotorcycle(string i_VehicleModel, string i_LicencePlate, float i_BatteryLeft, string i_LicenseType, int i_EngineVolume)
-            {
-                ElectricMotorcycle electricMotorcycle = new ElectricMotorcycle(i_VehicleModel, i_LicencePlate, i_BatteryLeft, i_LicencePlate, i_EngineVolume);
-                return electricMotorcycle;
-            }
-
-            private static Truck createTruck(string i_VehicleModel, string i_LicencePlate, float i_FuelLeft, bool i_CarryDangerousMaterials, float i_CargoVolume)
-            {
-                Truck truck = new Truck(i_VehicleModel, i_LicencePlate, i_FuelLeft, i_CarryDangerousMaterials, i_CargoVolume);
-                return truck;
-            }
+        public static Truck CreateTruck(string i_VehicleModel, string i_LicencePlate, float i_FuelLeft, bool i_CarryDangerousMaterials, float i_CargoVolume)
+        {
+            Truck truck = new Truck(i_VehicleModel, i_LicencePlate, i_FuelLeft, m_TruckMaxFuel, m_TruckNumOfWheels, i_CarryDangerousMaterials, i_CargoVolume);
+            return truck;
         }
     }
 }
