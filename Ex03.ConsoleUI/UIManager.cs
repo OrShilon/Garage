@@ -13,13 +13,13 @@ namespace Ex03.ConsoleUI
 
         private static void PrintVehiclesInGarage()
         {
-            List<Vehicle> carsList = GarageManager.CarsList;
-            if (carsList.Any())
+            List<Vehicle> vehiclesList = GarageManager.VehiclesList;
+            if (vehiclesList.Any())
             {
                 Console.WriteLine("Vehicles in the garage: ");
-                foreach (GarageLogic.Vehicle vehicle in carsList)
+                foreach (Vehicle vehicle in vehiclesList)
                 {
-                    Console.WriteLine(vehicle.m_LicencePlate);
+                    Console.WriteLine(vehicle.m_LicencePlate); //להעביר את המימוש של הלולאה הזאת לתןך הגאראז' מנג'ר!
                 }
             }
             else
@@ -52,6 +52,7 @@ namespace Ex03.ConsoleUI
 7. Display my vehicle details
 Type in the corresponding number to your visit purpose please.");
             Console.Write(messege);
+            AddNewVehicle();
         }
 
         public static void AddNewVehicle()
@@ -92,6 +93,7 @@ Type in the corresponding number to your vehicle please.");
                 case eVehicles.Truck:
                     break;
                 default:
+                    //invalid input, need to handle.......
                     break;
             }
 
@@ -121,22 +123,54 @@ Type in the corresponding number to your vehicle please.");
         {
             string carModel;
             string licencePlate;
-            string fuelLeft; //need to change type to float later on
+            string fuelLeftInput; //need to change type to float later on
+            float fuelLeft;
             string color;
-            string numOfDoors; // need to change type to byte later on
+            string numOfDoorsInput; // need to change type to byte later on
+            byte numOfDoors;
 
             Console.WriteLine("Please enter your Car's model:");
             carModel = Console.ReadLine();
             Console.WriteLine("please enter your licence plate:");
-            licencePlate = Console.ReadLine(); //need to make isvalidinput for this line!
+            licencePlate = Console.ReadLine(); //need to make invalidinput for this line!
             Console.WriteLine("Please enter how much fuel left in your car:");
-            fuelLeft = Console.ReadLine(); //need to make sure it is float, and then convert type to float!!
+            fuelLeftInput = Console.ReadLine();
+            while(!IsValidFuelInput(fuelLeftInput, out fuelLeft))
+            {
+                Console.WriteLine("Not a valid input. Please enter how much fuel left in your car:");
+                fuelLeftInput = Console.ReadLine();
+            }
             Console.WriteLine("Please enter the color of your car:");
-            color = Console.ReadLine(); //need to verify the color
+            color = Console.ReadLine();
+            while (!IsValidCarColor(color))
+            {
+                Console.WriteLine("Not a valid input. Please enter the color of your car:");
+                color = Console.ReadLine();
+            }
             Console.WriteLine("Please enter the number of doors your car has:");
-            numOfDoors = Console.ReadLine(); // need to varify this input
+            numOfDoorsInput = Console.ReadLine();
+            while (!IsValidNumOfDoorsInput(numOfDoorsInput, out numOfDoors))
+            {
+                Console.WriteLine("Not a valid input. Please enter the number of doors your car has:");
+                numOfDoorsInput = Console.ReadLine();
+            }
+            Car newCar = CreateVehicle.CreateCar(carModel, licencePlate, fuelLeft, color, numOfDoors);
+            GarageManager.AddVehicleToGarage(newCar);
+        }
 
-            //CreateVehicle.CreateCar(carModel, licencePlate, (float)fuelLeft, color, (byte)numOfDoors);
+        private static bool IsValidFuelInput(string i_FuelLeftUnput, out float o_FuelLeft)
+        {
+            return float.TryParse(i_FuelLeftUnput, out o_FuelLeft);
+        }
+        private static bool IsValidCarColor(string i_Color)
+        {
+            //need to change return statement to enum
+            return i_Color.Equals("Red") || i_Color.Equals("White") || i_Color.Equals("Black") || i_Color.Equals("Grey");
+        }
+        private static bool IsValidNumOfDoorsInput(string i_NumOfDoorsInput, out byte o_NumOfDoors)
+        {
+            byte.TryParse(i_NumOfDoorsInput, out o_NumOfDoors);
+            return o_NumOfDoors > 1 && o_NumOfDoors < 6; //need to change 1 and 6 to const
         }
     }
 

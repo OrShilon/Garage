@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ex03.GarageLogic
 {
-    internal class Car : FuelVehicle
+    public class Car : FuelVehicle
     {
         internal string m_Color;
         internal int m_NumOfDoors;
