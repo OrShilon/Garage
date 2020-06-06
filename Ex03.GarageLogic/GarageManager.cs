@@ -8,22 +8,31 @@ namespace Ex03.GarageLogic
 {
     public static class GarageManager
     {
-        private static List<Vehicle> m_AllCarsInGarage;
+        private static List<Vehicle> m_AllVehiclesInGarage = new List<Vehicle>();
 
         public static void PrintVehiclesInGarage()
         {
-            foreach (Vehicle vehicle in m_AllCarsInGarage)
+            foreach (Vehicle vehicle in m_AllVehiclesInGarage)
             {
-
+                //need to print after filtering by status
             }
         }
 
-        public static List<Vehicle> CarsList
+        public static List<Vehicle> VehiclesList
         {
             get 
             {
-                return m_AllCarsInGarage;
+                return m_AllVehiclesInGarage;
             }
+        }
+
+        public static void AddVehicleToGarage(Vehicle vehicle)
+        {
+            m_AllVehiclesInGarage.Add(vehicle);
+        }
+        public static void RemoveVehicleFromGarage(Vehicle vehicle)
+        {
+            m_AllVehiclesInGarage.Remove(vehicle);
         }
     }
 }

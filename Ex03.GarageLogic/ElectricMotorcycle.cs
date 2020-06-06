@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Ex03.GarageLogic
 {
     
-    class ElectricMotorcycle : Vehicle
+    public class ElectricMotorcycle : Vehicle
     {
         internal string m_LicenseType;
         internal int m_EngineVolume;
