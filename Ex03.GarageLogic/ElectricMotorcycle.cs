@@ -18,6 +18,13 @@ namespace Ex03.GarageLogic
             m_LicenseType = i_LicenseType;
             m_EngineVolume = i_EngineVolume;
         }
+        //m_LicenseType
+        //m_EngineVolume
+        public override string ToString()
+        {
+            return base.ToString() + Environment.NewLine + String.Format(@"Vehicle license type is: {0}
+Vehicle engine volume is : {1} cc", m_LicenseType, m_EngineVolume);
+        }
     }
     
 }
