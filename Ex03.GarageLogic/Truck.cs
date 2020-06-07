@@ -19,7 +19,7 @@ namespace Ex03.GarageLogic
             m_CargoVolume = i_CargoVolume;
         }
 
-        public void GenerateWheels(string i_WheelMaker, string i_CurrentAirPressure)
+        public void GenerateWheels(string i_WheelMaker, byte i_CurrentAirPressure)
         {
             int m_NumOfWheels = 4; //need to remove, just to fix the for for now
             for (int i = 0; i < m_NumOfWheels; i++)
