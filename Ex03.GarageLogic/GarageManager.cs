@@ -9,7 +9,7 @@ namespace Ex03.GarageLogic
     public static class GarageManager
     {
         private static List<Vehicle> m_AllVehiclesInGarage = new List<Vehicle>();
-        const int notInGarage = -1;
+        const int k_NotInGarage = -1;
 
         public static void PrintVehiclesInGarage()
         {
@@ -39,7 +39,7 @@ namespace Ex03.GarageLogic
         public static void FillAir(string i_LicensePlateNumber)
         {
             int vehicleLocation = CheckIfVehicleInGarage(i_LicensePlateNumber);
-            if (vehicleLocation == notInGarage)
+            if (vehicleLocation == k_NotInGarage)
             {
                 throw new ArgumentException("Vehicle is NOT in garage");
             }
@@ -54,7 +54,7 @@ namespace Ex03.GarageLogic
         public static void FillBattery(string i_LicensePlateNumber, float i_HowMuchToFill)
         {
             int vehicleLocation = CheckIfVehicleInGarage(i_LicensePlateNumber);
-            if (vehicleLocation == notInGarage)
+            if (vehicleLocation == k_NotInGarage)
             {
                 throw new ArgumentException("Vehicle is NOT in garage");
             }
@@ -75,7 +75,7 @@ namespace Ex03.GarageLogic
         public static void Refuel(string i_LicensePlateNumber, byte i_HowMuchToFill, eFuelTypes i_FuelType)
         {
             int vehicleLocation = CheckIfVehicleInGarage(i_LicensePlateNumber);
-            if(vehicleLocation == notInGarage)
+            if(vehicleLocation == k_NotInGarage)
             {
                 throw new ArgumentException("Vehicle is NOT in garage");
             }
@@ -102,7 +102,7 @@ namespace Ex03.GarageLogic
          **/ 
         public static int CheckIfVehicleInGarage(string i_LicensePlateNumber)
         {
-            int vehicleLocation = notInGarage;
+            int vehicleLocation = k_NotInGarage;
             for(int i = 0; i < m_AllVehiclesInGarage.Count; i++)
             {
                 if (m_AllVehiclesInGarage[i].m_LicencePlate == i_LicensePlateNumber)

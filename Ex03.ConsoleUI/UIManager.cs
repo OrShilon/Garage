@@ -73,7 +73,7 @@ Type in the corresponding number to your visit purpose please.");
 Type in the corresponding number to your vehicle please.");
             Console.WriteLine(Messege);
             vehicleType = Console.ReadLine();
-            while(!IsValidVehicleChoice(vehicleType))
+            while (!IsValidVehicleChoice(vehicleType))
             {
                 Console.WriteLine("Invalid Input.");
                 Console.WriteLine(Messege);
@@ -81,7 +81,20 @@ Type in the corresponding number to your vehicle please.");
             }
 
             int.TryParse(vehicleType, out ValidvehicleType);
-            userVehicle = (eVehicles) ValidvehicleType;
+            userVehicle = (eVehicles)ValidvehicleType;
+
+            Console.WriteLine("please enter your licence plate:");
+            licencePlate = Console.ReadLine(); //need to make invalidinput for this line!
+
+            //need to add code here to check if the vehicle is new or not
+
+            Console.WriteLine("Please enter your vehicle's model:");
+            vehicleModel = Console.ReadLine();
+            while (!IsValidVehicleModel(vehicleModel))
+            {
+                Console.WriteLine("Not a valid input. Please enter your vehicle's model:");
+                vehicleModel = Console.ReadLine();
+            }
 
             Console.WriteLine("please enter your licence plate:");
             licencePlate = Console.ReadLine(); //need to make invalidinput for this line!
@@ -128,14 +141,14 @@ Type in the corresponding number to your vehicle please.");
         {
             bool isValidInput = false;
 
-            if(i_UserChoice.Length != 1)
+            if (i_UserChoice.Length != 1)
             {
                 isValidInput = false;
             }
             else
             {
                 //צריך לשנות את '0' ו '6' להיות קונסט כי אי אפשר לשים רק מספר
-                if(i_UserChoice[0] > '0' && i_UserChoice[0] < '6')
+                if (i_UserChoice[0] > '0' && i_UserChoice[0] < '6')
                 {
                     isValidInput = true;
                 }
@@ -282,8 +295,8 @@ Type in the corresponding number to your vehicle please.");
                 Console.WriteLine("Not a valid input. Please enter the number of doors your car has:");
                 cargoVolume = Console.ReadLine();
             }
-                Truck newTruck = CreateVehicle.CreateTruck(i_TruckModel, i_LicencePlate, i_FuelLeft, dangerousMaterials, validCargoVolume);
-                GarageManager.AddVehicleToGarage(newTruck);
+            Truck newTruck = CreateVehicle.CreateTruck(i_TruckModel, i_LicencePlate, i_FuelLeft, dangerousMaterials, validCargoVolume);
+            GarageManager.AddVehicleToGarage(newTruck);
         }
 
 
@@ -311,10 +324,10 @@ Type in the corresponding number to your vehicle please.");
         private static bool IsValidMotorcycleLicence(string i_MotorcycleLicenceType)
         {
             bool isValidLicenceType = false;
-            
-            if(i_MotorcycleLicenceType.Length == 1)
+
+            if (i_MotorcycleLicenceType.Length == 1)
             {
-                if(i_MotorcycleLicenceType[0] > '0' && i_MotorcycleLicenceType[0] < '5')  //need to change to constants
+                if (i_MotorcycleLicenceType[0] > '0' && i_MotorcycleLicenceType[0] < '5')  //need to change to constants
                 {
                     isValidLicenceType = true;
                 }
@@ -343,7 +356,7 @@ Type in the corresponding number to your vehicle please.");
             else
             {
                 //need to change to const
-                if(isDangerous == 0 || isDangerous == 1)
+                if (isDangerous == 0 || isDangerous == 1)
                 {
                     isValidInput = true;
                     if (isDangerous == 0)
@@ -360,7 +373,7 @@ Type in the corresponding number to your vehicle please.");
 
         public static void FillAir(string i_LicensePlateNumber)
         {
-          GarageLogic.GarageManager.FillAir(i_LicensePlateNumber);  
+            GarageLogic.GarageManager.FillAir(i_LicensePlateNumber);
         }
 
         public static void FillBattery(string i_LicensePlateNumber, float i_HowMuchToFill)
@@ -370,7 +383,7 @@ Type in the corresponding number to your vehicle please.");
 
         public static void Refuel(string i_LicensePlateNumber, byte i_HowMuchToFill, eFuelTypes i_FuelType)
         {
-                GarageLogic.GarageManager.Refuel(i_LicensePlateNumber, i_HowMuchToFill, i_FuelType);
+            GarageLogic.GarageManager.Refuel(i_LicensePlateNumber, i_HowMuchToFill, i_FuelType);
         }
     }
 }
