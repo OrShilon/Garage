@@ -83,6 +83,19 @@ Type in the corresponding number to your vehicle please.");
             int.TryParse(vehicleType, out ValidvehicleType);
             userVehicle = (eVehicles) ValidvehicleType;
 
+            Console.WriteLine("please enter your licence plate:");
+            licencePlate = Console.ReadLine(); //need to make invalidinput for this line!
+
+            //need to add code here to check if the vehicle is new or not
+
+            Console.WriteLine("Please enter your vehicle's model:");
+            vehicleModel = Console.ReadLine();
+            while (!IsValidVehicleModel(vehicleModel))
+            {
+                Console.WriteLine("Not a valid input. Please enter your vehicle's model:");
+                vehicleModel = Console.ReadLine();
+            }
+
             switch (userVehicle)
             {
                 case eVehicles.Car:
@@ -139,15 +152,6 @@ Type in the corresponding number to your vehicle please.");
             string numOfDoorsInput;
             byte numOfDoors;
 
-            Console.WriteLine("Please enter your car's model:");
-            i_CarModel = Console.ReadLine();
-            while(!IsValidVehicleModel(i_CarModel))
-            {
-                Console.WriteLine("Not a valid input. Please enter your car's model:");
-                i_CarModel = Console.ReadLine();
-            }
-            Console.WriteLine("please enter your licence plate:");
-            i_LicencePlate = Console.ReadLine(); //need to make invalidinput for this line!
             Console.WriteLine("Please enter how much {0} left in your car:", i_IsElectric ? "battery" : "fuel");
             energyLeftInput = Console.ReadLine();
             while (!IsValidFuelInput(energyLeftInput, out i_EnergyLeft))
@@ -190,15 +194,6 @@ Type in the corresponding number to your vehicle please.");
             string engineVolume = string.Empty;
             int validEngineVolume;
 
-            Console.WriteLine("Please enter your motorcycle's model:");
-            i_MotorcycleModel = Console.ReadLine();
-            while (!IsValidVehicleModel(i_MotorcycleModel))
-            {
-                Console.WriteLine("Not a valid input. Please enter your motorcycle's model:");
-                i_MotorcycleModel = Console.ReadLine();
-            }
-            Console.WriteLine("please enter your licence plate:");
-            i_LicencePlate = Console.ReadLine(); //need to make invalidinput for this line!
             Console.WriteLine("Please enter how much {0} left in your motorcycle:", i_IsElectric ? "battery" : "fuel");
             energyLeftInput = Console.ReadLine();
             while (!IsValidFuelInput(energyLeftInput, out i_EnergyLeft))
@@ -262,16 +257,6 @@ Type in the corresponding number to your vehicle please.");
             float validCargoVolume;
             string dangerousMaterialsInput;
             bool dangerousMaterials;
-
-            Console.WriteLine("Please enter your truck's model:");
-            i_TruckModel = Console.ReadLine();
-            while (!IsValidVehicleModel(i_TruckModel))
-            {
-                Console.WriteLine("Not a valid input. Please enter your truck's model:");
-                i_TruckModel = Console.ReadLine();
-            }
-            Console.WriteLine("please enter your licence plate:");
-            i_LicencePlate = Console.ReadLine(); //need to make invalidinput for this line!
 
             Console.WriteLine("Please enter how much fuel left in your truck:");
             fuelLeftInput = Console.ReadLine();
@@ -351,7 +336,7 @@ Type in the corresponding number to your vehicle please.");
             int isDangerous;
             bool isValidInput = false;
             i_DangerousMaterials = false;
-            if (int.TryParse(i_IsDangerous, out isDangerous))
+            if (!int.TryParse(i_IsDangerous, out isDangerous))
             {
                 i_DangerousMaterials = false;
             }
