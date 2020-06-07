@@ -172,6 +172,41 @@ Type in the corresponding number to your vehicle please.");
             byte.TryParse(i_NumOfDoorsInput, out o_NumOfDoors);
             return o_NumOfDoors > 1 && o_NumOfDoors < 6; //need to change 1 and 6 to const
         }
-    }
 
+        public static void FillAir(string i_LicensePlateNumber)
+        {
+            if (GarageLogic.GarageManager.CheckIfVehicleInGarage(i_LicensePlateNumber))
+            {
+                GarageLogic.GarageManager.FillAir(i_LicensePlateNumber);
+            }
+            else
+            {
+                Console.WriteLine("sorry the given vehicle is not in the garage");
+            }
+        }
+
+        public static void FillBattery(string i_LicensePlateNumber)
+        {
+            if (GarageLogic.GarageManager.CheckIfVehicleInGarage(i_LicensePlateNumber))
+            {
+                GarageLogic.GarageManager.FillBattery(i_LicensePlateNumber);
+            }
+            else
+            {
+                Console.WriteLine("sorry the given vehicle is not in the garage");
+            }
+        }
+
+        public static void Refuel(string i_LicensePlateNumber)
+        {
+            if (GarageLogic.GarageManager.CheckIfVehicleInGarage(i_LicensePlateNumber))
+            {
+                GarageLogic.GarageManager.Refuel(i_LicensePlateNumber);
+            }
+            else
+            {
+                Console.WriteLine("sorry the given vehicle is not in the garage");
+            }
+        }
+    }
 }
