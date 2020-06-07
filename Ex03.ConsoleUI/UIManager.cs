@@ -34,12 +34,6 @@ namespace Ex03.ConsoleUI
             Console.WriteLine(WelcomeMessage);
             Console.WriteLine();
         }
-        //DisplayGarageLicensePlates,
-        //ChangeCarStatus,
-        //FillAir,
-        //Refuel,
-        //Recharge,
-        //DisplayVehicleDetails
 
         public static void GarageOptionsForCustomer()
         {
@@ -60,6 +54,11 @@ Type in the corresponding number to your visit purpose please.");
             string vehicleType;
             int ValidvehicleType;
             eVehicles userVehicle;
+            string vehicleModel = string.Empty;
+            string licencePlate = string.Empty;
+            float energyLeft = 0f; //can be fuel or battery
+            bool isElectricVehicle;
+
             string Messege = string.Format(@"What is the Type of your Vehicle?
 1. Regular car
 2. Electric Car
@@ -77,14 +76,17 @@ Type in the corresponding number to your vehicle please.");
             }
 
             int.TryParse(vehicleType, out ValidvehicleType);
-            userVehicle = (eVehicles)ValidvehicleType;
+            userVehicle = (eVehicles) ValidvehicleType;
 
             switch (userVehicle)
             {
                 case eVehicles.Car:
-                    CreateCar();
+                    isElectricVehicle = false;
+                    CreateCar(isElectricVehicle, vehicleModel, licencePlate, energyLeft);
                     break;
                 case eVehicles.ElectricCar:
+                    isElectricVehicle = true;
+                    CreateCar(isElectricVehicle, vehicleModel, licencePlate, energyLeft);
                     break;
                 case eVehicles.Motorcycle:
                     break;
@@ -119,26 +121,28 @@ Type in the corresponding number to your vehicle please.");
         }
 
         // there is another method name CreateCar in GarageLogic! need to check if it is ok
-        private static void CreateCar()
+        private static void CreateCar(bool i_IsElectric, string i_CarModel, string i_LicencePlate, float i_EnergyLeft)
         {
-            string carModel;
-            string licencePlate;
-            string fuelLeftInput; //need to change type to float later on
-            float fuelLeft;
+            string energyLeftInput; //can be fuel or battery
             string color;
-            string numOfDoorsInput; // need to change type to byte later on
+            string numOfDoorsInput;
             byte numOfDoors;
 
-            Console.WriteLine("Please enter your Car's model:");
-            carModel = Console.ReadLine();
-            Console.WriteLine("please enter your licence plate:");
-            licencePlate = Console.ReadLine(); //need to make invalidinput for this line!
-            Console.WriteLine("Please enter how much fuel left in your car:");
-            fuelLeftInput = Console.ReadLine();
-            while(!IsValidFuelInput(fuelLeftInput, out fuelLeft))
+            Console.WriteLine("Please enter your car's model:");
+            i_CarModel = Console.ReadLine();
+            while(!IsValidVehicleModel(i_CarModel))
             {
-                Console.WriteLine("Not a valid input. Please enter how much fuel left in your car:");
-                fuelLeftInput = Console.ReadLine();
+                Console.WriteLine("Not a valid input. Please enter your car's model:");
+                i_CarModel = Console.ReadLine();
+            }
+            Console.WriteLine("please enter your licence plate:");
+            i_LicencePlate = Console.ReadLine(); //need to make invalidinput for this line!
+            Console.WriteLine("Please enter how much {0} left in your car:", i_IsElectric ? "battery" : "fuel");
+            energyLeftInput = Console.ReadLine();
+            while (!IsValidFuelInput(energyLeftInput, out i_EnergyLeft))
+            {
+                Console.WriteLine("Not a valid input. Please enter how much {0} left in your car:", i_IsElectric ? "battery" : "fuel");
+                energyLeftInput = Console.ReadLine();
             }
             Console.WriteLine("Please enter the color of your car:");
             color = Console.ReadLine();
@@ -154,8 +158,95 @@ Type in the corresponding number to your vehicle please.");
                 Console.WriteLine("Not a valid input. Please enter the number of doors your car has:");
                 numOfDoorsInput = Console.ReadLine();
             }
-            Car newCar = CreateVehicle.CreateCar(carModel, licencePlate, fuelLeft, color, numOfDoors);
-            GarageManager.AddVehicleToGarage(newCar);
+
+            if (i_IsElectric)
+            {
+                ElectricCar newElectricCar = CreateVehicle.CreateElectricCar(i_CarModel, i_LicencePlate, i_EnergyLeft, color, numOfDoors);
+                GarageManager.AddVehicleToGarage(newElectricCar);
+            }
+            else
+            {
+                Car newCar = CreateVehicle.CreateCar(i_CarModel, i_LicencePlate, i_EnergyLeft, color, numOfDoors);
+                GarageManager.AddVehicleToGarage(newCar);
+            }
+        }
+
+        private static void CreateMotorcycle(bool i_IsElectric, string i_MotorcycleModel, string i_LicencePlate, float i_EnergyLeft)
+        {
+            string energyLeftInput; //can be fuel or battery
+            string licenceTypeInput;
+            string validLicenceType = string.Empty;
+            string engineVolume = string.Empty;
+            int validEngineVolume;
+
+            Console.WriteLine("Please enter your motorcycle's model:");
+            i_MotorcycleModel = Console.ReadLine();
+            while (!IsValidVehicleModel(i_MotorcycleModel))
+            {
+                Console.WriteLine("Not a valid input. Please enter your motorcycle's model:");
+                i_MotorcycleModel = Console.ReadLine();
+            }
+            Console.WriteLine("please enter your licence plate:");
+            i_LicencePlate = Console.ReadLine(); //need to make invalidinput for this line!
+            Console.WriteLine("Please enter how much {0} left in your motorcycle:", i_IsElectric ? "battery" : "fuel");
+            energyLeftInput = Console.ReadLine();
+            while (!IsValidFuelInput(energyLeftInput, out i_EnergyLeft))
+            {
+                Console.WriteLine("Not a valid input. Please enter how much {0} left in your motorcycle:", i_IsElectric ? "battery" : "fuel");
+                energyLeftInput = Console.ReadLine();
+            }
+
+            Console.WriteLine("Please enter your licence type:");
+            licenceTypeInput = Console.ReadLine();
+            while (!IsValidMotorcycleLicence(licenceTypeInput))
+            {
+                Console.WriteLine("Not a valid input. Please enter the color of your car:");
+                licenceTypeInput = Console.ReadLine();
+            }
+
+            switch(licenceTypeInput)
+            {
+                case "1":
+                    validLicenceType = "A";
+                    break;
+                case "2":
+                    validLicenceType = "A1";
+                    break;
+                case "3":
+                    validLicenceType = "AA";
+                    break;
+                case "4":
+                    validLicenceType = "B";
+                    break;
+                default:
+                    //exeption??? ----> need to check what to do here, because we wiill never get here!
+                    break;
+
+            }
+
+            Console.WriteLine("Please enter your engine's volume (in Cc):");
+            engineVolume = Console.ReadLine();
+            while (!IsValidEngineVolume(engineVolume, out validEngineVolume))
+            {
+                Console.WriteLine("Not a valid input. Please enter the number of doors your car has:");
+                engineVolume = Console.ReadLine();
+            }
+
+            if (i_IsElectric)
+            {
+                ElectricMotorcycle newElectricMotorcycle = CreateVehicle.CreateElectricMotorcycle(i_MotorcycleModel, i_LicencePlate, i_EnergyLeft, validLicenceType, validEngineVolume);
+                GarageManager.AddVehicleToGarage(newElectricMotorcycle);
+            }
+            else
+            {
+                Motorcycle newMotorcycle = CreateVehicle.CreateMotorcycle(i_MotorcycleModel, i_LicencePlate, i_EnergyLeft, validLicenceType, validEngineVolume);
+                GarageManager.AddVehicleToGarage(newMotorcycle);
+            }
+        }
+
+        private static bool IsValidVehicleModel(string i_VehicleModel)
+        {
+            return !i_VehicleModel.Equals(string.Empty);
         }
 
         private static bool IsValidFuelInput(string i_FuelLeftUnput, out float o_FuelLeft)
@@ -173,11 +264,37 @@ Type in the corresponding number to your vehicle please.");
             return o_NumOfDoors > 1 && o_NumOfDoors < 6; //need to change 1 and 6 to const
         }
 
+        private static bool IsValidMotorcycleLicence(string i_MotorcycleLicenceType)
+        {
+            bool isValidLicenceType = false;
+            
+            if(i_MotorcycleLicenceType.Length == 1)
+            {
+                if(i_MotorcycleLicenceType[0] > '0' && i_MotorcycleLicenceType[0] < '5')  //need to change to constants
+                {
+                    isValidLicenceType = true;
+                }
+            }
+            else
+            {
+                isValidLicenceType = false;
+            }
+            return isValidLicenceType;
+        }
+
+        private static bool IsValidEngineVolume(string i_EngineVolume, out int i_ValidEngineVolume)
+        {
+            return int.TryParse(i_EngineVolume, out i_ValidEngineVolume);
+        }
+
+
+
+
         public static void FillAir(string i_LicensePlateNumber)
         {
-            if (GarageLogic.GarageManager.CheckIfVehicleInGarage(i_LicensePlateNumber))
+            if (GarageManager.CheckIfVehicleInGarage(i_LicensePlateNumber))
             {
-                GarageLogic.GarageManager.FillAir(i_LicensePlateNumber);
+                GarageManager.FillAir(i_LicensePlateNumber);
             }
             else
             {
@@ -187,9 +304,9 @@ Type in the corresponding number to your vehicle please.");
 
         public static void FillBattery(string i_LicensePlateNumber)
         {
-            if (GarageLogic.GarageManager.CheckIfVehicleInGarage(i_LicensePlateNumber))
+            if (GarageManager.CheckIfVehicleInGarage(i_LicensePlateNumber))
             {
-                GarageLogic.GarageManager.FillBattery(i_LicensePlateNumber);
+                GarageManager.FillBattery(i_LicensePlateNumber);
             }
             else
             {
@@ -199,9 +316,9 @@ Type in the corresponding number to your vehicle please.");
 
         public static void Refuel(string i_LicensePlateNumber)
         {
-            if (GarageLogic.GarageManager.CheckIfVehicleInGarage(i_LicensePlateNumber))
+            if (GarageManager.CheckIfVehicleInGarage(i_LicensePlateNumber))
             {
-                GarageLogic.GarageManager.Refuel(i_LicensePlateNumber);
+                GarageManager.Refuel(i_LicensePlateNumber);
             }
             else
             {
