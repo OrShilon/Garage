@@ -9,7 +9,29 @@ namespace Ex03.GarageLogic
     public static class GarageManager
     {
         private static List<Vehicle> m_AllVehiclesInGarage = new List<Vehicle>();
-        const int k_NotInGarage = -1;
+        private static readonly Dictionary<string, string> VehiclesInGarageStatus = new Dictionary<string, string>();
+        const int notInGarage = -1;
+        const string m_InRepairStatus = "In repair";
+        const float m_CarMaxAirPressure = 32f;
+        const float m_MotorcycleMaxAirPressure = 30f;
+        const float m_TruckMaxAirPressure = 28f;
+
+        public static void AddVehicleToGarage(string i_VehicleLicencePlate)
+        {
+            VehiclesInGarageStatus.Add(i_VehicleLicencePlate, m_InRepairStatus);
+        }
+
+        public static void RemoveVehicleToGarage(string i_VehicleLicencePlate)
+        {
+            VehiclesInGarageStatus.Remove(i_VehicleLicencePlate);
+        }
+        public static Dictionary<string, string> VehiclesStatusDictionary
+        {
+            get
+            {
+                return VehiclesInGarageStatus;
+            }
+        }
 
         public static void PrintVehiclesInGarage()
         {
@@ -36,6 +58,16 @@ namespace Ex03.GarageLogic
             m_AllVehiclesInGarage.Remove(vehicle);
         }
 
+        /*public  static void GenerateWheels(string i_WheelMaker, byte i_CurrentAirPressure)
+        {
+            int m_NumOfWheels = 4; //need to remove, just to fix the for for now
+            for (int i = 0; i < m_NumOfWheels; i++)
+            {
+                Wheel newWheel = new Wheel(i_WheelMaker, i_CurrentAirPressure, m_CarMaxAirPressure);
+                m_Wheels[i] = newWheel;
+            }
+        }*/
+
         public static void FillAir(string i_LicensePlateNumber)
         {
             int vehicleLocation = CheckIfVehicleInGarage(i_LicensePlateNumber);
@@ -44,7 +76,7 @@ namespace Ex03.GarageLogic
                 throw new ArgumentException("Vehicle is NOT in garage");
             }
             Vehicle customerVehicle = m_AllVehiclesInGarage[vehicleLocation];
-            byte maxAirPressure = customerVehicle.m_Wheels[0].m_MaxAirPressure;
+            float maxAirPressure = customerVehicle.m_Wheels[0].m_MaxAirPressure;
             for (int i = 0; i < customerVehicle.m_Wheels.Length; i++)
             {
                 customerVehicle.m_Wheels[i].m_CurrentAirPressure = maxAirPressure;

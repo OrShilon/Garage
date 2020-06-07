@@ -10,7 +10,6 @@ namespace Ex03.ConsoleUI
 {
     class UIManager
     {
-        private const string WelcomeMessage = "Hello and welcome to our garage. What is the purpose of your visit?";
 
         private static void PrintVehiclesInGarage()
         {
@@ -33,22 +32,22 @@ namespace Ex03.ConsoleUI
 
         public static void Welcome()
         {
-            Console.WriteLine(WelcomeMessage);
+            Console.WriteLine("Hello and welcome to our garage.{0}", Environment.NewLine);
             Thread.Sleep(1200);
             GarageOptionsForCustomer();
-            Console.WriteLine();
         }
 
         public static void GarageOptionsForCustomer()
         {
-            string messege = string.Format(@"1. I would like to check in a new vehicle
+            string messege = string.Format(@"What is the purpose of your visit?
+1. I would like to check in a new vehicle
 2. Display the current license plates that are in the garage
 3. Change my vehicle status
 4. Fill air in my vehicle wheels
 5. Refuel my vehicle
 6. Recharge my vehicle
 7. Display my vehicle details
-Type in the corresponding number to your visit purpose please.");
+Type in the corresponding number to your visit purpose please{0}", Environment.NewLine);
             Console.Write(messege);
             Console.ReadLine();
             AddNewVehicle();
@@ -59,81 +58,77 @@ Type in the corresponding number to your visit purpose please.");
             string vehicleType;
             int ValidvehicleType;
             eVehicles userVehicle;
-            string vehicleModel = string.Empty;
-            string licencePlate = string.Empty;
+            string vehicleModel;
+            string licencePlate;
             float energyLeft = 0f; //can be fuel or battery
             bool isElectricVehicle;
 
-            string Messege = string.Format(@"What is the Type of your Vehicle?
+
+            Console.WriteLine("please enter your licence plate:");
+            licencePlate = Console.ReadLine(); //need to make invalidinput for this line!
+            if (GarageManager.VehiclesStatusDictionary.ContainsKey(licencePlate))
+            {
+                Console.WriteLine("Your vehicle is already in our garage!{0}", Environment.NewLine);
+                GarageOptionsForCustomer();
+            }
+            else
+            {
+
+                string Messege = string.Format(@"What is the Type of your Vehicle?
 1. Regular car
 2. Electric Car
 3. Regular Motorcycle
 4. Electric Motorcycle
 5. Truck
-Type in the corresponding number to your vehicle please.");
-            Console.WriteLine(Messege);
-            vehicleType = Console.ReadLine();
-            while (!IsValidVehicleChoice(vehicleType))
-            {
-                Console.WriteLine("Invalid Input.");
+Type in the corresponding number to your vehicle please.{0}", Environment.NewLine);
                 Console.WriteLine(Messege);
                 vehicleType = Console.ReadLine();
-            }
+                while (!IsValidVehicleChoice(vehicleType))
+                {
+                    Console.WriteLine("Invalid Input.");
+                    Thread.Sleep(1000);
+                    Console.WriteLine(Messege);
+                    vehicleType = Console.ReadLine();
+                }
 
-            int.TryParse(vehicleType, out ValidvehicleType);
-            userVehicle = (eVehicles)ValidvehicleType;
+                int.TryParse(vehicleType, out ValidvehicleType);
+                userVehicle = (eVehicles)ValidvehicleType;
 
-            Console.WriteLine("please enter your licence plate:");
-            licencePlate = Console.ReadLine(); //need to make invalidinput for this line!
-
-            //need to add code here to check if the vehicle is new or not
-
-            Console.WriteLine("Please enter your vehicle's model:");
-            vehicleModel = Console.ReadLine();
-            while (!IsValidVehicleModel(vehicleModel))
-            {
-                Console.WriteLine("Not a valid input. Please enter your vehicle's model:");
+                GarageManager.AddVehicleToGarage(licencePlate);
+                Console.WriteLine("Please enter your vehicle's model:");
                 vehicleModel = Console.ReadLine();
-            }
+                while (!IsValidVehicleModel(vehicleModel))
+                {
+                    Console.WriteLine("Not a valid input. Please enter your vehicle's model:");
+                    vehicleModel = Console.ReadLine();
+                }
 
-            Console.WriteLine("please enter your licence plate:");
-            licencePlate = Console.ReadLine(); //need to make invalidinput for this line!
-
-            //need to add code here to check if the vehicle is new or not
-
-            Console.WriteLine("Please enter your vehicle's model:");
-            vehicleModel = Console.ReadLine();
-            while (!IsValidVehicleModel(vehicleModel))
-            {
-                Console.WriteLine("Not a valid input. Please enter your vehicle's model:");
-                vehicleModel = Console.ReadLine();
-            }
-
-            switch (userVehicle)
-            {
-                case eVehicles.Car:
-                    isElectricVehicle = false;
-                    CreateCar(isElectricVehicle, vehicleModel, licencePlate, energyLeft);
-                    break;
-                case eVehicles.ElectricCar:
-                    isElectricVehicle = true;
-                    CreateCar(isElectricVehicle, vehicleModel, licencePlate, energyLeft);
-                    break;
-                case eVehicles.Motorcycle:
-                    isElectricVehicle = false;
-                    CreateMotorcycle(isElectricVehicle, vehicleModel, licencePlate, energyLeft);
-                    break;
-                case eVehicles.ElectricMotorcycle:
-                    isElectricVehicle = true;
-                    CreateMotorcycle(isElectricVehicle, vehicleModel, licencePlate, energyLeft);
-                    break;
-                case eVehicles.Truck:
-                    isElectricVehicle = false;
-                    CreateTruck(vehicleModel, licencePlate, energyLeft);
-                    break;
-                default:
-                    //invalid input, need to handle.......
-                    break;
+                switch (userVehicle)
+                {
+                    case eVehicles.Car:
+                        isElectricVehicle = false;
+                        CreateCar(isElectricVehicle, vehicleModel, licencePlate, energyLeft);
+                        break;
+                    case eVehicles.ElectricCar:
+                        isElectricVehicle = true;
+                        CreateCar(isElectricVehicle, vehicleModel, licencePlate, energyLeft);
+                        break;
+                    case eVehicles.Motorcycle:
+                        isElectricVehicle = false;
+                        CreateMotorcycle(isElectricVehicle, vehicleModel, licencePlate, energyLeft);
+                        break;
+                    case eVehicles.ElectricMotorcycle:
+                        isElectricVehicle = true;
+                        CreateMotorcycle(isElectricVehicle, vehicleModel, licencePlate, energyLeft);
+                        break;
+                    case eVehicles.Truck:
+                        CreateTruck(vehicleModel, licencePlate, energyLeft);
+                        break;
+                    default:
+                        //invalid input, need to handle.......
+                        break;
+                }
+                GarageOptionsForCustomer();
             }
 
         }
@@ -359,9 +354,9 @@ Type in the corresponding number to your vehicle please.");
                 if (isDangerous == 0 || isDangerous == 1)
                 {
                     isValidInput = true;
-                    if (isDangerous == 0)
+                    if (isDangerous == 1)
                     {
-                        i_DangerousMaterials = false;
+                        i_DangerousMaterials = true;
                     }
                     i_DangerousMaterials = true;
                 }
