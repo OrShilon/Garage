@@ -175,38 +175,18 @@ Type in the corresponding number to your vehicle please.");
 
         public static void FillAir(string i_LicensePlateNumber)
         {
-            if (GarageLogic.GarageManager.CheckIfVehicleInGarage(i_LicensePlateNumber))
-            {
-                GarageLogic.GarageManager.FillAir(i_LicensePlateNumber);
-            }
-            else
-            {
-                Console.WriteLine("sorry the given vehicle is not in the garage");
-            }
+                GarageLogic.GarageManager.FillAir(i_LicensePlateNumber);   
         }
 
-        public static void FillBattery(string i_LicensePlateNumber)
+        public static void FillBattery(string i_LicensePlateNumber, float i_HowMuchToFill)
         {
-            if (GarageLogic.GarageManager.CheckIfVehicleInGarage(i_LicensePlateNumber))
-            {
-                GarageLogic.GarageManager.FillBattery(i_LicensePlateNumber);
-            }
-            else
-            {
-                Console.WriteLine("sorry the given vehicle is not in the garage");
-            }
+            GarageLogic.GarageManager.FillBattery(i_LicensePlateNumber, i_HowMuchToFill);
         }
 
-        public static void Refuel(string i_LicensePlateNumber)
+        public static void Refuel(string i_LicensePlateNumber, byte i_HowMuchToFill, eFuelTypes i_FuelType)
         {
-            if (GarageLogic.GarageManager.CheckIfVehicleInGarage(i_LicensePlateNumber))
-            {
-                GarageLogic.GarageManager.Refuel(i_LicensePlateNumber);
-            }
-            else
-            {
-                Console.WriteLine("sorry the given vehicle is not in the garage");
-            }
+           
+                GarageLogic.GarageManager.Refuel(i_LicensePlateNumber, i_HowMuchToFill, i_FuelType);
         }
     }
 }
