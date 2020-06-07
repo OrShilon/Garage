@@ -58,18 +58,18 @@ namespace Ex03.GarageLogic
             {
                 throw new ArgumentException("Vehicle is NOT in garage");
             }
-            BatteryVehicle customerVehicle = m_AllVehiclesInGarage[vehicleLocation] as BatteryVehicle;
+            ElectricVehicle customerVehicle = m_AllVehiclesInGarage[vehicleLocation] as ElectricVehicle;
             if (customerVehicle == null)
             {
                 throw new ArgumentException("NOT a battery vehicle");
             }
-            float newBatteryHoursLeft = customerVehicle.m_FuelOrBatteryLeft + i_HowMuchToFill;
-            if (newBatteryHoursLeft > customerVehicle.m_MaxFuelOrBattery)
+            float newBatteryHoursLeft = customerVehicle.m_BatteryLeft + i_HowMuchToFill;
+            if (newBatteryHoursLeft > customerVehicle.m_BatteryHourCapacity)
             {
                 throw new ValueOutOfRangeException("refuel quantity is too large");
             }
            
-            customerVehicle.m_FuelOrBatteryLeft = newBatteryHoursLeft;//צריך לבדוק האם לעשות GET וSET m_FuelOrBatteryLeftל
+            customerVehicle.m_BatteryLeft = newBatteryHoursLeft;//צריך לבדוק האם לעשות GET וSET m_FuelOrBatteryLeftל
         }
         //לא בודק בכלל אם רכב נמצא במוסך צריך לטפל בזה לפני. כאן במקרה של חריגה/סוג דלק לא נכון נזרקת אקספשיין
         public static void Refuel(string i_LicensePlateNumber, byte i_HowMuchToFill, eFuelTypes i_FuelType)
@@ -84,8 +84,8 @@ namespace Ex03.GarageLogic
             {
                 throw new ArgumentException("NOT a fuel vehicle");
             }
-            float newFuelLeft = customerVehicle.m_FuelOrBatteryLeft + i_HowMuchToFill;
-            if (newFuelLeft > customerVehicle.m_MaxFuelOrBattery)
+            float newFuelLeft = customerVehicle.m_FuelLeft + i_HowMuchToFill;
+            if (newFuelLeft > customerVehicle.m_FuelTankCapacity)
             {
                 throw new ValueOutOfRangeException("refuel quantity is too large");
             }
@@ -93,7 +93,7 @@ namespace Ex03.GarageLogic
             {
                 throw new ArgumentException("fuel type is NOT valid");
             }
-            customerVehicle.m_FuelOrBatteryLeft = newFuelLeft;//צריך לבדוק האם לעשות GET וSET m_FuelOrBatteryLeftל
+            customerVehicle.m_FuelLeft = newFuelLeft;//צריך לבדוק האם לעשות GET וSET m_FuelOrBatteryLeftל
 
         }
         /**

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Ex03.ConsoleUI
@@ -33,6 +34,8 @@ namespace Ex03.ConsoleUI
         public static void Welcome()
         {
             Console.WriteLine(WelcomeMessage);
+            Thread.Sleep(1200);
+            GarageOptionsForCustomer();
             Console.WriteLine();
         }
 
@@ -47,6 +50,7 @@ namespace Ex03.ConsoleUI
 7. Display my vehicle details
 Type in the corresponding number to your visit purpose please.");
             Console.Write(messege);
+            Console.ReadLine();
             AddNewVehicle();
         }
 
@@ -90,10 +94,16 @@ Type in the corresponding number to your vehicle please.");
                     CreateCar(isElectricVehicle, vehicleModel, licencePlate, energyLeft);
                     break;
                 case eVehicles.Motorcycle:
+                    isElectricVehicle = false;
+                    CreateMotorcycle(isElectricVehicle, vehicleModel, licencePlate, energyLeft);
                     break;
                 case eVehicles.ElectricMotorcycle:
+                    isElectricVehicle = true;
+                    CreateMotorcycle(isElectricVehicle, vehicleModel, licencePlate, energyLeft);
                     break;
                 case eVehicles.Truck:
+                    isElectricVehicle = false;
+                    CreateTruck(vehicleModel, licencePlate, energyLeft);
                     break;
                 default:
                     //invalid input, need to handle.......
@@ -205,7 +215,7 @@ Type in the corresponding number to your vehicle please.");
                 licenceTypeInput = Console.ReadLine();
             }
 
-            switch(licenceTypeInput)
+            switch (licenceTypeInput)
             {
                 case "1":
                     validLicenceType = "A";
@@ -244,6 +254,54 @@ Type in the corresponding number to your vehicle please.");
                 GarageManager.AddVehicleToGarage(newMotorcycle);
             }
         }
+
+        private static void CreateTruck(string i_TruckModel, string i_LicencePlate, float i_FuelLeft)
+        {
+            string fuelLeftInput;
+            string cargoVolume = string.Empty;
+            float validCargoVolume;
+            string dangerousMaterialsInput;
+            bool dangerousMaterials;
+
+            Console.WriteLine("Please enter your truck's model:");
+            i_TruckModel = Console.ReadLine();
+            while (!IsValidVehicleModel(i_TruckModel))
+            {
+                Console.WriteLine("Not a valid input. Please enter your truck's model:");
+                i_TruckModel = Console.ReadLine();
+            }
+            Console.WriteLine("please enter your licence plate:");
+            i_LicencePlate = Console.ReadLine(); //need to make invalidinput for this line!
+
+            Console.WriteLine("Please enter how much fuel left in your truck:");
+            fuelLeftInput = Console.ReadLine();
+            while (!IsValidFuelInput(fuelLeftInput, out i_FuelLeft))
+            {
+                Console.WriteLine("Not a valid input. Please enter how much fuel left in your truck:");
+                fuelLeftInput = Console.ReadLine();
+            }
+
+            Console.WriteLine("Is there any dangerous materials in your truck? Enter 1 for yes, 0 for no.");
+            dangerousMaterialsInput = Console.ReadLine();
+            while (!IsValidDangerousMaterialsInput(dangerousMaterialsInput, out dangerousMaterials))
+            {
+                Console.WriteLine("Not a valid input. Please enter the color of your car:");
+                dangerousMaterialsInput = Console.ReadLine();
+            }
+
+            Console.WriteLine("Please enter your truck's cargo volume:");
+            cargoVolume = Console.ReadLine();
+            //need to change the while to isvalidtruckcargo from isvalidfuelinput
+            while (!IsValidFuelInput(cargoVolume, out validCargoVolume))
+            {
+                Console.WriteLine("Not a valid input. Please enter the number of doors your car has:");
+                cargoVolume = Console.ReadLine();
+            }
+                Truck newTruck = CreateVehicle.CreateTruck(i_TruckModel, i_LicencePlate, i_FuelLeft, dangerousMaterials, validCargoVolume);
+                GarageManager.AddVehicleToGarage(newTruck);
+        }
+
+
 
         private static bool IsValidVehicleModel(string i_VehicleModel)
         {
@@ -288,7 +346,31 @@ Type in the corresponding number to your vehicle please.");
             return int.TryParse(i_EngineVolume, out i_ValidEngineVolume);
         }
 
+        private static bool IsValidDangerousMaterialsInput(string i_IsDangerous, out bool i_DangerousMaterials)
+        {
+            int isDangerous;
+            bool isValidInput = false;
+            i_DangerousMaterials = false;
+            if (int.TryParse(i_IsDangerous, out isDangerous))
+            {
+                i_DangerousMaterials = false;
+            }
+            else
+            {
+                //need to change to const
+                if(isDangerous == 0 || isDangerous == 1)
+                {
+                    isValidInput = true;
+                    if (isDangerous == 0)
+                    {
+                        i_DangerousMaterials = false;
+                    }
+                    i_DangerousMaterials = true;
+                }
+            }
 
+            return isValidInput;
+        }
 
 
         public static void FillAir(string i_LicensePlateNumber)

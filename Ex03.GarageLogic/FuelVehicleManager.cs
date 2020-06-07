@@ -8,14 +8,14 @@ namespace Ex03.GarageLogic
 {
     internal static class FuelVehicleManager
     {
-        public static float GetFuelLeft(Vehicle i_vehicle)
+        public static float GetFuelLeft(FuelVehicle i_FuelVehicle)
         {
-            return i_vehicle.m_FuelOrBatteryLeft;
+            return i_FuelVehicle.m_FuelLeft;
         }
 
-        public static float GetMaxFuelPossible(Vehicle i_vehicle)
+        public static float TankCapacity(FuelVehicle i_FuelVehicle)
         {
-            return i_vehicle.m_MaxFuelOrBattery;
+            return i_FuelVehicle.m_FuelTankCapacity;
         }
 
         public static void Refuel(FuelVehicle i_FuelVehicle, float i_LittersToAdd, int i_FuelType)
@@ -43,7 +43,7 @@ namespace Ex03.GarageLogic
         {
 
             //need to check if i have enough space in my tank!!!
-            i_FuelVehicle.m_FuelOrBatteryLeft += i_LittersToAdd;
+            i_FuelVehicle.m_FuelLeft += i_LittersToAdd;
         }
     }
 }
