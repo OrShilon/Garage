@@ -16,6 +16,4 @@ namespace Ex03.GarageLogic
             m_FuelType = i_FuelType;
         }
     }
-
-
 }
