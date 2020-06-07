@@ -46,7 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BatteryVehicle.cs" />
+    <Compile Include="ElectricVehicle.cs" />
     <Compile Include="Car.cs" />
     <Compile Include="CreateVehicle.cs" />
     <Compile Include="eCarColors.cs" />
