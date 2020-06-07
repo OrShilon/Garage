@@ -9,6 +9,7 @@ namespace Ex03.GarageLogic
     public static class GarageManager
     {
         private static List<Vehicle> m_AllVehiclesInGarage = new List<Vehicle>();
+        const int notInGarage = -1;
 
         public static void PrintVehiclesInGarage()
         {
@@ -37,49 +38,79 @@ namespace Ex03.GarageLogic
 
         public static void FillAir(string i_LicensePlateNumber)
         {
-            foreach (Vehicle vehicle1 in m_AllVehiclesInGarage)// need to make an iteration function(find the given vehicle in list)
+            int vehicleLocation = CheckIfVehicleInGarage(i_LicensePlateNumber);
+            if (vehicleLocation == notInGarage)
             {
-                if (vehicle1.m_LicencePlate == i_LicensePlateNumber && vehicle1 is FuelVehicle)
-                {
-                    for (int i = 0; i < vehicle1.m_Wheels.Length; i++)
-                        vehicle1.m_Wheels[i].m_CurrentAirPressure = vehicle1.m_Wheels[i].m_MaxAirPressure;
-                }
+                throw new ArgumentException("Vehicle is NOT in garage");
+            }
+            Vehicle customerVehicle = m_AllVehiclesInGarage[vehicleLocation];
+            byte maxAirPressure = customerVehicle.m_Wheels[0].m_MaxAirPressure;
+            for (int i = 0; i < customerVehicle.m_Wheels.Length; i++)
+            {
+                customerVehicle.m_Wheels[i].m_CurrentAirPressure = maxAirPressure;
             }
         }
 
-        public static void FillBattery(string i_LicensePlateNumber)
+        public static void FillBattery(string i_LicensePlateNumber, float i_HowMuchToFill)
         {
-            foreach (Vehicle vehicle1 in m_AllVehiclesInGarage)// need to make an iteration function(find the given vehicle in list)
+            int vehicleLocation = CheckIfVehicleInGarage(i_LicensePlateNumber);
+            if (vehicleLocation == notInGarage)
             {
-                if (vehicle1.m_LicencePlate == i_LicensePlateNumber && !(vehicle1 is FuelVehicle))
-                {
-                    vehicle1.m_FuelOrBatteryLeft = vehicle1.m_MaxFuelOrBattery;
-                }
+                throw new ArgumentException("Vehicle is NOT in garage");
             }
+            BatteryVehicle customerVehicle = m_AllVehiclesInGarage[vehicleLocation] as BatteryVehicle;
+            if (customerVehicle == null)
+            {
+                throw new ArgumentException("NOT a battery vehicle");
+            }
+            float newBatteryHoursLeft = customerVehicle.m_FuelOrBatteryLeft + i_HowMuchToFill;
+            if (newBatteryHoursLeft > customerVehicle.m_MaxFuelOrBattery)
+            {
+                throw new ValueOutOfRangeException("refuel quantity is too large");
+            }
+           
+            customerVehicle.m_FuelOrBatteryLeft = newBatteryHoursLeft;//צריך לבדוק האם לעשות GET וSET m_FuelOrBatteryLeftל
         }
-
-        public static void Refuel(string i_LicensePlateNumber)
+        //לא בודק בכלל אם רכב נמצא במוסך צריך לטפל בזה לפני. כאן במקרה של חריגה/סוג דלק לא נכון נזרקת אקספשיין
+        public static void Refuel(string i_LicensePlateNumber, byte i_HowMuchToFill, eFuelTypes i_FuelType)
         {
-            foreach (Vehicle vehicle1 in m_AllVehiclesInGarage)// need to make an iteration function(find the given vehicle in list)
+            int vehicleLocation = CheckIfVehicleInGarage(i_LicensePlateNumber);
+            if(vehicleLocation == notInGarage)
             {
-                if (vehicle1.m_LicencePlate == i_LicensePlateNumber && (vehicle1 is FuelVehicle))
-                {
-                    vehicle1.m_FuelOrBatteryLeft = vehicle1.m_MaxFuelOrBattery;
-                }
+                throw new ArgumentException("Vehicle is NOT in garage");
             }
+            FuelVehicle customerVehicle = m_AllVehiclesInGarage[vehicleLocation] as FuelVehicle;
+            if(customerVehicle == null)
+            {
+                throw new ArgumentException("NOT a fuel vehicle");
+            }
+            float newFuelLeft = customerVehicle.m_FuelOrBatteryLeft + i_HowMuchToFill;
+            if (newFuelLeft > customerVehicle.m_MaxFuelOrBattery)
+            {
+                throw new ValueOutOfRangeException("refuel quantity is too large");
+            }
+            if(i_FuelType != customerVehicle.m_FuelType)//צריך לדרוס פונקצית == וגם !=
+            {
+                throw new ArgumentException("fuel type is NOT valid");
+            }
+            customerVehicle.m_FuelOrBatteryLeft = newFuelLeft;//צריך לבדוק האם לעשות GET וSET m_FuelOrBatteryLeftל
+
         }
-
-        public static bool CheckIfVehicleInGarage(string i_LicensePlateNumber)
+        /**
+         * checks if the given vehicle is in the garage if so returns its location in the list
+         * if not returns -1
+         **/ 
+        public static int CheckIfVehicleInGarage(string i_LicensePlateNumber)
         {
-            bool VehicleIsInGarage = false;
-            foreach (Vehicle vehicle1 in m_AllVehiclesInGarage)
+            int vehicleLocation = notInGarage;
+            for(int i = 0; i < m_AllVehiclesInGarage.Count; i++)
             {
-                if (vehicle1.m_LicencePlate == i_LicensePlateNumber)
+                if (m_AllVehiclesInGarage[i].m_LicencePlate == i_LicensePlateNumber)
                 {
-                    VehicleIsInGarage = true;
+                    vehicleLocation = i;
                 }
             }
-            return VehicleIsInGarage;
+            return vehicleLocation;
         }
     }
 }
