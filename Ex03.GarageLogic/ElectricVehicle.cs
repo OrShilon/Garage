@@ -17,6 +17,12 @@ namespace Ex03.GarageLogic
             m_BatteryLeft = i_BatteryLeft;
             m_BatteryHourCapacity = i_BatteryHourCapacity;
         }
+
+        public override string ToString()
+        {
+            return base.ToString() + Environment.NewLine + String.Format(@"Vehicle battery hour capacity is: {0} hours
+Vehicle battery left is: {1} hours", m_BatteryHourCapacity, m_BatteryLeft);
+        }
     }
     
 }
