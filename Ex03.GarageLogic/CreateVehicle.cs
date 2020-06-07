@@ -37,7 +37,7 @@ namespace Ex03.GarageLogic
 
         public static ElectricMotorcycle CreateElectricMotorcycle(string i_VehicleModel, string i_LicencePlate, float i_BatteryLeft, string i_LicenseType, int i_EngineVolume)
         {
-            ElectricMotorcycle electricMotorcycle = new ElectricMotorcycle(i_VehicleModel, i_LicencePlate, i_BatteryLeft, m_MotorcycleMaxBattery, m_MotorcycleNumOfWheels, i_LicenseType);
+            ElectricMotorcycle electricMotorcycle = new ElectricMotorcycle(i_VehicleModel, i_LicencePlate, i_BatteryLeft, m_MotorcycleMaxBattery, m_MotorcycleNumOfWheels, i_LicenseType, i_EngineVolume);
             return electricMotorcycle;
         }
 
