@@ -25,7 +25,8 @@ namespace Ex03.ConsoleUI
             else
             {
                 Console.WriteLine("No Vehicles in the garage yet.");
-                //לטפל בזה שהרשימת רכבים ריקה, כלומר עוד לא נכנסו רכבים למוסךך
+                Console.WriteLine();
+                //לטפל בזה שהרשימת רכבים ריקה, כלומר עוד לא נכנסו רכבים למוסך
             }
         }
 
