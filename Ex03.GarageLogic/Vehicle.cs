@@ -18,5 +18,14 @@ namespace Ex03.GarageLogic
             m_LicencePlate = i_LicencePlate;
             m_Wheels = new Wheel[i_NumOfWheels];
         }
+
+        public override string ToString()
+        {
+            return String.Format(@"Vehicle model is: {0}
+Vehicle license plate number is: {1}", m_VehicleModel, m_LicencePlate);
+        }
+       
     }
+
+    
 }

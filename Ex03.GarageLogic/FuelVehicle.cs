@@ -19,5 +19,11 @@ namespace Ex03.GarageLogic
             m_FuelTankCapacity = i_FuelTankCapacity;
             m_FuelType = i_FuelType;
         }
+        public override string ToString()
+        {
+            return base.ToString() + Environment.NewLine +  String.Format(@"Vehicle fuel type is: {0}
+Vehicle fuel tank capacity is: {1} liters
+Vehicle fuel left is: {2} liters", m_FuelType, m_FuelTankCapacity, m_FuelLeft);
+        }
     }
 }

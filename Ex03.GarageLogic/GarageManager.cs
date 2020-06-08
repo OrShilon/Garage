@@ -10,7 +10,7 @@ namespace Ex03.GarageLogic
     {
         private static List<Vehicle> m_AllVehiclesInGarage = new List<Vehicle>();
         private static readonly Dictionary<string, string> VehiclesInGarageStatus = new Dictionary<string, string>();
-        const int m_NotInGarage = -1;
+        const int notInGarage = -1;
         const string m_InRepairStatus = "In repair";
         const float m_CarMaxAirPressure = 32f;
         const float m_MotorcycleMaxAirPressure = 30f;
@@ -71,7 +71,7 @@ namespace Ex03.GarageLogic
         public static void FillAir(string i_LicensePlateNumber)
         {
             int vehicleLocation = CheckIfVehicleInGarage(i_LicensePlateNumber);
-            if (vehicleLocation == m_NotInGarage)
+            if (vehicleLocation == k_NotInGarage)
             {
                 throw new ArgumentException("Vehicle is NOT in garage");
             }
@@ -86,7 +86,7 @@ namespace Ex03.GarageLogic
         public static void FillBattery(string i_LicensePlateNumber, float i_HowMuchToFill)
         {
             int vehicleLocation = CheckIfVehicleInGarage(i_LicensePlateNumber);
-            if (vehicleLocation == m_NotInGarage)
+            if (vehicleLocation == k_NotInGarage)
             {
                 throw new ArgumentException("Vehicle is NOT in garage");
             }
@@ -107,7 +107,7 @@ namespace Ex03.GarageLogic
         public static void Refuel(string i_LicensePlateNumber, byte i_HowMuchToFill, eFuelTypes i_FuelType)
         {
             int vehicleLocation = CheckIfVehicleInGarage(i_LicensePlateNumber);
-            if(vehicleLocation == m_NotInGarage)
+            if(vehicleLocation == k_NotInGarage)
             {
                 throw new ArgumentException("Vehicle is NOT in garage");
             }
@@ -134,7 +134,7 @@ namespace Ex03.GarageLogic
          **/ 
         public static int CheckIfVehicleInGarage(string i_LicensePlateNumber)
         {
-            int vehicleLocation = m_NotInGarage;
+            int vehicleLocation = k_NotInGarage;
             for(int i = 0; i < m_AllVehiclesInGarage.Count; i++)
             {
                 if (m_AllVehiclesInGarage[i].m_LicencePlate == i_LicensePlateNumber)
