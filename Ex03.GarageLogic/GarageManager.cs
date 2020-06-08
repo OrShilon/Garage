@@ -10,7 +10,7 @@ namespace Ex03.GarageLogic
     {
         private static List<Vehicle> m_AllVehiclesInGarage = new List<Vehicle>();
         private static readonly Dictionary<string, string> VehiclesInGarageStatus = new Dictionary<string, string>();
-        const int notInGarage = -1;
+        const int k_NotInGarage = -1;
         const string m_InRepairStatus = "In repair";
         const float m_CarMaxAirPressure = 32f;
         const float m_MotorcycleMaxAirPressure = 30f;
@@ -38,6 +38,20 @@ namespace Ex03.GarageLogic
             foreach (Vehicle vehicle in m_AllVehiclesInGarage)
             {
                 //need to print after filtering by status
+            }
+        }
+
+        public static void PrintVehicle(string i_LicencePlate)
+        {
+            int vehicleLocation = CheckIfVehicleInGarage(i_LicencePlate);
+
+            if (vehicleLocation != -1)
+            {
+                        Console.WriteLine(m_AllVehiclesInGarage[vehicleLocation].ToString());
+            }
+            else
+            {
+                Console.WriteLine("your vehicle is not in our garage!");
             }
         }
 
