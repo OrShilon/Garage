@@ -12,6 +12,7 @@ namespace Ex03.ConsoleUI
         ElectricCar,
         Motorcycle,
         ElectricMotorcycle,
-        Truck
+        Truck,
+        bus
     }
 }

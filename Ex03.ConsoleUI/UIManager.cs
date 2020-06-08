@@ -209,12 +209,17 @@ Type in the corresponding number to your vehicle please.{0}", Environment.NewLin
                 Console.WriteLine("Not a valid input. Please enter how much {0} left in your motorcycle:", i_IsElectric ? "battery" : "fuel");
                 energyLeftInput = Console.ReadLine();
             }
-
-            Console.WriteLine("Please enter your licence type:");
+            string licenceTypeQuestion = string.Format(@" Please enter your licence type:
+1. A
+2. A1
+3. AA
+4. B
+Type in the corresponding number to your vehicle please.{0}", Environment.NewLine);
+            Console.WriteLine(licenceTypeQuestion);
             licenceTypeInput = Console.ReadLine();
             while (!IsValidMotorcycleLicence(licenceTypeInput))
             {
-                Console.WriteLine("Not a valid input. Please enter the color of your car:");
+                Console.WriteLine(string.Format(@"Not a valid input.{0}{1}", Environment.NewLine, licenceTypeQuestion));
                 licenceTypeInput = Console.ReadLine();
             }
 
