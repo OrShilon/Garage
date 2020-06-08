@@ -21,10 +21,7 @@ namespace Ex03.GarageLogic
             VehiclesInGarageStatus.Add(i_VehicleLicencePlate, m_InRepairStatus);
         }
 
-        public static void RemoveVehicleToGarage(string i_VehicleLicencePlate)
-        {
-            VehiclesInGarageStatus.Remove(i_VehicleLicencePlate);
-        }
+
         public static Dictionary<string, string> VehiclesStatusDictionary
         {
             get
