@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,20 +10,20 @@ namespace Ex03.GarageLogic
     public static class GarageManager
     {
         private static List<Vehicle> m_AllVehiclesInGarage = new List<Vehicle>();
-        private static readonly Dictionary<string, string> VehiclesInGarageStatus = new Dictionary<string, string>();
+        private static readonly Dictionary<string, eVehicleStatus> VehiclesInGarageStatus = new Dictionary<string, eVehicleStatus>();
         const int k_NotInGarage = -1;
-        const string m_InRepairStatus = "In repair";
         const float m_CarMaxAirPressure = 32f;
         const float m_MotorcycleMaxAirPressure = 30f;
         const float m_TruckMaxAirPressure = 28f;
 
-        public static void AddVehicleToGarage(string i_VehicleLicencePlate)
+        public static void AddVehicleToGarage(Vehicle i_Vehicle)
         {
-            VehiclesInGarageStatus.Add(i_VehicleLicencePlate, m_InRepairStatus);
+            VehiclesInGarageStatus.Add(i_Vehicle.m_LicencePlate, eVehicleStatus.InRepairStatus);
+            m_AllVehiclesInGarage.Add(i_Vehicle);
         }
 
 
-        public static Dictionary<string, string> VehiclesStatusDictionary
+        public static Dictionary<string, eVehicleStatus> VehiclesStatusDictionary
         {
             get
             {
@@ -32,13 +33,34 @@ namespace Ex03.GarageLogic
 
         public static void PrintVehiclesInGarage()
         {
-            foreach (Vehicle vehicle in m_AllVehiclesInGarage)
+            foreach (KeyValuePair<string, eVehicleStatus> pair in VehiclesInGarageStatus)
             {
-                //need to print after filtering by status
+                Console.WriteLine("License plate number: " + pair.Key + ", status: " + pair.Value);
             }
         }
 
-        public static void PrintVehicle(string i_LicencePlate)
+        public static void PrintVehiclesInGarage(eVehicleStatus i_status)
+        {
+            foreach (KeyValuePair<string, eVehicleStatus> pair in VehiclesInGarageStatus)
+            {
+                if (pair.Value.Equals(i_status))
+                {
+                    Console.WriteLine("License plate number: " + pair.Key + ", status: " + pair.Value);
+                }
+            }
+        }
+
+        public static void ChangeVehicleStatus(string i_LicensePlateNumber, eVehicleStatus i_NewVehicleStatus)
+        {
+            int vehicleLocation = CheckIfVehicleInGarage(i_LicensePlateNumber);
+            if (vehicleLocation == k_NotInGarage)
+            {
+                throw new ArgumentException("Vehicle is NOT in garage");
+            }
+            VehiclesInGarageStatus[i_LicensePlateNumber] = i_NewVehicleStatus;
+        }
+
+        public static void PrintVehicleDetails(string i_LicencePlate)
         {
             int vehicleLocation = CheckIfVehicleInGarage(i_LicencePlate);
 
@@ -51,33 +73,6 @@ namespace Ex03.GarageLogic
                 Console.WriteLine("your vehicle is not in our garage!");
             }
         }
-
-        public static List<Vehicle> VehiclesList
-        {
-            get 
-            {
-                return m_AllVehiclesInGarage;
-            }
-        }
-
-        public static void AddVehicleToGarage(Vehicle vehicle)
-        {
-            m_AllVehiclesInGarage.Add(vehicle);
-        }
-        public static void RemoveVehicleFromGarage(Vehicle vehicle)
-        {
-            m_AllVehiclesInGarage.Remove(vehicle);
-        }
-
-        /*public  static void GenerateWheels(string i_WheelMaker, byte i_CurrentAirPressure)
-        {
-            int m_NumOfWheels = 4; //need to remove, just to fix the for for now
-            for (int i = 0; i < m_NumOfWheels; i++)
-            {
-                Wheel newWheel = new Wheel(i_WheelMaker, i_CurrentAirPressure, m_CarMaxAirPressure);
-                m_Wheels[i] = newWheel;
-            }
-        }*/
 
         public static void FillAir(string i_LicensePlateNumber)
         {
