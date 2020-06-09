@@ -11,7 +11,7 @@ namespace Ex03.ConsoleUI
         static void Main(string[] args)
         {
             //UIManager.Welcome();
-            UIManager.PrintOptions(typeof(eVehicles));
+            UIManager.PrintOptions(typeof(GarageLogic.eVehicles));
             Console.ReadLine();
         }
     }

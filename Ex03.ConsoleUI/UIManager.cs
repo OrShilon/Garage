@@ -67,6 +67,9 @@ Type in the corresponding number to your visit purpose please{0}", Environment.N
             string licencePlate;
             float energyLeft = 0f; //can be fuel or battery
             bool isElectricVehicle;
+            string ownerName;
+            string ownerPhoneNumber;
+            Vehicle vehicle;
 
 
             Console.WriteLine("please enter your licence plate:");
@@ -78,14 +81,17 @@ Type in the corresponding number to your visit purpose please{0}", Environment.N
             }
             else
             {
-
-//                string Messege = string.Format(@"What is the Type of your Vehicle?
-//1. Regular car
-//2. Electric Car
-//3. Regular Motorcycle
-//4. Electric Motorcycle
-//5. Truck
-//Type in the corresponding number to your vehicle please.{0}", Environment.NewLine);
+                Console.WriteLine("Please enter you name:");
+                ownerName = Console.ReadLine();
+                Console.WriteLine("Please enter your phone number:");
+                ownerPhoneNumber = Console.ReadLine();
+                //                string Messege = string.Format(@"What is the Type of your Vehicle?
+                //1. Regular car
+                //2. Electric Car
+                //3. Regular Motorcycle
+                //4. Electric Motorcycle
+                //5. Truck
+                //Type in the corresponding number to your vehicle please.{0}", Environment.NewLine);
                 userVehicle = (eVehicles) PrintOptions(typeof(eVehicles));
 
                 Console.WriteLine("Please enter your vehicle's model:");
@@ -100,7 +106,8 @@ Type in the corresponding number to your visit purpose please{0}", Environment.N
                 {
                     case eVehicles.Car:
                         isElectricVehicle = false;
-                        CreateCar(isElectricVehicle, vehicleModel, licencePlate, energyLeft);
+                        vehicle = CreateCar(isElectricVehicle, vehicleModel, licencePlate, energyLeft);
+                        VehicleOwner owner = new  VehicleOwner(ownerName, ownerPhoneNumber, vehicle);
                         break;
                     case eVehicles.ElectricCar:
                         isElectricVehicle = true;
@@ -154,8 +161,9 @@ Type in the corresponding number to your visit purpose please{0}", Environment.N
         }
 
         // there is another method name CreateCar in GarageLogic! need to check if it is ok
-        private static void CreateCar(bool i_IsElectric, string i_CarModel, string i_LicencePlate, float i_EnergyLeft)
+        private static Vehicle CreateCar(bool i_IsElectric, string i_CarModel, string i_LicencePlate, float i_EnergyLeft)
         {
+            Vehicle vehicle;
             string energyLeftInput; //can be fuel or battery
             string color;
             string numOfDoorsInput;
@@ -185,16 +193,20 @@ Type in the corresponding number to your visit purpose please{0}", Environment.N
 
             if (i_IsElectric)
             {
-                ElectricCar newElectricCar = CreateVehicle.CreateElectricCar(i_CarModel, i_LicencePlate, i_EnergyLeft, color, numOfDoors);
+                ElectricCar newElectricCar = CreateVehicle.CreateElectricCar(i_CarModel, i_LicencePlate, i_EnergyLeft, color, numOfDoors, "wheelsmaker", 32f);
                 GarageManager.AddVehicleToGarage(newElectricCar);
                 GarageManager.AddVehicleToGarage(newElectricCar);
+                vehicle = newElectricCar;
             }
             else
             {
                 Car newCar = CreateVehicle.CreateCar(i_CarModel, i_LicencePlate, i_EnergyLeft, color, numOfDoors, "wheelsmaker", 32f);
                 GarageManager.AddVehicleToGarage(newCar);
                 GarageManager.AddVehicleToGarage(newCar);
+                vehicle = newCar;
             }
+
+            return vehicle;
         }
 
         private static void CreateMotorcycle(bool i_IsElectric, string i_MotorcycleModel, string i_LicencePlate, float i_EnergyLeft)
