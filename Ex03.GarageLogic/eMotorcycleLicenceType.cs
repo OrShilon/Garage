@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ex03.ConsoleUI
+namespace Ex03.GarageLogic
 {
-    enum eMotorcycleLicenceType
+    public enum eMotorcycleLicenceType
     {
         A = 1,
         A1,

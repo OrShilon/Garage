@@ -11,7 +11,7 @@ namespace Ex03.ConsoleUI
         static void Main(string[] args)
         {
             //UIManager.Welcome();
-            UIManager.PrintOptions(typeof(string));
+            UIManager.PrintOptions(typeof(eVehicles));
             Console.ReadLine();
         }
     }

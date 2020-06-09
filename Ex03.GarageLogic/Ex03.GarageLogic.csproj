@@ -53,7 +53,10 @@
     <Compile Include="eFuelTypes.cs" />
     <Compile Include="ElectricCar.cs" />
     <Compile Include="ElectricMotorcycle.cs" />
+    <Compile Include="eMenu.cs" />
+    <Compile Include="eMotorcycleLicenceType.cs" />
     <Compile Include="eNumOfDoors.cs" />
+    <Compile Include="eVehicles.cs" />
     <Compile Include="eVehicleStatus.cs" />
     <Compile Include="FuelVehicle.cs" />
     <Compile Include="FuelVehicleManager.cs" />
