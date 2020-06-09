@@ -132,8 +132,9 @@ Type in the corresponding number to your visit purpose please{0}", Environment.N
                 GarageOptionsForCustomer();
             }
 
-        }
 
+        }
+ 
         private static bool IsValidEnumInput(string i_UserInput, int i_EnumLength, out int i_ValidUserInput)
         {
             int.TryParse(i_UserInput, out i_ValidUserInput);

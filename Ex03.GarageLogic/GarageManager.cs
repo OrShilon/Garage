@@ -11,7 +11,7 @@ namespace Ex03.GarageLogic
     {
         private static List<Vehicle> m_AllVehiclesInGarage = new List<Vehicle>();
         private static readonly Dictionary<string, eVehicleStatus> VehiclesInGarageStatus = new Dictionary<string, eVehicleStatus>();
-        const int k_NotInGarage = -1;
+        public const int k_NotInGarage = -1;
         public const float m_CarMaxAirPressure = 32f;
         public const float m_MotorcycleMaxAirPressure = 30f;
         public const float m_TruckMaxAirPressure = 28f;
