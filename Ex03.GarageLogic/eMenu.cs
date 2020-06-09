@@ -8,7 +8,7 @@ namespace Ex03.GarageLogic
 {
     public enum eMenu
     {
-        AddmitingNewCar = 1,
+        AddNewVehicle = 1,
         DisplayGarageLicensePlates,
         ChangeCarStatus,
         FillAir,

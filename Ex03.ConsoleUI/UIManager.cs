@@ -42,12 +42,26 @@ Type in the corresponding number to your visit purpose please{0}", Environment.N
 
             eMenu userOption = (eMenu) validOption;
 
-
             //need to add more cases for all the options
             switch (userOption)
             {
-                case eMenu.AddmitingNewCar:
+                case eMenu.AddNewVehicle:
                     AddNewVehicle();
+                    break;
+                case eMenu.DisplayGarageLicensePlates:
+                    DisplayVehiclesInGarage();
+                    break;
+                case eMenu.ChangeCarStatus:
+                    ChangeVehicleStatus();
+                    break;
+                case eMenu.FillAir:
+                    FillAir();
+                    break;
+                case eMenu.Refuel:
+                    break;
+                case eMenu.Recharge:
+                    break;
+                case eMenu.DisplayVehicleDitails:
                     break;
                 default:
                     //invalid input, need to handle.......
@@ -60,8 +74,6 @@ Type in the corresponding number to your visit purpose please{0}", Environment.N
 
         public static void AddNewVehicle()
         {
-            string vehicleType;
-            int ValidvehicleType;
             eVehicles userVehicle;
             string vehicleModel;
             string licencePlate;
@@ -106,7 +118,6 @@ Type in the corresponding number to your visit purpose please{0}", Environment.N
                 {
                     case eVehicles.Car:
                         isElectricVehicle = false;
-
                         CreateCar(isElectricVehicle, vehicleModel, licencePlate, energyLeft, owner);
                         break;
                     case eVehicles.ElectricCar:
@@ -198,14 +209,14 @@ Type in the corresponding number to your visit purpose please{0}", Environment.N
             GetWheelInformation(out wheelMaker, out wheelsCurrentAirPressure, GarageManager.m_CarMaxAirPressure);
             if (i_IsElectric)
             {
-                ElectricCar newElectricCar = CreateVehicle.CreateElectricCar(i_CarModel, i_LicencePlate, i_EnergyLeft, color, numOfDoors, wheelMaker, wheelsCurrentAirPressure);
+                ElectricCar newElectricCar = CreateVehicle.CreateElectricCar(i_CarModel, i_LicencePlate, i_EnergyLeft, color, numOfDoors, wheelMaker, wheelsCurrentAirPressure, i_VehicleOwner);
                 GarageManager.AddVehicleToGarage(newElectricCar);
                 GarageManager.AddVehicleToGarage(newElectricCar);
                 vehicle = newElectricCar;
             }
             else
             {
-                Car newCar = CreateVehicle.CreateCar(i_CarModel, i_LicencePlate, i_EnergyLeft, color, numOfDoors, wheelMaker, wheelsCurrentAirPressure);
+                Car newCar = CreateVehicle.CreateCar(i_CarModel, i_LicencePlate, i_EnergyLeft, color, numOfDoors, wheelMaker, wheelsCurrentAirPressure, i_VehicleOwner);
                 GarageManager.AddVehicleToGarage(newCar);
                 GarageManager.AddVehicleToGarage(newCar);
                 vehicle = newCar;
@@ -223,6 +234,7 @@ Type in the corresponding number to your visit purpose please{0}", Environment.N
             int validEngineVolume;
             float wheelsCurrentAirPressure;
             string wheelMaker;
+            eMotorcycleLicenceType licenceType;
 
             Console.WriteLine("Please enter how much {0} left in your motorcycle:", i_IsElectric ? "battery" : "fuel");
             energyLeftInput = Console.ReadLine();
@@ -231,36 +243,26 @@ Type in the corresponding number to your visit purpose please{0}", Environment.N
                 Console.WriteLine("Not a valid input. Please enter how much {0} left in your motorcycle:", i_IsElectric ? "battery" : "fuel");
                 energyLeftInput = Console.ReadLine();
             }
-            string licenceTypeQuestion = string.Format(@" Please enter your licence type:
-1. A
-2. A1
-3. AA
-4. B
-Type in the corresponding number to your vehicle please.{0}", Environment.NewLine);
-            Console.WriteLine(licenceTypeQuestion);
-            licenceTypeInput = Console.ReadLine();
-            while (!IsValidMotorcycleLicence(licenceTypeInput))
-            {
-                Console.WriteLine(string.Format(@"Not a valid input.{0}{1}", Environment.NewLine, licenceTypeQuestion));
-                licenceTypeInput = Console.ReadLine();
-            }
 
-            switch (licenceTypeInput)
+            Console.WriteLine("Please enter your licence type:");
+            licenceType = (eMotorcycleLicenceType) PrintOptions(typeof(eMotorcycleLicenceType));
+
+            switch (licenceType)
             {
-                case "1":
+                case eMotorcycleLicenceType.A:
                     validLicenceType = "A";
                     break;
-                case "2":
+                case eMotorcycleLicenceType.A1:
                     validLicenceType = "A1";
                     break;
-                case "3":
+                case eMotorcycleLicenceType.AA:
                     validLicenceType = "AA";
                     break;
-                case "4":
+                case eMotorcycleLicenceType.B:
                     validLicenceType = "B";
                     break;
                 default:
-                    //exeption??? ----> need to check what to do here, because we wiill never get here!
+                    //exeption??? ----> need to check what to do here, because we will never get here!
                     break;
 
             }
@@ -277,13 +279,13 @@ Type in the corresponding number to your vehicle please.{0}", Environment.NewLin
 
             if (i_IsElectric)
             {
-                ElectricMotorcycle newElectricMotorcycle = CreateVehicle.CreateElectricMotorcycle(i_MotorcycleModel, i_LicencePlate, i_EnergyLeft, validLicenceType, validEngineVolume, wheelMaker, wheelsCurrentAirPressure);
+                ElectricMotorcycle newElectricMotorcycle = CreateVehicle.CreateElectricMotorcycle(i_MotorcycleModel, i_LicencePlate, i_EnergyLeft, validLicenceType, validEngineVolume, wheelMaker, wheelsCurrentAirPressure, i_VehicleOwner);
                 GarageManager.AddVehicleToGarage(newElectricMotorcycle);
                 GarageManager.AddVehicleToGarage(newElectricMotorcycle);
             }
             else
             {
-                Motorcycle newMotorcycle = CreateVehicle.CreateMotorcycle(i_MotorcycleModel, i_LicencePlate, i_EnergyLeft, validLicenceType, validEngineVolume, wheelMaker, wheelsCurrentAirPressure);
+                Motorcycle newMotorcycle = CreateVehicle.CreateMotorcycle(i_MotorcycleModel, i_LicencePlate, i_EnergyLeft, validLicenceType, validEngineVolume, wheelMaker, wheelsCurrentAirPressure, i_VehicleOwner);
                 GarageManager.AddVehicleToGarage(newMotorcycle);
                 GarageManager.AddVehicleToGarage(newMotorcycle);
             }
@@ -326,7 +328,7 @@ Type in the corresponding number to your vehicle please.{0}", Environment.NewLin
 
             GetWheelInformation(out wheelMaker, out wheelsCurrentAirPressure, GarageManager.m_CarMaxAirPressure);
 
-            Truck newTruck = CreateVehicle.CreateTruck(i_TruckModel, i_LicencePlate, i_FuelLeft, dangerousMaterials, validCargoVolume, wheelMaker, wheelsCurrentAirPressure);
+            Truck newTruck = CreateVehicle.CreateTruck(i_TruckModel, i_LicencePlate, i_FuelLeft, dangerousMaterials, validCargoVolume, wheelMaker, wheelsCurrentAirPressure, i_VehicleOwner);
             GarageManager.AddVehicleToGarage(newTruck);
             GarageManager.AddVehicleToGarage(newTruck);
         }
@@ -467,6 +469,59 @@ Type in the corresponding number to your vehicle please.{0}", Environment.NewLin
         public static void Refuel(string i_LicensePlateNumber, byte i_HowMuchToFill, eFuelTypes i_FuelType)
         {
             GarageLogic.GarageManager.Refuel(i_LicensePlateNumber, i_HowMuchToFill, i_FuelType);
+        }
+
+        private static void DisplayVehiclesInGarage()
+        {
+            string userInput;
+            eVehicleStatus userStatus;
+
+            Console.WriteLine("Do you want to filter by status? Enter 1 for yes, 0 for no");
+            userInput = Console.ReadLine();
+            while(!IsValidStatusInput(userInput))
+            {
+                Console.WriteLine("Invalid input. Do you want to filter by status? Enter 1 for yes, 0 for no");
+                userInput = Console.ReadLine();
+            }
+
+            if(userInput[0].Equals('0'))
+            {
+                GarageManager.PrintVehiclesInGarage();
+            }
+            else
+            {
+                Console.WriteLine("Please enter the wanted status to display");
+                userStatus = (eVehicleStatus) PrintOptions(typeof(eVehicleStatus));
+                GarageManager.PrintVehiclesInGarage(userStatus);
+            }
+        }
+
+        private static bool IsValidStatusInput(string i_StatusInput)
+        {
+            return i_StatusInput[0].Equals('0') || i_StatusInput[0].Equals('1');
+        }
+
+        public static void ChangeVehicleStatus()
+        {
+            Console.WriteLine("What is the license plate of your vehicle?");
+            string licensePlate = Console.ReadLine(); //need to make invalidinput for this line!
+            if (GarageManager.CheckIfVehicleInGarage(licensePlate) == GarageManager.k_NotInGarage)
+            {
+                Console.WriteLine("Sorry the given vehicle is not in the garage.");
+            }
+            else
+            {
+                Console.WriteLine("What would you like the new status to be?");
+                GarageManager.ChangeVehicleStatus(licensePlate, (eVehicleStatus)PrintOptions(typeof(eVehicleStatus)));
+            }
+        }
+
+        private static void FillAir()
+        {
+            string licencePlate;
+            Console.WriteLine("please enter your licence plate:");
+            licencePlate = Console.ReadLine(); //need to make invalidinput for this line!
+            GarageManager.FillAir(licencePlate);
         }
     }
 }
