@@ -11,8 +11,8 @@ namespace Ex03.GarageLogic
         internal float m_BatteryLeft;
         internal float m_BatteryHourCapacity;
 
-        public ElectricVehicle(string i_VehicleModel, string i_LicencePlate, float i_BatteryLeft, float i_BatteryHourCapacity, byte i_NumOfWheels) :
-            base(i_VehicleModel, i_LicencePlate, i_NumOfWheels)
+        public ElectricVehicle(string i_VehicleModel, string i_LicencePlate, float i_BatteryLeft, float i_BatteryHourCapacity, byte i_NumOfWheels, VehicleOwner i_Owner) :
+            base(i_VehicleModel, i_LicencePlate, i_NumOfWheels, i_Owner)
         {
             m_BatteryLeft = i_BatteryLeft;
             m_BatteryHourCapacity = i_BatteryHourCapacity;

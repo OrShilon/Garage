@@ -12,8 +12,8 @@ namespace Ex03.GarageLogic
         internal float m_CargoVolume;
         internal const float m_MaxAirPressure = 28;
 
-        public Truck(string i_VehicleModel, string i_LicencePlate, float i_FuelLeft, float i_MaxFuel, byte i_NumOfWheels, bool i_CarryDangerousMaterials, float i_CargoVolume) :
-            base(i_VehicleModel, i_LicencePlate, i_FuelLeft, i_MaxFuel, i_NumOfWheels, eFuelTypes.Soler)
+        public Truck(string i_VehicleModel, string i_LicencePlate, float i_FuelLeft, float i_MaxFuel, byte i_NumOfWheels, bool i_CarryDangerousMaterials, float i_CargoVolume, VehicleOwner i_Owner) :
+            base(i_VehicleModel, i_LicencePlate, i_FuelLeft, i_MaxFuel, i_NumOfWheels, eFuelTypes.Soler, i_Owner)
         {
             m_CarryDangerousMaterials = i_CarryDangerousMaterials;
             m_CargoVolume = i_CargoVolume;
