@@ -10,26 +10,6 @@ namespace Ex03.ConsoleUI
 {
     class UIManager
     {
-
-        private static void PrintVehiclesInGarage()
-        {
-            List<Vehicle> vehiclesList = GarageManager.VehiclesList;
-            if (vehiclesList.Any())
-            {
-                Console.WriteLine("Vehicles in the garage: ");
-                foreach (Vehicle vehicle in vehiclesList)
-                {
-                    Console.WriteLine(vehicle.m_LicencePlate); //להעביר את המימוש של הלולאה הזאת לתןך הגאראז' מנג'ר!
-                }
-            }
-            else
-            {
-                Console.WriteLine("No Vehicles in the garage yet.");
-                Console.WriteLine();
-                //לטפל בזה שהרשימת רכבים ריקה, כלומר עוד לא נכנסו רכבים למוסך
-            }
-        }
-
         public static void Welcome()
         {
             Console.WriteLine("Hello and welcome to our garage.{0}", Environment.NewLine);
@@ -94,7 +74,6 @@ Type in the corresponding number to your vehicle please.{0}", Environment.NewLin
                 int.TryParse(vehicleType, out ValidvehicleType);
                 userVehicle = (eVehicles) ValidvehicleType;
 
-                GarageManager.AddVehicleToGarage(licencePlate);
                 Console.WriteLine("Please enter your vehicle's model:");
                 vehicleModel = Console.ReadLine();
                 while (!IsValidVehicleModel(vehicleModel))
@@ -186,10 +165,12 @@ Type in the corresponding number to your vehicle please.{0}", Environment.NewLin
             {
                 ElectricCar newElectricCar = CreateVehicle.CreateElectricCar(i_CarModel, i_LicencePlate, i_EnergyLeft, color, numOfDoors);
                 GarageManager.AddVehicleToGarage(newElectricCar);
+                GarageManager.AddVehicleToGarage(newElectricCar);
             }
             else
             {
-                Car newCar = CreateVehicle.CreateCar(i_CarModel, i_LicencePlate, i_EnergyLeft, color, numOfDoors);
+                Car newCar = CreateVehicle.CreateCar(i_CarModel, i_LicencePlate, i_EnergyLeft, color, numOfDoors, "wheelsmaker", 32f);
+                GarageManager.AddVehicleToGarage(newCar);
                 GarageManager.AddVehicleToGarage(newCar);
             }
         }
@@ -255,10 +236,12 @@ Type in the corresponding number to your vehicle please.{0}", Environment.NewLin
             {
                 ElectricMotorcycle newElectricMotorcycle = CreateVehicle.CreateElectricMotorcycle(i_MotorcycleModel, i_LicencePlate, i_EnergyLeft, validLicenceType, validEngineVolume);
                 GarageManager.AddVehicleToGarage(newElectricMotorcycle);
+                GarageManager.AddVehicleToGarage(newElectricMotorcycle);
             }
             else
             {
                 Motorcycle newMotorcycle = CreateVehicle.CreateMotorcycle(i_MotorcycleModel, i_LicencePlate, i_EnergyLeft, validLicenceType, validEngineVolume);
+                GarageManager.AddVehicleToGarage(newMotorcycle);
                 GarageManager.AddVehicleToGarage(newMotorcycle);
             }
         }
@@ -296,6 +279,7 @@ Type in the corresponding number to your vehicle please.{0}", Environment.NewLin
                 cargoVolume = Console.ReadLine();
             }
             Truck newTruck = CreateVehicle.CreateTruck(i_TruckModel, i_LicencePlate, i_FuelLeft, dangerousMaterials, validCargoVolume);
+            GarageManager.AddVehicleToGarage(newTruck);
             GarageManager.AddVehicleToGarage(newTruck);
         }
 
