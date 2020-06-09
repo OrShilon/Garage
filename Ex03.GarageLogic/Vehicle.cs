@@ -11,12 +11,14 @@ namespace Ex03.GarageLogic
         internal string m_VehicleModel;
         public string m_LicencePlate;
         internal Wheel[] m_Wheels;
+        VehicleOwner owner;
 
-        public Vehicle(string i_VehicleModel, string i_LicencePlate, byte i_NumOfWheels)
+        public Vehicle(string i_VehicleModel, string i_LicencePlate, byte i_NumOfWheels, VehicleOwner i_Owner)
         {
             m_VehicleModel = i_VehicleModel;
             m_LicencePlate = i_LicencePlate;
             m_Wheels = new Wheel[i_NumOfWheels];
+            owner = i_Owner;
         }
 
         public override string ToString()
