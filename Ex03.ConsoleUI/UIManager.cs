@@ -58,18 +58,18 @@ Type in the corresponding number to your visit purpose please{0}", Environment.N
                     FillAir();
                     break;
                 case eMenu.Refuel:
+                    ReFuel();
                     break;
                 case eMenu.Recharge:
+                    FillBattery();
                     break;
                 case eMenu.DisplayVehicleDitails:
+                    DisplayVehicleDetails();
                     break;
                 default:
                     //invalid input, need to handle.......
                     break;
             }
-
-            //need to add switch case for the options.
-            AddNewVehicle();
         }
 
         public static void AddNewVehicle()
@@ -210,13 +210,11 @@ Type in the corresponding number to your visit purpose please{0}", Environment.N
             {
                 ElectricCar newElectricCar = CreateVehicle.CreateElectricCar(i_CarModel, i_LicencePlate, i_EnergyLeft, color, numOfDoors, wheelMaker, wheelsCurrentAirPressure, i_VehicleOwner);
                 GarageManager.AddVehicleToGarage(newElectricCar);
-                GarageManager.AddVehicleToGarage(newElectricCar);
                 vehicle = newElectricCar;
             }
             else
             {
                 Car newCar = CreateVehicle.CreateCar(i_CarModel, i_LicencePlate, i_EnergyLeft, color, numOfDoors, wheelMaker, wheelsCurrentAirPressure, i_VehicleOwner);
-                GarageManager.AddVehicleToGarage(newCar);
                 GarageManager.AddVehicleToGarage(newCar);
                 vehicle = newCar;
             }
@@ -280,12 +278,10 @@ Type in the corresponding number to your visit purpose please{0}", Environment.N
             {
                 ElectricMotorcycle newElectricMotorcycle = CreateVehicle.CreateElectricMotorcycle(i_MotorcycleModel, i_LicencePlate, i_EnergyLeft, validLicenceType, validEngineVolume, wheelMaker, wheelsCurrentAirPressure, i_VehicleOwner);
                 GarageManager.AddVehicleToGarage(newElectricMotorcycle);
-                GarageManager.AddVehicleToGarage(newElectricMotorcycle);
             }
             else
             {
                 Motorcycle newMotorcycle = CreateVehicle.CreateMotorcycle(i_MotorcycleModel, i_LicencePlate, i_EnergyLeft, validLicenceType, validEngineVolume, wheelMaker, wheelsCurrentAirPressure, i_VehicleOwner);
-                GarageManager.AddVehicleToGarage(newMotorcycle);
                 GarageManager.AddVehicleToGarage(newMotorcycle);
             }
         }
@@ -329,7 +325,6 @@ Type in the corresponding number to your visit purpose please{0}", Environment.N
 
             Truck newTruck = CreateVehicle.CreateTruck(i_TruckModel, i_LicencePlate, i_FuelLeft, dangerousMaterials, validCargoVolume, wheelMaker, wheelsCurrentAirPressure, i_VehicleOwner);
             GarageManager.AddVehicleToGarage(newTruck);
-            GarageManager.AddVehicleToGarage(newTruck);
         }
 
         private static void GetWheelInformation(out string o_WheelMaker, out float o_CurrentAirPressure, float i_MaxAirPressure)
@@ -339,7 +334,7 @@ Type in the corresponding number to your visit purpose please{0}", Environment.N
             o_WheelMaker = Console.ReadLine();
             Console.WriteLine("Please enter the currnet air pressure in your wheels:");
             currentAirPressureInput = Console.ReadLine();
-            while(float.TryParse(currentAirPressureInput, out o_CurrentAirPressure))
+            while(!float.TryParse(currentAirPressureInput, out o_CurrentAirPressure))
             {
                 Console.WriteLine("Invalid air pressure input. Please enter the currnet air pressure in your wheels:");
                 currentAirPressureInput = Console.ReadLine();
@@ -354,13 +349,14 @@ Type in the corresponding number to your visit purpose please{0}", Environment.N
         {
             //need to handle execption - make sure it is enum!!
             int length = i_Enum.GetEnumNames().Length;
-            int index = 1;
+            int index;
             string userInput;
             bool isValidInput = true; //true means that the input by the user was invalid
             int validUerInput;
 
             do
             {
+                index = 1;
                 if(!isValidInput)
                 {
                     Console.WriteLine("Invalid input.{0}", Environment.NewLine);
@@ -375,7 +371,7 @@ Type in the corresponding number to your visit purpose please{0}", Environment.N
                 Console.WriteLine("Type in the corresponding number to your vehicle please.{0}", Environment.NewLine);
                 userInput = Console.ReadLine();
 
-                if(IsValidEnumInput(userInput, length, out validUerInput))
+                if(!IsValidEnumInput(userInput, length, out validUerInput))
                 {
                     isValidInput = false;
                 }
@@ -390,9 +386,9 @@ Type in the corresponding number to your visit purpose please{0}", Environment.N
             return !i_VehicleModel.Equals(string.Empty);
         }
 
-        private static bool IsValidFuelInput(string i_FuelLeftUnput, out float o_FuelLeft)
+        private static bool IsValidFuelInput(string i_FuelLeftInput, out float o_FuelLeft)
         {
-            return float.TryParse(i_FuelLeftUnput, out o_FuelLeft);
+            return float.TryParse(i_FuelLeftInput, out o_FuelLeft);
         }
         private static bool IsValidCarColor(string i_Color)
         {
@@ -520,7 +516,80 @@ Type in the corresponding number to your visit purpose please{0}", Environment.N
             string licencePlate;
             Console.WriteLine("please enter your licence plate:");
             licencePlate = Console.ReadLine(); //need to make invalidinput for this line!
-            GarageManager.FillAir(licencePlate);
+            if (GarageManager.CheckIfVehicleInGarage(licencePlate) == GarageManager.k_NotInGarage)
+            {
+                Console.WriteLine("Sorry the given vehicle is not in the garage.");
+            }
+            else
+            {
+                GarageManager.FillAir(licencePlate);
+            }
+        }
+        private static void ReFuel()
+        {
+            string licencePlate;
+            string LittersOfFuelToFiil;
+            float ValidLittersOfFuelToAdd;
+            eFuelTypes fuelType;
+            Console.WriteLine("please enter your licence plate:");
+            licencePlate = Console.ReadLine(); //need to make invalidinput for this line!
+            if (GarageManager.CheckIfVehicleInGarage(licencePlate) == GarageManager.k_NotInGarage)
+            {
+                Console.WriteLine("Sorry the given vehicle is not in the garage.");
+            }
+            else
+            {
+                Console.WriteLine("Please enter how much fuel to fill:");
+                LittersOfFuelToFiil = Console.ReadLine();
+                while (!IsValidFuelInput(LittersOfFuelToFiil, out ValidLittersOfFuelToAdd))
+                {
+                    Console.WriteLine("Invalid input. Please enter how much fuel to fill:");
+                    LittersOfFuelToFiil = Console.ReadLine();
+                }
+
+                fuelType = (eFuelTypes)PrintOptions(typeof(eFuelTypes));
+                GarageManager.Refuel(licencePlate, ValidLittersOfFuelToAdd, fuelType);
+            }
+        }
+        private static void FillBattery()
+        {
+            string licencePlate;
+            string batteryHoursInput;
+            float ValidBatteryHours;
+
+            Console.WriteLine("please enter your licence plate:");
+            licencePlate = Console.ReadLine(); //need to make invalidinput for this line!
+            if (GarageManager.CheckIfVehicleInGarage(licencePlate) == GarageManager.k_NotInGarage)
+            {
+                Console.WriteLine("Sorry the given vehicle is not in the garage.");
+            }
+            else
+            {
+                Console.WriteLine("Please enter how much battery to fill:");
+                batteryHoursInput = Console.ReadLine();
+                while (!IsValidFuelInput(batteryHoursInput, out ValidBatteryHours))
+                {
+                    Console.WriteLine("Invalid input. Please enter how much battery to fill:");
+                    batteryHoursInput = Console.ReadLine();
+                }
+
+                GarageManager.FillBattery(licencePlate, ValidBatteryHours);
+            }
+        }
+
+        private static void DisplayVehicleDetails()
+        {
+            string licencePlate;
+            Console.WriteLine("please enter your licence plate:");
+            licencePlate = Console.ReadLine(); //need to make invalidinput for this line!
+            if (GarageManager.CheckIfVehicleInGarage(licencePlate) == GarageManager.k_NotInGarage)
+            {
+                Console.WriteLine("Sorry the given vehicle is not in the garage.");
+            }
+            else
+            {
+                GarageManager.PrintVehicleDetails(licencePlate);
+            }
         }
     }
 }
