@@ -11,7 +11,7 @@ namespace Ex03.GarageLogic
     {
         private static List<Vehicle> m_AllVehiclesInGarage = new List<Vehicle>();
         private static readonly Dictionary<string, eVehicleStatus> VehiclesInGarageStatus = new Dictionary<string, eVehicleStatus>();
-        const int k_NotInGarage = -1;
+        public const int k_NotInGarage = -1;
         public const float m_CarMaxAirPressure = 32f;
         public const float m_MotorcycleMaxAirPressure = 30f;
         public const float m_TruckMaxAirPressure = 28f;
@@ -96,20 +96,22 @@ namespace Ex03.GarageLogic
             {
                 throw new ArgumentException("Vehicle is NOT in garage");
             }
+
             ElectricVehicle customerVehicle = m_AllVehiclesInGarage[vehicleLocation] as ElectricVehicle;
             if (customerVehicle == null)
             {
                 throw new ArgumentException("NOT a battery vehicle");
             }
-            float newBatteryHoursLeft = customerVehicle.m_BatteryLeft + i_HowMuchToFill;
-            if (newBatteryHoursLeft > customerVehicle.m_BatteryHourCapacity)
+
+            float newBatterLeft = customerVehicle.m_BatteryLeft + i_HowMuchToFill;
+            if (newBatterLeft > customerVehicle.m_BatteryHourCapacity)
             {
                 throw new ValueOutOfRangeException("refuel quantity is too large");
             }
            
-            customerVehicle.m_BatteryLeft = newBatteryHoursLeft;//צריך לבדוק האם לעשות GET וSET m_FuelOrBatteryLeftל
+            customerVehicle.m_BatteryLeft = newBatterLeft;//צריך לבדוק האם לעשות GET וSET m_FuelOrBatteryLeftל
         }
-        //לא בודק בכלל אם רכב נמצא במוסך צריך לטפל בזה לפני. כאן במקרה של חריגה/סוג דלק לא נכון נזרקת אקספשיין
+
         public static void Refuel(string i_LicensePlateNumber, byte i_HowMuchToFill, eFuelTypes i_FuelType)
         {
             int vehicleLocation = CheckIfVehicleInGarage(i_LicensePlateNumber);

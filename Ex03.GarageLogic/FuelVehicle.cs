@@ -12,8 +12,8 @@ namespace Ex03.GarageLogic
         internal float m_FuelTankCapacity;
         public eFuelTypes m_FuelType;
 
-        public FuelVehicle(string i_VehicleModel, string i_LicencePlate, float i_FuelLeft, float i_FuelTankCapacity, byte i_NumOfWheels, eFuelTypes i_FuelType) :
-            base(i_VehicleModel, i_LicencePlate, i_NumOfWheels)
+        public FuelVehicle(string i_VehicleModel, string i_LicencePlate, float i_FuelLeft, float i_FuelTankCapacity, byte i_NumOfWheels, eFuelTypes i_FuelType,VehicleOwner i_Owner) :
+            base(i_VehicleModel, i_LicencePlate, i_NumOfWheels, i_Owner)
         {
             m_FuelLeft = i_FuelLeft;
             m_FuelTankCapacity = i_FuelTankCapacity;
