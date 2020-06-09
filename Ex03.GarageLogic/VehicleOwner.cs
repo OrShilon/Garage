@@ -10,13 +10,11 @@ namespace Ex03.GarageLogic
     {
         public string m_Name;
         public string m_PhoneNumber;
-        public Vehicle m_OwnersVehicle;
 
-        public VehicleOwner(string i_Name, string i_PhoneNumber, Vehicle i_OwnersVehicle)
+        public VehicleOwner(string i_Name, string i_PhoneNumber)
         {
             m_Name = i_Name;
             m_PhoneNumber = i_PhoneNumber;
-            m_OwnersVehicle = i_OwnersVehicle;
         }
 
         public string Name
