@@ -19,7 +19,9 @@ namespace Ex03.ConsoleUI
 
         public static void GarageOptionsForCustomer()
         {
-            string messege = string.Format(@"What is the purpose of your visit?
+            string userInput;
+            int validOption;
+            string menu = string.Format(@"What is the purpose of your visit?
 1. I would like to check in a new vehicle
 2. Display the current license plates that are in the garage
 3. Change my vehicle status
@@ -27,9 +29,32 @@ namespace Ex03.ConsoleUI
 5. Refuel my vehicle
 6. Recharge my vehicle
 7. Display my vehicle details
+8. Exit program
 Type in the corresponding number to your visit purpose please{0}", Environment.NewLine);
-            Console.Write(messege);
-            Console.ReadLine();
+            Console.Write(menu);
+            userInput = Console.ReadLine();
+            while(!IsValidEnumInput(userInput, Enum.GetNames(typeof(eMenu)).Length, out validOption))
+            {
+                Console.WriteLine("Invalid input.");
+                Console.WriteLine(menu);
+                userInput = Console.ReadLine();
+            }
+
+            eMenu userOption = (eMenu) validOption;
+
+
+            //need to add more cases for all the options
+            switch (userOption)
+            {
+                case eMenu.AddmitingNewCar:
+                    AddNewVehicle();
+                    break;
+                default:
+                    //invalid input, need to handle.......
+                    break;
+            }
+
+            //need to add switch case for the options.
             AddNewVehicle();
         }
 
@@ -54,25 +79,14 @@ Type in the corresponding number to your visit purpose please{0}", Environment.N
             else
             {
 
-                string Messege = string.Format(@"What is the Type of your Vehicle?
-1. Regular car
-2. Electric Car
-3. Regular Motorcycle
-4. Electric Motorcycle
-5. Truck
-Type in the corresponding number to your vehicle please.{0}", Environment.NewLine);
-                Console.WriteLine(Messege);
-                vehicleType = Console.ReadLine();
-                while (!IsValidVehicleChoice(vehicleType))
-                {
-                    Console.WriteLine("Invalid Input.");
-                    Thread.Sleep(1000);
-                    Console.WriteLine(Messege);
-                    vehicleType = Console.ReadLine();
-                }
-
-                int.TryParse(vehicleType, out ValidvehicleType);
-                userVehicle = (eVehicles) ValidvehicleType;
+//                string Messege = string.Format(@"What is the Type of your Vehicle?
+//1. Regular car
+//2. Electric Car
+//3. Regular Motorcycle
+//4. Electric Motorcycle
+//5. Truck
+//Type in the corresponding number to your vehicle please.{0}", Environment.NewLine);
+                userVehicle = (eVehicles) PrintOptions(typeof(eVehicles));
 
                 Console.WriteLine("Please enter your vehicle's model:");
                 vehicleModel = Console.ReadLine();
@@ -111,6 +125,14 @@ Type in the corresponding number to your vehicle please.{0}", Environment.NewLin
             }
 
         }
+
+        private static bool IsValidEnumInput(string i_UserInput, int i_EnumLength, out int i_ValidUserInput)
+        {
+            int.TryParse(i_UserInput, out i_ValidUserInput);
+
+            return i_ValidUserInput <= i_EnumLength && i_ValidUserInput > 0;
+        }
+
         private static bool IsValidVehicleChoice(string i_UserChoice)
         {
             bool isValidInput = false;
@@ -288,7 +310,6 @@ Type in the corresponding number to your vehicle please.{0}", Environment.NewLin
             //need to handle execption - make sure it is enum!!
             int length = i_Enum.GetEnumNames().Length;
             int index = 1;
-            const int begginIndex = 1;
             string userInput;
             bool isValidInput = true; //true means that the input by the user was invalid
             int validUerInput;
@@ -309,7 +330,7 @@ Type in the corresponding number to your vehicle please.{0}", Environment.NewLin
                 Console.WriteLine("Type in the corresponding number to your vehicle please.{0}", Environment.NewLine);
                 userInput = Console.ReadLine();
 
-                if(!int.TryParse(userInput, out validUerInput) || length > validUerInput || validUerInput < begginIndex)
+                if(IsValidEnumInput(userInput, length, out validUerInput))
                 {
                     isValidInput = false;
                 }

@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Ex03.GarageLogic
 {
-    public enum eNumOfDoors
+    public enum eMotorcycleLicenceType
     {
-        Two = 2,
-        Three,
-        Four,
-        Five
+        A = 1,
+        A1,
+        AA,
+        B
     }
 }
