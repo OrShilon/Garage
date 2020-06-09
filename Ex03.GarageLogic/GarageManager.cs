@@ -64,13 +64,13 @@ namespace Ex03.GarageLogic
         {
             int vehicleLocation = CheckIfVehicleInGarage(i_LicencePlate);
 
-            if (vehicleLocation != -1)
+            if (vehicleLocation == k_NotInGarage)
             {
-                        Console.WriteLine(m_AllVehiclesInGarage[vehicleLocation].ToString());
+                throw new ArgumentException("Vehicle is NOT in garage");
             }
             else
             {
-                Console.WriteLine("your vehicle is not in our garage!");
+                Console.WriteLine(m_AllVehiclesInGarage[vehicleLocation].ToString());
             }
         }
 
@@ -112,7 +112,7 @@ namespace Ex03.GarageLogic
             customerVehicle.m_BatteryLeft = newBatterLeft;//צריך לבדוק האם לעשות GET וSET m_FuelOrBatteryLeftל
         }
 
-        public static void Refuel(string i_LicensePlateNumber, byte i_HowMuchToFill, eFuelTypes i_FuelType)
+        public static void Refuel(string i_LicensePlateNumber, float i_HowMuchToFill, eFuelTypes i_FuelType)
         {
             int vehicleLocation = CheckIfVehicleInGarage(i_LicensePlateNumber);
             if(vehicleLocation == k_NotInGarage)
