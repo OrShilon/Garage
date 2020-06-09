@@ -92,7 +92,7 @@ Type in the corresponding number to your vehicle please.{0}", Environment.NewLin
                 }
 
                 int.TryParse(vehicleType, out ValidvehicleType);
-                userVehicle = (eVehicles)ValidvehicleType;
+                userVehicle = (eVehicles) ValidvehicleType;
 
                 GarageManager.AddVehicleToGarage(licencePlate);
                 Console.WriteLine("Please enter your vehicle's model:");
@@ -299,7 +299,41 @@ Type in the corresponding number to your vehicle please.{0}", Environment.NewLin
             GarageManager.AddVehicleToGarage(newTruck);
         }
 
+        public static int PrintOptions(Type i_Enum)
+        {
+            //need to handle execption - make sure it is enum!!
+            int length = i_Enum.GetEnumNames().Length;
+            int index = 1;
+            const int begginIndex = 1;
+            string userInput;
+            bool isValidInput = true; //true means that the input by the user was invalid
+            int validUerInput;
 
+            do
+            {
+                if(!isValidInput)
+                {
+                    Console.WriteLine("Invalid input.{0}", Environment.NewLine);
+                }
+
+                foreach (string item in i_Enum.GetEnumNames())
+                {
+                    Console.WriteLine("{0}. {1}", index, item);
+                    index++;
+                }
+
+                Console.WriteLine("Type in the corresponding number to your vehicle please.{0}", Environment.NewLine);
+                userInput = Console.ReadLine();
+
+                if(!int.TryParse(userInput, out validUerInput) || length > validUerInput || validUerInput < begginIndex)
+                {
+                    isValidInput = false;
+                }
+
+            } while (!isValidInput);
+
+            return validUerInput;
+        }
 
         private static bool IsValidVehicleModel(string i_VehicleModel)
         {

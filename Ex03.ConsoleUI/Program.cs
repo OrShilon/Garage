@@ -10,7 +10,8 @@ namespace Ex03.ConsoleUI
     {
         static void Main(string[] args)
         {
-            UIManager.Welcome();
+            //UIManager.Welcome();
+            UIManager.PrintOptions(typeof(string));
             Console.ReadLine();
         }
     }
