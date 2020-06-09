@@ -28,27 +28,31 @@ namespace Ex03.GarageLogic
             return car;
         }
 
-        public static ElectricCar CreateElectricCar(string i_VehicleModel, string i_LicencePlate, float i_BatteryLeft, string i_Color, int i_NumOfDoors)
+        public static ElectricCar CreateElectricCar(string i_VehicleModel, string i_LicencePlate, float i_BatteryLeft, string i_Color, int i_NumOfDoors, string i_WheelMaker, float i_WheelCurrentPressure)
         {
             ElectricCar electricCar = new ElectricCar(i_VehicleModel, i_LicencePlate, i_BatteryLeft, m_CarMaxBattery, i_Color, m_CarNumOfWheels, i_NumOfDoors);
+            GenerateWheels(electricCar, m_CarMaxWheelPressure, i_WheelMaker, i_WheelCurrentPressure);
             return electricCar;
         }
 
-        public static Motorcycle CreateMotorcycle(string i_VehicleModel, string i_LicencePlate, float i_FuelLeft, string i_LicenseType, int i_EngineVolume)
+        public static Motorcycle CreateMotorcycle(string i_VehicleModel, string i_LicencePlate, float i_FuelLeft, string i_LicenseType, int i_EngineVolume, string i_WheelMaker, float i_WheelCurrentPressure)
         {
             Motorcycle motorcycle = new Motorcycle(i_VehicleModel, i_LicencePlate, i_FuelLeft, m_MotorcycleMaxFuel, m_MotorcycleNumOfWheels, i_LicenseType, i_EngineVolume);
+            GenerateWheels(motorcycle, m_MotorcycleMaxWheelPressure, i_WheelMaker, i_WheelCurrentPressure);
             return motorcycle;
         }
 
-        public static ElectricMotorcycle CreateElectricMotorcycle(string i_VehicleModel, string i_LicencePlate, float i_BatteryLeft, string i_LicenseType, int i_EngineVolume)
+        public static ElectricMotorcycle CreateElectricMotorcycle(string i_VehicleModel, string i_LicencePlate, float i_BatteryLeft, string i_LicenseType, int i_EngineVolume, string i_WheelMaker, float i_WheelCurrentPressure)
         {
             ElectricMotorcycle electricMotorcycle = new ElectricMotorcycle(i_VehicleModel, i_LicencePlate, i_BatteryLeft, m_MotorcycleMaxBattery, m_MotorcycleNumOfWheels, i_LicenseType, i_EngineVolume);
+            GenerateWheels(electricMotorcycle, m_MotorcycleMaxWheelPressure, i_WheelMaker, i_WheelCurrentPressure);
             return electricMotorcycle;
         }
 
-        public static Truck CreateTruck(string i_VehicleModel, string i_LicencePlate, float i_FuelLeft, bool i_CarryDangerousMaterials, float i_CargoVolume)
+        public static Truck CreateTruck(string i_VehicleModel, string i_LicencePlate, float i_FuelLeft, bool i_CarryDangerousMaterials, float i_CargoVolume, string i_WheelMaker, float i_WheelCurrentPressure)
         {
             Truck truck = new Truck(i_VehicleModel, i_LicencePlate, i_FuelLeft, m_TruckMaxFuel, m_TruckNumOfWheels, i_CarryDangerousMaterials, i_CargoVolume);
+            GenerateWheels(truck, m_TruckMaxWheelPressure, i_WheelMaker, i_WheelCurrentPressure);
             return truck;
         }
 
