@@ -33,11 +33,14 @@ namespace Ex03.ConsoleUI
 Type in the corresponding number to your visit purpose please{0}", Environment.NewLine);
             Console.Write(menu);
             userInput = Console.ReadLine();
-            while(!IsValidEnumInput(userInput, Enum.GetNames(typeof(eMenu)).Length, out validOption))
+            Ex02.ConsoleUtils.Screen.Clear();
+            while (!IsValidEnumInput(userInput, Enum.GetNames(typeof(eMenu)).Length, out validOption))
             {
                 Console.WriteLine("Invalid input.");
+                Thread.Sleep(1000);
                 Console.WriteLine(menu);
                 userInput = Console.ReadLine();
+                Ex02.ConsoleUtils.Screen.Clear();
             }
 
             eMenu userOption = (eMenu) validOption;
@@ -88,6 +91,8 @@ Type in the corresponding number to your visit purpose please{0}", Environment.N
             if (GarageManager.VehiclesStatusDictionary.ContainsKey(licencePlate))
             {
                 Console.WriteLine("Your vehicle is already in our garage!{0}", Environment.NewLine);
+                Thread.Sleep(1200);
+                Ex02.ConsoleUtils.Screen.Clear();
                 GarageOptionsForCustomer();
             }
             else
@@ -97,13 +102,6 @@ Type in the corresponding number to your visit purpose please{0}", Environment.N
                 Console.WriteLine("Please enter your phone number:");
                 ownerPhoneNumber = Console.ReadLine();
                 VehicleOwner owner = new VehicleOwner(ownerName, ownerPhoneNumber);
-                //                string Messege = string.Format(@"What is the Type of your Vehicle?
-                //1. Regular car
-                //2. Electric Car
-                //3. Regular Motorcycle
-                //4. Electric Motorcycle
-                //5. Truck
-                //Type in the corresponding number to your vehicle please.{0}", Environment.NewLine);
                 userVehicle = (eVehicles) PrintOptions(typeof(eVehicles));
 
                 Console.WriteLine("Please enter your vehicle's model:");
@@ -139,7 +137,8 @@ Type in the corresponding number to your visit purpose please{0}", Environment.N
                         //invalid input, need to handle.......
                         break;
                 }
-                
+                Thread.Sleep(1000);
+                Ex02.ConsoleUtils.Screen.Clear();
                 GarageOptionsForCustomer();
             }
 
@@ -375,8 +374,14 @@ Type in the corresponding number to your visit purpose please{0}", Environment.N
                 {
                     isValidInput = false;
                 }
+                else
+                {
+                    isValidInput = true;
+                }
 
             } while (!isValidInput);
+
+            Ex02.ConsoleUtils.Screen.Clear();
 
             return validUerInput;
         }
@@ -451,20 +456,26 @@ Type in the corresponding number to your visit purpose please{0}", Environment.N
         }
 
 
-        public static void FillAir(string i_LicensePlateNumber)
-        {
-            GarageLogic.GarageManager.FillAir(i_LicensePlateNumber);
-        }
+        //public static void FillAir(string i_LicensePlateNumber)
+        //{
+        //    GarageManager.FillAir(i_LicensePlateNumber);
+        //    Thread.Sleep(1000);
+        //    Ex02.ConsoleUtils.Screen.Clear();
+        //}
 
-        public static void FillBattery(string i_LicensePlateNumber, float i_HowMuchToFill)
-        {
-            GarageLogic.GarageManager.FillBattery(i_LicensePlateNumber, i_HowMuchToFill);
-        }
+        //public static void FillBattery(string i_LicensePlateNumber, float i_HowMuchToFill)
+        //{
+        //    GarageManager.FillBattery(i_LicensePlateNumber, i_HowMuchToFill);
+        //    Thread.Sleep(1000);
+        //    Ex02.ConsoleUtils.Screen.Clear();
+        //}
 
-        public static void Refuel(string i_LicensePlateNumber, byte i_HowMuchToFill, eFuelTypes i_FuelType)
-        {
-            GarageLogic.GarageManager.Refuel(i_LicensePlateNumber, i_HowMuchToFill, i_FuelType);
-        }
+        //public static void Refuel(string i_LicensePlateNumber, byte i_HowMuchToFill, eFuelTypes i_FuelType)
+        //{
+        //    GarageManager.Refuel(i_LicensePlateNumber, i_HowMuchToFill, i_FuelType);
+        //    Thread.Sleep(1000);
+        //    Ex02.ConsoleUtils.Screen.Clear();
+        //}
 
         private static void DisplayVehiclesInGarage()
         {
@@ -479,7 +490,9 @@ Type in the corresponding number to your visit purpose please{0}", Environment.N
                 userInput = Console.ReadLine();
             }
 
-            if(userInput[0].Equals('0'))
+            Ex02.ConsoleUtils.Screen.Clear();
+
+            if (userInput[0].Equals('0'))
             {
                 GarageManager.PrintVehiclesInGarage();
             }
@@ -489,6 +502,9 @@ Type in the corresponding number to your visit purpose please{0}", Environment.N
                 userStatus = (eVehicleStatus) PrintOptions(typeof(eVehicleStatus));
                 GarageManager.PrintVehiclesInGarage(userStatus);
             }
+            Thread.Sleep(8000);
+            Ex02.ConsoleUtils.Screen.Clear();
+            GarageOptionsForCustomer();
         }
 
         private static bool IsValidStatusInput(string i_StatusInput)
@@ -503,12 +519,15 @@ Type in the corresponding number to your visit purpose please{0}", Environment.N
             if (GarageManager.CheckIfVehicleInGarage(licensePlate) == GarageManager.k_NotInGarage)
             {
                 Console.WriteLine("Sorry the given vehicle is not in the garage.");
+                Thread.Sleep(1500);
             }
             else
             {
                 Console.WriteLine("What would you like the new status to be?");
                 GarageManager.ChangeVehicleStatus(licensePlate, (eVehicleStatus)PrintOptions(typeof(eVehicleStatus)));
             }
+            Ex02.ConsoleUtils.Screen.Clear();
+            GarageOptionsForCustomer();
         }
 
         private static void FillAir()
@@ -524,6 +543,9 @@ Type in the corresponding number to your visit purpose please{0}", Environment.N
             {
                 GarageManager.FillAir(licencePlate);
             }
+            Thread.Sleep(1000);
+            Ex02.ConsoleUtils.Screen.Clear();
+            GarageOptionsForCustomer();
         }
         private static void ReFuel()
         {
@@ -550,6 +572,9 @@ Type in the corresponding number to your visit purpose please{0}", Environment.N
                 fuelType = (eFuelTypes)PrintOptions(typeof(eFuelTypes));
                 GarageManager.Refuel(licencePlate, ValidLittersOfFuelToAdd, fuelType);
             }
+            Thread.Sleep(1000);
+            Ex02.ConsoleUtils.Screen.Clear();
+            GarageOptionsForCustomer();
         }
         private static void FillBattery()
         {
@@ -575,6 +600,9 @@ Type in the corresponding number to your visit purpose please{0}", Environment.N
 
                 GarageManager.FillBattery(licencePlate, ValidBatteryHours);
             }
+            Thread.Sleep(1000);
+            Ex02.ConsoleUtils.Screen.Clear();
+            GarageOptionsForCustomer();
         }
 
         private static void DisplayVehicleDetails()
@@ -585,11 +613,18 @@ Type in the corresponding number to your visit purpose please{0}", Environment.N
             if (GarageManager.CheckIfVehicleInGarage(licencePlate) == GarageManager.k_NotInGarage)
             {
                 Console.WriteLine("Sorry the given vehicle is not in the garage.");
+                Thread.Sleep(2000);
+                Ex02.ConsoleUtils.Screen.Clear();
+                GarageOptionsForCustomer();
             }
             else
             {
+                Ex02.ConsoleUtils.Screen.Clear();
                 GarageManager.PrintVehicleDetails(licencePlate);
             }
+            Thread.Sleep(8000);
+            Ex02.ConsoleUtils.Screen.Clear();
+            GarageOptionsForCustomer();
         }
     }
 }
