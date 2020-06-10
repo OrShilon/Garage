@@ -19,6 +19,13 @@ namespace Ex03.GarageLogic
 
         public static void AddVehicleToGarage(Vehicle i_Vehicle)
         {
+            foreach(Vehicle vehicle in m_AllVehiclesInGarage)
+            {
+                if (vehicle.Equals(i_Vehicle))
+                {
+
+                }
+            }
             VehiclesInGarageStatus.Add(i_Vehicle.m_LicencePlate, eVehicleStatus.InRepair);
             m_AllVehiclesInGarage.Add(i_Vehicle);
         }
@@ -36,7 +43,7 @@ namespace Ex03.GarageLogic
         {
             if (VehiclesInGarageStatus.Count == k_MinValue)
             {
-                throw new ArgumentException("No vehicles are in the garage");
+                Console.WriteLine("Sorry but there are no vehicles in the garage currently");
             }
             foreach (KeyValuePair<string, eVehicleStatus> pair in VehiclesInGarageStatus)
             {
@@ -48,13 +55,16 @@ namespace Ex03.GarageLogic
         {
             if (VehiclesInGarageStatus.Count == k_MinValue)
             {
-                throw new ArgumentException("No vehicles are in the garage");
+                Console.WriteLine("Sorry but there are no vehicles in the garage currently");
             }
-            foreach (KeyValuePair<string, eVehicleStatus> pair in VehiclesInGarageStatus)
+            else
             {
-                if (pair.Value.Equals(i_status))
+                foreach (KeyValuePair<string, eVehicleStatus> pair in VehiclesInGarageStatus)
                 {
-                    Console.WriteLine("License plate number: " + pair.Key + ", status: " + pair.Value);
+                    if (pair.Value.Equals(i_status))
+                    {
+                        Console.WriteLine("License plate number: " + pair.Key + ", status: " + pair.Value);
+                    }
                 }
             }
         }
