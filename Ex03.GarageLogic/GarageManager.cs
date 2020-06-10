@@ -70,7 +70,7 @@ namespace Ex03.GarageLogic
             }
             else
             {
-                Console.WriteLine(m_AllVehiclesInGarage[vehicleLocation].ToString());
+                Console.WriteLine(m_AllVehiclesInGarage[vehicleLocation].ToString() + Environment.NewLine + "Vehicle status is: " + VehiclesInGarageStatus[i_LicencePlate]);
             }
         }
 
@@ -106,7 +106,7 @@ namespace Ex03.GarageLogic
             float newBatterLeft = customerVehicle.m_BatteryLeft + i_HowMuchToFill;
             if (newBatterLeft > customerVehicle.m_BatteryHourCapacity)
             {
-                throw new ValueOutOfRangeException("refuel quantity is too large");
+                throw new ValueOutOfRangeException("battery hours quantity is too large");
             }
            
             customerVehicle.m_BatteryLeft = newBatterLeft;//צריך לבדוק האם לעשות GET וSET m_FuelOrBatteryLeftל

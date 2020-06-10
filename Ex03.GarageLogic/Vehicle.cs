@@ -21,7 +21,6 @@ namespace Ex03.GarageLogic
             owner = i_Owner;
         }
 
-
         public override bool Equals(object obj)
         {
             //Check for null and compare run - time types.
@@ -65,6 +64,5 @@ Vehicle license plate number is: {1}
 {2}
 {3}", m_VehicleModel, m_LicencePlate, owner.ToString(), m_Wheels[0].ToString());
         }
-
     }    
 }
