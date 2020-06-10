@@ -8,10 +8,10 @@ namespace Ex03.GarageLogic
 {
     public class Car : FuelVehicle
     {
-        internal string m_Color;
-        internal int m_NumOfDoors;
+        internal eCarColors m_Color;
+        internal eNumOfDoors m_NumOfDoors;
 
-        public Car(string i_VehicleModel, string i_LicencePlate, float i_FuelLeft, float i_MaxFuel, byte i_NumOfWheels, string i_Color, byte i_NumOfDoors, VehicleOwner i_Owner) : 
+        public Car(string i_VehicleModel, string i_LicencePlate, float i_FuelLeft, float i_MaxFuel, byte i_NumOfWheels, eCarColors i_Color, eNumOfDoors i_NumOfDoors, VehicleOwner i_Owner) : 
             base(i_VehicleModel, i_LicencePlate, i_FuelLeft, i_MaxFuel, i_NumOfWheels, eFuelTypes.Octan96, i_Owner)
         {
             m_Color = i_Color;

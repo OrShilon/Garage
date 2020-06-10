@@ -1,6 +1,7 @@
 ﻿using Ex03.GarageLogic;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -51,7 +52,7 @@ Type in the corresponding number to your visit purpose please{0}", Environment.N
                 case eMenu.AddNewVehicle:
                     AddNewVehicle();
                     break;
-                case eMenu.DisplayGarageLicensePlates:
+                case eMenu.DisplayVehiclesInGarage:
                     DisplayVehiclesInGarage();
                     break;
                 case eMenu.ChangeCarStatus:
@@ -66,7 +67,7 @@ Type in the corresponding number to your visit purpose please{0}", Environment.N
                 case eMenu.Recharge:
                     FillBattery();
                     break;
-                case eMenu.DisplayVehicleDitails:
+                case eMenu.DisplayVehicleDetails:
                     DisplayVehicleDetails();
                     break;
                 default:
@@ -177,9 +178,8 @@ Type in the corresponding number to your visit purpose please{0}", Environment.N
         {
             Vehicle vehicle;
             string energyLeftInput; //can be fuel or battery
-            string color;
-            string numOfDoorsInput;
-            byte numOfDoors;
+            eCarColors color;
+            eNumOfDoors numOfDoors;
             float wheelsCurrentAirPressure;
             string wheelMaker;
 
@@ -191,19 +191,9 @@ Type in the corresponding number to your visit purpose please{0}", Environment.N
                 energyLeftInput = Console.ReadLine();
             }
             Console.WriteLine("Please enter the color of your car:");
-            color = Console.ReadLine();
-            while (!IsValidCarColor(color))
-            {
-                Console.WriteLine("Not a valid input. Please enter the color of your car:");
-                color = Console.ReadLine();
-            }
+            color = (eCarColors) PrintOptions(typeof(eCarColors));
             Console.WriteLine("Please enter the number of doors your car has:");
-            numOfDoorsInput = Console.ReadLine();
-            while (!IsValidNumOfDoorsInput(numOfDoorsInput, out numOfDoors))
-            {
-                Console.WriteLine("Not a valid input. Please enter the number of doors your car has:");
-                numOfDoorsInput = Console.ReadLine();
-            }
+            numOfDoors = (eNumOfDoors)PrintOptions(typeof(eNumOfDoors));
 
             GetWheelInformation(out wheelMaker, out wheelsCurrentAirPressure, GarageManager.m_CarMaxAirPressure);
             if (i_IsElectric)

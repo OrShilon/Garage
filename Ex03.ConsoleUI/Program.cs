@@ -11,7 +11,7 @@ namespace Ex03.ConsoleUI
     {
         static void Main(string[] args)
         {
-            Car car = new Car("qwe", "qwe", 10, 60, 4, "Red", 3, new VehicleOwner("or", "123456"));
+            Car car = new Car("qwe", "qwe", 10, 60, 4, eCarColors.black, eNumOfDoors.Four, new VehicleOwner("or", "123456"));
             ElectricMotorcycle electricMotor = new ElectricMotorcycle("asd", "asd", 0.8f, 1.2f, 2,"A", 100, new VehicleOwner("amit", "654321"));
             Truck truck = new Truck("zxc", "zxc", 50f, 120f, 16, true, 60f, new VehicleOwner("mitzi", "09876567"));
             GarageManager.AddVehicleToGarage(car);
