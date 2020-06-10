@@ -8,10 +8,10 @@ namespace Ex03.GarageLogic
 {
     public class ElectricCar : ElectricVehicle
     {
-        internal string m_Color;
-        internal int m_NumOfDoors;
+        internal eCarColors m_Color;
+        internal eNumOfDoors m_NumOfDoors;
 
-        public ElectricCar(string i_VehicleModel, string i_LicencePlate, float i_EnergyLeft, float i_MaxBattery, string i_Color, byte i_NumOfWheels, int i_NumOfDoors, VehicleOwner i_Owner) :
+        public ElectricCar(string i_VehicleModel, string i_LicencePlate, float i_EnergyLeft, float i_MaxBattery, eCarColors i_Color, byte i_NumOfWheels, eNumOfDoors i_NumOfDoors, VehicleOwner i_Owner) :
             base(i_VehicleModel, i_LicencePlate, i_EnergyLeft, i_MaxBattery, i_NumOfWheels, i_Owner)
         {
             m_Color = i_Color;

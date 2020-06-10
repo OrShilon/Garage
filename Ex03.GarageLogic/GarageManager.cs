@@ -18,7 +18,7 @@ namespace Ex03.GarageLogic
 
         public static void AddVehicleToGarage(Vehicle i_Vehicle)
         {
-            VehiclesInGarageStatus.Add(i_Vehicle.m_LicencePlate, eVehicleStatus.InRepairStatus);
+            VehiclesInGarageStatus.Add(i_Vehicle.m_LicencePlate, eVehicleStatus.InRepair);
             m_AllVehiclesInGarage.Add(i_Vehicle);
         }
 

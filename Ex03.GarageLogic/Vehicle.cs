@@ -21,14 +21,6 @@ namespace Ex03.GarageLogic
             owner = i_Owner;
         }
 
-        public override string ToString()
-        {
-            return String.Format(@"Vehicle model is: {0}
-Vehicle license plate number is: {1}
-{2}
-{3}", m_VehicleModel, m_LicencePlate, owner.ToString(), m_Wheels[0].ToString());
-        }
-
         public override bool Equals(object obj)
         {
             //Check for null and compare run - time types.
@@ -65,7 +57,12 @@ Vehicle license plate number is: {1}
             return !(i_LeftVehicle == i_RightVehicle);
         }
 
-    }
-
-    
+        public override string ToString()
+        {
+            return String.Format(@"Vehicle model is: {0}
+Vehicle license plate number is: {1}
+{2}
+{3}", m_VehicleModel, m_LicencePlate, owner.ToString(), m_Wheels[0].ToString());
+        }
+    }    
 }

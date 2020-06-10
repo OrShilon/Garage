@@ -21,14 +21,14 @@ namespace Ex03.GarageLogic
         internal const float m_TruckMaxWheelPressure = 28;
 
 
-        public static Car CreateCar(string i_VehicleModel, string i_LicencePlate, float i_FuelLeft, string i_Color, byte i_NumOfDoors, string i_WheelMaker, float i_WheelCurrentPressure, VehicleOwner i_Owner)
+        public static Car CreateCar(string i_VehicleModel, string i_LicencePlate, float i_FuelLeft, eCarColors i_Color, eNumOfDoors i_NumOfDoors, string i_WheelMaker, float i_WheelCurrentPressure, VehicleOwner i_Owner)
         {
             Car car = new Car(i_VehicleModel, i_LicencePlate, i_FuelLeft, m_CarMaxFuel, m_CarNumOfWheels, i_Color, i_NumOfDoors, i_Owner);
             GenerateWheels(car, m_CarMaxWheelPressure, i_WheelMaker, i_WheelCurrentPressure);
             return car;
         }
 
-        public static ElectricCar CreateElectricCar(string i_VehicleModel, string i_LicencePlate, float i_BatteryLeft, string i_Color, int i_NumOfDoors, string i_WheelMaker, float i_WheelCurrentPressure, VehicleOwner i_Owner)
+        public static ElectricCar CreateElectricCar(string i_VehicleModel, string i_LicencePlate, float i_BatteryLeft, eCarColors i_Color, eNumOfDoors i_NumOfDoors, string i_WheelMaker, float i_WheelCurrentPressure, VehicleOwner i_Owner)
         {
             ElectricCar electricCar = new ElectricCar(i_VehicleModel, i_LicencePlate, i_BatteryLeft, m_CarMaxBattery, i_Color, m_CarNumOfWheels, i_NumOfDoors, i_Owner);
             GenerateWheels(electricCar, m_CarMaxWheelPressure, i_WheelMaker, i_WheelCurrentPressure);
