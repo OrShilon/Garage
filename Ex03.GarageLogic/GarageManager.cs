@@ -12,6 +12,7 @@ namespace Ex03.GarageLogic
         private static List<Vehicle> m_AllVehiclesInGarage = new List<Vehicle>();
         private static readonly Dictionary<string, eVehicleStatus> VehiclesInGarageStatus = new Dictionary<string, eVehicleStatus>();
         public const int k_NotInGarage = -1;
+        public const int k_MinValue = 0;
         public const float m_CarMaxAirPressure = 32f;
         public const float m_MotorcycleMaxAirPressure = 30f;
         public const float m_TruckMaxAirPressure = 28f;
@@ -33,6 +34,10 @@ namespace Ex03.GarageLogic
 
         public static void PrintVehiclesInGarage()
         {
+            if (VehiclesInGarageStatus.Count == k_MinValue)
+            {
+                throw new ArgumentException("No vehicles are in the garage");
+            }
             foreach (KeyValuePair<string, eVehicleStatus> pair in VehiclesInGarageStatus)
             {
                 Console.WriteLine("License plate number: " + pair.Key + ", status: " + pair.Value);
@@ -41,6 +46,10 @@ namespace Ex03.GarageLogic
 
         public static void PrintVehiclesInGarage(eVehicleStatus i_status)
         {
+            if (VehiclesInGarageStatus.Count == k_MinValue)
+            {
+                throw new ArgumentException("No vehicles are in the garage");
+            }
             foreach (KeyValuePair<string, eVehicleStatus> pair in VehiclesInGarageStatus)
             {
                 if (pair.Value.Equals(i_status))
@@ -98,18 +107,19 @@ namespace Ex03.GarageLogic
             }
 
             ElectricVehicle customerVehicle = m_AllVehiclesInGarage[vehicleLocation] as ElectricVehicle;
-            if (customerVehicle == null)
+            if(customerVehicle == null)
             {
                 throw new ArgumentException("NOT a battery vehicle");
             }
 
-            float newBatterLeft = customerVehicle.m_BatteryLeft + i_HowMuchToFill;
-            if (newBatterLeft > customerVehicle.m_BatteryHourCapacity)
+            float newBatteryLeft = customerVehicle.m_BatteryLeft + i_HowMuchToFill;
+            float calculatedMaximumBatteryHours = customerVehicle.m_BatteryHourCapacity - customerVehicle.m_BatteryLeft;
+            if (newBatteryLeft > customerVehicle.m_BatteryHourCapacity)
             {
-                throw new ValueOutOfRangeException("battery hours quantity is too large");
+                throw new ValueOutOfRangeException(calculatedMaximumBatteryHours, k_MinValue);
             }
            
-            customerVehicle.m_BatteryLeft = newBatterLeft;//צריך לבדוק האם לעשות GET וSET m_FuelOrBatteryLeftל
+            customerVehicle.m_BatteryLeft = newBatteryLeft;//צריך לבדוק האם לעשות GET וSET m_FuelOrBatteryLeftל
         }
 
         public static void Refuel(string i_LicensePlateNumber, float i_HowMuchToFill, eFuelTypes i_FuelType)
@@ -125,11 +135,12 @@ namespace Ex03.GarageLogic
                 throw new ArgumentException("NOT a fuel vehicle");
             }
             float newFuelLeft = customerVehicle.m_FuelLeft + i_HowMuchToFill;
+            float calculatedMaximumFuelCapacity = customerVehicle.m_FuelTankCapacity - customerVehicle.m_FuelLeft;
             if (newFuelLeft > customerVehicle.m_FuelTankCapacity)
             {
-                throw new ValueOutOfRangeException("refuel quantity is too large");
+                throw new ValueOutOfRangeException(calculatedMaximumFuelCapacity, k_MinValue);
             }
-            if(i_FuelType != customerVehicle.m_FuelType)//צריך לדרוס פונקצית == וגם !=
+            if (i_FuelType != customerVehicle.m_FuelType)//צריך לדרוס פונקצית == וגם !=
             {
                 throw new ArgumentException("fuel type is NOT valid");
             }
