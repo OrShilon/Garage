@@ -63,10 +63,10 @@ Type in the corresponding number to your visit purpose please{0}", Environment.N
                     FillAir();
                     break;
                 case eMenu.Refuel:
-                    ReFuel();
+                    ReFuel(k_FirstTimeLicencePlateInput);
                     break;
                 case eMenu.Recharge:
-                    FillBattery();
+                    FillBattery(k_FirstTimeLicencePlateInput);
                     break;
                 case eMenu.DisplayVehicleDetails:
                     DisplayVehicleDetails();
@@ -109,6 +109,7 @@ Type in the corresponding number to your visit purpose please{0}", Environment.N
                 while(!InputValidation.IsValidPhoneNumber(ownerPhoneNumber))
                 {
                     Console.WriteLine("Not a valid input. Please enter your phone number:");
+                    ownerPhoneNumber = Console.ReadLine();
                 }
                 VehicleOwner owner = new VehicleOwner(ownerName, ownerPhoneNumber);
                 userVehicle = (eVehicles) DisplayEnumOptions(typeof(eVehicles));
@@ -164,7 +165,7 @@ Type in the corresponding number to your visit purpose please{0}", Environment.N
 
             Console.WriteLine("Please enter how much {0} left in your car:", i_IsElectric ? "battery" : "fuel");
             energyLeftInput = Console.ReadLine();
-            while (!InputValidation.IsValidFloatInput(energyLeftInput, out i_EnergyLeft))
+            while (!InputValidation.IsValidFloatInput(energyLeftInput, out i_EnergyLeft) || (i_IsElectric && i_EnergyLeft > 2.1) || (!i_IsElectric && i_EnergyLeft < 60))
             {
                 Console.WriteLine("Not a valid input. Please enter how much {0} left in your car:", i_IsElectric ? "battery" : "fuel");
                 energyLeftInput = Console.ReadLine();
@@ -204,7 +205,7 @@ Type in the corresponding number to your visit purpose please{0}", Environment.N
 
             Console.WriteLine("Please enter how much {0} left in your motorcycle:", i_IsElectric ? "battery" : "fuel");
             energyLeftInput = Console.ReadLine();
-            while (!InputValidation.IsValidFloatInput(energyLeftInput, out i_EnergyLeft))
+            while (!InputValidation.IsValidFloatInput(energyLeftInput, out i_EnergyLeft) || (i_IsElectric && i_EnergyLeft > 1.2) || (!i_IsElectric && i_EnergyLeft < 7))
             {
                 Console.WriteLine("Not a valid input. Please enter how much {0} left in your motorcycle:", i_IsElectric ? "battery" : "fuel");
                 energyLeftInput = Console.ReadLine();
