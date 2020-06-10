@@ -8,7 +8,7 @@ namespace Ex03.GarageLogic
 {
     public class CreateVehicle
     {
-        internal const float m_CarMaxFuel = 2.1f;
+        internal const float m_CarMaxFuel = 60f;
         internal const byte m_CarNumOfWheels = 4;
         internal const float m_CarMaxBattery = 2.1f;
         internal const float m_CarMaxWheelPressure = 32;
