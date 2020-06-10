@@ -22,6 +22,7 @@ namespace Ex03.GarageLogic
         [Description("Rcharge")]
         Recharge,
         [Description("Display vehicle details")]
-        DisplayVehicleDetails
+        DisplayVehicleDetails,
+        Exit
     }
 }
