@@ -303,16 +303,16 @@ namespace Ex03.ConsoleUI
                     index = 1;
                     if (!isValidInput)
                     {
-                        Console.WriteLine("Invalid input.{0}", Environment.NewLine);
+                        Console.WriteLine(MessagesEnglish.k_InvalidInputAndNewLineMessage, Environment.NewLine);
                     }
 
                     foreach (string item in i_Enum.GetEnumNames())
                     {
-                        Console.WriteLine("{0}. {1}", index, item);
+                        Console.WriteLine(MessagesEnglish.k_0OR1Message, index, item);
                         index++;
                     }
 
-                    Console.WriteLine("Type in the corresponding number to your vehicle please.{0}", Environment.NewLine);
+                    Console.WriteLine(MessagesEnglish.k_ChooseVehicleMessage, Environment.NewLine);
                     userInput = Console.ReadLine();
 
                     if (!InputValidation.IsValidEnumInput(userInput, length, out validUerInput))
@@ -341,19 +341,20 @@ namespace Ex03.ConsoleUI
         {
             string currentAirPressureInput;
 
-            Console.WriteLine("Please enter the name of your wheel maker:");
+            Console.WriteLine(MessagesEnglish.k_GetWheelMakerMessage);
             o_WheelMaker = Console.ReadLine();
             while(InputValidation.IsEmptyInput(o_WheelMaker))
             {
-                Console.WriteLine("Invalid input. Please enter the name of your wheel maker:");
+                Console.WriteLine(MessagesEnglish.k_NotValidWheelMakerMessage);
                 o_WheelMaker = Console.ReadLine();
             }
 
-            Console.WriteLine("Please enter the currnet air pressure in your wheels (maximum {0}):", i_MaxAirPressure);
+            Console.WriteLine(MessagesEnglish.k_GetCurrentAirPressureMessage, i_MaxAirPressure);
             currentAirPressureInput = Console.ReadLine();
             while (!InputValidation.IsValidFloatInput(currentAirPressureInput, out o_CurrentAirPressure) || i_MaxAirPressure < o_CurrentAirPressure)
             {
-                Console.WriteLine("{1}.{2} Please enter the currnet air pressure in your wheels (maximum {0}):", i_MaxAirPressure, i_MaxAirPressure < o_CurrentAirPressure ? "You have entered a number above the maximum air pressure " : "Invalid air pressure input", Environment.NewLine);
+                Console.WriteLine(i_MaxAirPressure < o_CurrentAirPressure ? MessagesEnglish.k_AirPressureAboveMAximumMessage : MessagesEnglish.k_InvalidAirPressureMessage);
+                Console.WriteLine(MessagesEnglish.k_GetCurrentAirPressureMessage, i_MaxAirPressure);
                 currentAirPressureInput = Console.ReadLine();
             }
         }
@@ -363,11 +364,11 @@ namespace Ex03.ConsoleUI
             string userInput;
             eVehicleStatus userStatus;
 
-            Console.WriteLine("Do you want to filter by status? Enter 1 for yes, 0 for no");
+            Console.WriteLine(MessagesEnglish.k_FilterByStatusMessage);
             userInput = Console.ReadLine();
             while(!InputValidation.IsValidStatusFilterInput(userInput))
             {
-                Console.WriteLine("Invalid input. Do you want to filter by status? Enter 1 for yes, 0 for no");
+                Console.WriteLine(MessagesEnglish.k_NotValidFilterByStatusMessage);
                 userInput = Console.ReadLine();
             }
 
@@ -379,7 +380,7 @@ namespace Ex03.ConsoleUI
             }
             else
             {
-                Console.WriteLine("Please enter the wanted status to display");
+                Console.WriteLine(MessagesEnglish.k_GetStatusFilterMessage);
                 userStatus = (eVehicleStatus) DisplayEnumOptions(typeof(eVehicleStatus));
                 GarageManager.PrintVehiclesInGarage(userStatus);
             }
@@ -395,12 +396,12 @@ namespace Ex03.ConsoleUI
             licencePlate = EnterLicencePlate();
             if (GarageManager.CheckIfVehicleInGarage(licencePlate) == GarageManager.k_NotInGarage)
             {
-                Console.WriteLine("Sorry the given vehicle is not in the garage.");
+                Console.WriteLine(MessagesEnglish.k_VehicleNotRegisteredMessage);
                 Thread.Sleep(1500);
             }
             else
             {
-                Console.WriteLine("What would you like the new status to be?");
+                Console.WriteLine(MessagesEnglish.k_GetNewStatusMessage);
                 GarageManager.ChangeVehicleStatus(licencePlate, (eVehicleStatus)DisplayEnumOptions(typeof(eVehicleStatus)));
             }
             Ex02.ConsoleUtils.Screen.Clear();
@@ -414,7 +415,7 @@ namespace Ex03.ConsoleUI
             licencePlate = EnterLicencePlate();
             if (GarageManager.CheckIfVehicleInGarage(licencePlate) == GarageManager.k_NotInGarage)
             {
-                Console.WriteLine("Sorry the given vehicle is not in the garage.");
+                Console.WriteLine(MessagesEnglish.k_VehicleNotRegisteredMessage);
             }
             else
             {
@@ -437,15 +438,15 @@ namespace Ex03.ConsoleUI
 
             if (GarageManager.CheckIfVehicleInGarage(licencePlate) == GarageManager.k_NotInGarage)
             {
-                Console.WriteLine("Sorry the given vehicle is not in the garage.");
+                Console.WriteLine(MessagesEnglish.k_VehicleNotRegisteredMessage);
             }
             else
             {
-                Console.WriteLine("Please enter how much fuel to fill:");
+                Console.WriteLine(MessagesEnglish.k_RefuelAmountMessage);
                 LittersOfFuelToFiil = Console.ReadLine();
                 while (!InputValidation.IsValidFloatInput(LittersOfFuelToFiil, out ValidLittersOfFuelToAdd))
                 {
-                    Console.WriteLine("Invalid input. Please enter how much fuel to fill:");
+                    Console.WriteLine(MessagesEnglish.k_NotValidRefuelAmountMessage);
                     LittersOfFuelToFiil = Console.ReadLine();
                 }
 
@@ -480,26 +481,25 @@ namespace Ex03.ConsoleUI
 
             if (i_FirstTimeLicencePlateInput)
             {
-                Console.WriteLine("please enter your licence plate:");
-                licencePlate = Console.ReadLine(); //need to make invalidinput for this line!
+                licencePlate = EnterLicencePlate();
             }
             else
             {
-                Console.WriteLine("Invalid input. Please enter how much fuel to fill:");
+                Console.WriteLine(MessagesEnglish.k_NotValidBatteryMessage);
                 licencePlate = Console.ReadLine(); //need to make invalidinput for this line!
             }
 
             if (GarageManager.CheckIfVehicleInGarage(licencePlate) == GarageManager.k_NotInGarage)
             {
-                Console.WriteLine("Sorry the given vehicle is not in the garage.");
+                Console.WriteLine(MessagesEnglish.k_VehicleNotRegisteredMessage);
             }
             else
             {
-                Console.WriteLine("Please enter how much battery to fill:");
+                Console.WriteLine(MessagesEnglish.k_BatteryToChargeMessage);
                 batteryHoursInput = Console.ReadLine();
                 while (!InputValidation.IsValidFloatInput(batteryHoursInput, out ValidBatteryHours))
                 {
-                    Console.WriteLine("Invalid input. Please enter how much battery to fill:");
+                    Console.WriteLine(MessagesEnglish.k_NotValidBatteryMessage);
                     batteryHoursInput = Console.ReadLine();
                 }
 
@@ -526,11 +526,10 @@ namespace Ex03.ConsoleUI
         private static void DisplayVehicleDetails()
         {
             string licencePlate;
-            Console.WriteLine("please enter your licence plate:");
-            licencePlate = Console.ReadLine(); //need to make invalidinput for this line!
+            licencePlate = EnterLicencePlate();
             if (GarageManager.CheckIfVehicleInGarage(licencePlate) == GarageManager.k_NotInGarage)
             {
-                Console.WriteLine("Sorry the given vehicle is not in the garage.");
+                Console.WriteLine(MessagesEnglish.k_VehicleNotRegisteredMessage);
                 Thread.Sleep(2000);
                 Ex02.ConsoleUtils.Screen.Clear();
                 GarageOptionsForCustomer();
@@ -548,11 +547,11 @@ namespace Ex03.ConsoleUI
         private static string EnterLicencePlate()
         {
             string licencePlate;
-            Console.WriteLine("please enter your licence plate:");
+            Console.WriteLine(MessagesEnglish.k_LicensePlateRequestMessage);
             licencePlate = Console.ReadLine();
             while(InputValidation.IsEmptyInput(licencePlate))
             {
-                Console.WriteLine("Invalid Input. please enter your licence plate:");
+                Console.WriteLine(MessagesEnglish.k_NotValidLicensePlateMessage);
                 licencePlate = Console.ReadLine();
             }
             return licencePlate;
@@ -560,7 +559,7 @@ namespace Ex03.ConsoleUI
 
         private static void ExitProgram()
         {
-            Console.WriteLine("Exit program...");
+            Console.WriteLine(MessagesEnglish.k_ExitMessage);
             Thread.Sleep(1500);
             Environment.Exit(0);
         }
