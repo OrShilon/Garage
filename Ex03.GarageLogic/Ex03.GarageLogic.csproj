@@ -59,7 +59,6 @@
     <Compile Include="eVehicles.cs" />
     <Compile Include="eVehicleStatus.cs" />
     <Compile Include="FuelVehicle.cs" />
-    <Compile Include="FuelVehicleManager.cs" />
     <Compile Include="GarageManager.cs" />
     <Compile Include="Motorcycle.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
