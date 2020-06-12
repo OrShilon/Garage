@@ -190,7 +190,7 @@ namespace Ex03.ConsoleUI
 
             energyLeft = EnterFuellOrEnergyLeft(i_IsElectric, i_Vehicle, i_IsElectric ? k_ElectricMotorcycleMaxBattery : k_MotorcycleMaxFuel);
 
-            Console.WriteLine("Please enter your licence type:");
+            Console.WriteLine(MessagesEnglish.k_GetLicenseTypeMessage);
             licenceType = (eMotorcycleLicenceType) DisplayEnumOptions(typeof(eMotorcycleLicenceType));
 
             validEngineVolume = EnterEngineVolume();
@@ -252,7 +252,7 @@ namespace Ex03.ConsoleUI
             string engineVolumeInput;
             int validEngineVolume = 0;
 
-            Console.WriteLine("Please enter your engine's volume (in Cc):");
+            Console.WriteLine(MessagesEnglish.k_GetEngineVolumeMessage);
             engineVolumeInput = Console.ReadLine();
 
             try
@@ -277,11 +277,11 @@ namespace Ex03.ConsoleUI
             string dangerousMaterialsInput;
             bool dangerousMaterials;
 
-            Console.WriteLine("Is there any dangerous materials in your truck? Enter 1 for yes, 0 for no.");
+            Console.WriteLine(MessagesEnglish.k_DangerMaterialMessage);
             dangerousMaterialsInput = Console.ReadLine();
             while (!InputValidation.IsValidDangerousMaterialsInput(dangerousMaterialsInput, out dangerousMaterials))
             {
-                Console.WriteLine("Not a valid input. Please enter the color of your car:");
+                Console.WriteLine(MessagesEnglish.k_NotValidDangerMaterialMessage);
                 dangerousMaterialsInput = Console.ReadLine();
             }
 
@@ -293,12 +293,12 @@ namespace Ex03.ConsoleUI
             string cargoVolumeInput;
             float validCargoVolume;
 
-            Console.WriteLine("Please enter your truck's cargo volume:");
+            Console.WriteLine(MessagesEnglish.k_GetCargoVolumeMessage);
             cargoVolumeInput = Console.ReadLine();
 
             while (!InputValidation.IsValidFloatInput(cargoVolumeInput, out validCargoVolume))
             {
-                Console.WriteLine("Not a valid input. Please enter your truck's cargo volume:");
+                Console.WriteLine(MessagesEnglish.k_NotValidCargoVolumeMessage);
                 cargoVolumeInput = Console.ReadLine();
             }
 
