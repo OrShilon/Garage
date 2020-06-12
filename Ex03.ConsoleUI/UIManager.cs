@@ -15,7 +15,7 @@ namespace Ex03.ConsoleUI
         private const bool k_FirstTimeLicencePlateInput = true;
         public static void Welcome()
         {
-            Console.WriteLine("Hello and welcome to our garage.{0}", Environment.NewLine);
+            Console.WriteLine(MessagesEnglish.k_GarageHelloMessage, Environment.NewLine);
             Thread.Sleep(1200);
             GarageOptionsForCustomer();
         }
@@ -24,24 +24,14 @@ namespace Ex03.ConsoleUI
         {
             string userInput;
             int validOption;
-            string menu = string.Format(@"What is the purpose of your visit?
-1. I would like to check in a new vehicle
-2. Display the current license plates that are in the garage
-3. Change my vehicle status
-4. Fill air in my vehicle wheels
-5. Refuel my vehicle
-6. Recharge my vehicle
-7. Display my vehicle details
-8. Exit program
-Type in the corresponding number to your visit purpose please{0}", Environment.NewLine);
-            Console.Write(menu);
+            Console.WriteLine(MessagesEnglish.k_GarageOptionsMessage);
             userInput = Console.ReadLine();
             Ex02.ConsoleUtils.Screen.Clear();
             while (!InputValidation.IsValidEnumInput(userInput, Enum.GetNames(typeof(eMenu)).Length, out validOption))
             {
-                Console.WriteLine("Invalid input.");
+                Console.WriteLine(MessagesEnglish.k_InvalidInputMessage);
                 Thread.Sleep(1000);
-                Console.WriteLine(menu);
+                Console.WriteLine(MessagesEnglish.k_GarageOptionsMessage);
                 userInput = Console.ReadLine();
                 Ex02.ConsoleUtils.Screen.Clear();
             }
@@ -91,34 +81,34 @@ Type in the corresponding number to your visit purpose please{0}", Environment.N
             string ownerPhoneNumber;
 
 
-            Console.WriteLine("please enter your licence plate:");
+            Console.WriteLine(MessagesEnglish.k_LicensePlateRequestMessage);
             licencePlate = Console.ReadLine(); //need to make invalidinput for this line!
             if (GarageManager.VehiclesStatusDictionary.ContainsKey(licencePlate))
             {
-                Console.WriteLine("Your vehicle is already in our garage!{0}", Environment.NewLine);
+                Console.WriteLine(MessagesEnglish.k_VehicleIsRegistered, Environment.NewLine); 
                 Thread.Sleep(1200);
                 Ex02.ConsoleUtils.Screen.Clear();
                 GarageOptionsForCustomer();
             }
             else
             {
-                Console.WriteLine("Please enter you name:");
+                Console.WriteLine(MessagesEnglish.k_GetNameMessage);
                 ownerName = Console.ReadLine();
-                Console.WriteLine("Please enter your phone number:");
+                Console.WriteLine(MessagesEnglish.k_GetPhoneNumberMessage);
                 ownerPhoneNumber = Console.ReadLine();
                 while(!InputValidation.IsValidPhoneNumber(ownerPhoneNumber))
                 {
-                    Console.WriteLine("Not a valid input. Please enter your phone number:");
+                    Console.WriteLine(MessagesEnglish.k_NotValidPhoneNumberMessage);
                     ownerPhoneNumber = Console.ReadLine();
                 }
                 VehicleOwner owner = new VehicleOwner(ownerName, ownerPhoneNumber);
                 userVehicle = (eVehicles) DisplayEnumOptions(typeof(eVehicles));
 
-                Console.WriteLine("Please enter your vehicle's model:");
+                Console.WriteLine(MessagesEnglish.k_GetVehicleModelMessage);
                 vehicleModel = Console.ReadLine();
                 while (!InputValidation.IsValidVehicleModel(vehicleModel))
                 {
-                    Console.WriteLine("Not a valid input. Please enter your vehicle's model:");
+                    Console.WriteLine(MessagesEnglish.k_NotValidVehicleModelMessage);
                     vehicleModel = Console.ReadLine();
                 }
 
@@ -163,16 +153,16 @@ Type in the corresponding number to your visit purpose please{0}", Environment.N
             float wheelsCurrentAirPressure;
             string wheelMaker;
 
-            Console.WriteLine("Please enter how much {0} left in your car:", i_IsElectric ? "battery" : "fuel");
+            Console.WriteLine(MessagesEnglish.k_GetFuelOrEnergyLeftMessage, i_IsElectric ? MessagesEnglish.k_BatteryMessage : MessagesEnglish.k_FuelMessage);
             energyLeftInput = Console.ReadLine();
             while (!InputValidation.IsValidFloatInput(energyLeftInput, out i_EnergyLeft) || (i_IsElectric && i_EnergyLeft > 2.1) || (!i_IsElectric && i_EnergyLeft < 60))
             {
-                Console.WriteLine("Not a valid input. Please enter how much {0} left in your car:", i_IsElectric ? "battery" : "fuel");
+                Console.WriteLine(MessagesEnglish.k_NotValidFuelOrEnergyLeftMessage, i_IsElectric ? MessagesEnglish.k_BatteryMessage : MessagesEnglish.k_FuelMessage);
                 energyLeftInput = Console.ReadLine();
             }
-            Console.WriteLine("Please enter the color of your car:");
+            Console.WriteLine(MessagesEnglish.k_GetColorMessage);
             color = (eCarColors) DisplayEnumOptions(typeof(eCarColors));
-            Console.WriteLine("Please enter the number of doors your car has:");
+            Console.WriteLine(MessagesEnglish.k_GetNumDoorsMessage);
             numOfDoors = (eNumOfDoors)DisplayEnumOptions(typeof(eNumOfDoors));
 
             GetWheelInformation(out wheelMaker, out wheelsCurrentAirPressure, GarageManager.m_CarMaxAirPressure);
@@ -203,7 +193,7 @@ Type in the corresponding number to your visit purpose please{0}", Environment.N
             string wheelMaker;
             eMotorcycleLicenceType licenceType;
 
-            Console.WriteLine("Please enter how much {0} left in your motorcycle:", i_IsElectric ? "battery" : "fuel");
+            Console.WriteLine("Please enter how much {0} left in your motorcycle:", i_IsElectric ? "battery" : "fuel");//already have same message for car
             energyLeftInput = Console.ReadLine();
             while (!InputValidation.IsValidFloatInput(energyLeftInput, out i_EnergyLeft) || (i_IsElectric && i_EnergyLeft > 1.2) || (!i_IsElectric && i_EnergyLeft < 7))
             {
@@ -238,7 +228,7 @@ Type in the corresponding number to your visit purpose please{0}", Environment.N
             engineVolume = Console.ReadLine();
             while (!InputValidation.IsValidEngineVolume(engineVolume, out validEngineVolume))
             {
-                Console.WriteLine("Not a valid input. Please enter the number of doors your car has:");
+                Console.WriteLine("Not a valid input. Please enter the engine's volume (in Cc): your Motorcycle has:");
                 engineVolume = Console.ReadLine();
             }
 
