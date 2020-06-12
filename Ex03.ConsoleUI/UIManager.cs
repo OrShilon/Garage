@@ -81,8 +81,8 @@ namespace Ex03.ConsoleUI
             string ownerPhoneNumber;
 
 
-            Console.WriteLine(MessagesEnglish.k_LicensePlateRequestMessage);
-            licencePlate = Console.ReadLine(); //need to make invalidinput for this line!
+
+            licencePlate = EnterLicencePlate();
             if (GarageManager.VehiclesStatusDictionary.ContainsKey(licencePlate))
             {
                 Console.WriteLine(MessagesEnglish.k_VehicleIsRegistered, Environment.NewLine); 
@@ -106,7 +106,7 @@ namespace Ex03.ConsoleUI
 
                 Console.WriteLine(MessagesEnglish.k_GetVehicleModelMessage);
                 vehicleModel = Console.ReadLine();
-                while (!InputValidation.IsValidVehicleModel(vehicleModel))
+                while (InputValidation.IsEmptyInput(vehicleModel))
                 {
                     Console.WriteLine(MessagesEnglish.k_NotValidVehicleModelMessage);
                     vehicleModel = Console.ReadLine();
@@ -249,7 +249,7 @@ namespace Ex03.ConsoleUI
         private static void CreateTruck(string i_TruckModel, string i_LicencePlate, float i_FuelLeft, VehicleOwner i_VehicleOwner)
         {
             string fuelLeftInput;
-            string cargoVolume = string.Empty;
+            string cargoVolume;
             float validCargoVolume;
             string dangerousMaterialsInput;
             bool dangerousMaterials;
@@ -281,7 +281,7 @@ namespace Ex03.ConsoleUI
                 cargoVolume = Console.ReadLine();
             }
 
-            GetWheelInformation(out wheelMaker, out wheelsCurrentAirPressure, GarageManager.m_CarMaxAirPressure);
+            GetWheelInformation(out wheelMaker, out wheelsCurrentAirPressure, GarageManager.m_TruckMaxAirPressure);
 
             Truck newTruck = CreateVehicle.CreateTruck(i_TruckModel, i_LicencePlate, i_FuelLeft, dangerousMaterials, validCargoVolume, wheelMaker, wheelsCurrentAirPressure, i_VehicleOwner);
             GarageManager.AddVehicleToGarage(newTruck);
@@ -349,11 +349,11 @@ namespace Ex03.ConsoleUI
                 o_WheelMaker = Console.ReadLine();
             }
 
-            Console.WriteLine("Please enter the currnet air pressure in your wheels:");
+            Console.WriteLine("Please enter the currnet air pressure in your wheels (maximum {0}):", i_MaxAirPressure);
             currentAirPressureInput = Console.ReadLine();
             while (!InputValidation.IsValidFloatInput(currentAirPressureInput, out o_CurrentAirPressure) || i_MaxAirPressure < o_CurrentAirPressure)
             {
-                Console.WriteLine("{0}. Please enter the currnet air pressure in your wheels:", i_MaxAirPressure < o_CurrentAirPressure ? "You have entered a number above the maximum air pressure " : "Invalid air pressure input");
+                Console.WriteLine("{1}.{2} Please enter the currnet air pressure in your wheels (maximum {0}):", i_MaxAirPressure, i_MaxAirPressure < o_CurrentAirPressure ? "You have entered a number above the maximum air pressure " : "Invalid air pressure input", Environment.NewLine);
                 currentAirPressureInput = Console.ReadLine();
             }
         }
@@ -365,7 +365,7 @@ namespace Ex03.ConsoleUI
 
             Console.WriteLine("Do you want to filter by status? Enter 1 for yes, 0 for no");
             userInput = Console.ReadLine();
-            while(!InputValidation.IsValidStatusInput(userInput))
+            while(!InputValidation.IsValidStatusFilterInput(userInput))
             {
                 Console.WriteLine("Invalid input. Do you want to filter by status? Enter 1 for yes, 0 for no");
                 userInput = Console.ReadLine();
@@ -390,9 +390,10 @@ namespace Ex03.ConsoleUI
 
         public static void ChangeVehicleStatus()
         {
-            Console.WriteLine("What is the license plate of your vehicle?");
-            string licensePlate = Console.ReadLine(); //need to make invalidinput for this line!
-            if (GarageManager.CheckIfVehicleInGarage(licensePlate) == GarageManager.k_NotInGarage)
+            string licencePlate;
+
+            licencePlate = EnterLicencePlate();
+            if (GarageManager.CheckIfVehicleInGarage(licencePlate) == GarageManager.k_NotInGarage)
             {
                 Console.WriteLine("Sorry the given vehicle is not in the garage.");
                 Thread.Sleep(1500);
@@ -400,7 +401,7 @@ namespace Ex03.ConsoleUI
             else
             {
                 Console.WriteLine("What would you like the new status to be?");
-                GarageManager.ChangeVehicleStatus(licensePlate, (eVehicleStatus)DisplayEnumOptions(typeof(eVehicleStatus)));
+                GarageManager.ChangeVehicleStatus(licencePlate, (eVehicleStatus)DisplayEnumOptions(typeof(eVehicleStatus)));
             }
             Ex02.ConsoleUtils.Screen.Clear();
             GarageOptionsForCustomer();
@@ -409,8 +410,8 @@ namespace Ex03.ConsoleUI
         private static void FillAir()
         {
             string licencePlate;
-            Console.WriteLine("please enter your licence plate:");
-            licencePlate = Console.ReadLine(); //need to make invalidinput for this line!
+
+            licencePlate = EnterLicencePlate();
             if (GarageManager.CheckIfVehicleInGarage(licencePlate) == GarageManager.k_NotInGarage)
             {
                 Console.WriteLine("Sorry the given vehicle is not in the garage.");
@@ -425,19 +426,13 @@ namespace Ex03.ConsoleUI
         }
         private static void ReFuel( bool i_FirstTimeLicencePlateInput)
         {
-            string licencePlate;
+            string licencePlate = string.Empty;
             string LittersOfFuelToFiil;
             float ValidLittersOfFuelToAdd;
             eFuelTypes fuelType;
             if(i_FirstTimeLicencePlateInput)
             {
-                Console.WriteLine("please enter your licence plate:");
-                licencePlate = Console.ReadLine(); //need to make invalidinput for this line!
-            }
-            else
-            {
-                Console.WriteLine("Invalid input. Please enter how much fuel to fill:");
-                licencePlate = Console.ReadLine(); //need to make invalidinput for this line!
+                licencePlate = EnterLicencePlate();
             }
 
             if (GarageManager.CheckIfVehicleInGarage(licencePlate) == GarageManager.k_NotInGarage)
@@ -453,7 +448,9 @@ namespace Ex03.ConsoleUI
                     Console.WriteLine("Invalid input. Please enter how much fuel to fill:");
                     LittersOfFuelToFiil = Console.ReadLine();
                 }
+
                 fuelType = (eFuelTypes)DisplayEnumOptions(typeof(eFuelTypes));
+
                 try
                 {
                     GarageManager.Refuel(licencePlate, ValidLittersOfFuelToAdd, fuelType);
@@ -467,6 +464,8 @@ namespace Ex03.ConsoleUI
                 catch (ArgumentException ae)
                 {
                     Console.WriteLine(ae.Message);
+                    i_FirstTimeLicencePlateInput = false;
+                    ReFuel(i_FirstTimeLicencePlateInput);
                 }
             }
             Thread.Sleep(1000);
@@ -544,6 +543,26 @@ namespace Ex03.ConsoleUI
             Thread.Sleep(8000);
             Ex02.ConsoleUtils.Screen.Clear();
             GarageOptionsForCustomer();
+        }
+
+        private static string EnterLicencePlate()
+        {
+            string licencePlate;
+            Console.WriteLine("please enter your licence plate:");
+            licencePlate = Console.ReadLine();
+            while(InputValidation.IsEmptyInput(licencePlate))
+            {
+                Console.WriteLine("Invalid Input. please enter your licence plate:");
+                licencePlate = Console.ReadLine();
+            }
+            return licencePlate;
+        }
+
+        private static void ExitProgram()
+        {
+            Console.WriteLine("Exit program...");
+            Thread.Sleep(1500);
+            Environment.Exit(0);
         }
     }
 }
