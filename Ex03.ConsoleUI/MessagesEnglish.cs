@@ -20,6 +20,7 @@ namespace Ex03.ConsoleUI
 8. Exit program
 Type in the corresponding number to your visit purpose please{0}";
         internal const string k_InvalidInputMessage = "Invalid input.";
+        internal const string k_InvalidInputAndNewLineMessage = "Invalid input.{0}";
         internal const string k_LicensePlateRequestMessage = "please enter your licence plate:";
         internal const string k_VehicleIsRegistered = "Your vehicle is already in our garage!{0}";
         internal const string k_GetNameMessage = "Please enter you name:";
@@ -32,14 +33,25 @@ Type in the corresponding number to your visit purpose please{0}";
         internal const string k_FuelMessage = "fuel";
         internal const string k_NotValidFuelOrEnergyLeftMessage = "Not a valid input. Please enter how much {0} left in your car:";
         internal const string k_GetColorMessage = "Please enter the color of your car:"; 
-        
         internal const string k_GetNumDoorsMessage = "Please enter the number of doors your car has:";
-        internal const string kelMessage = "fuel";
-        internal const string k_Batteryssage = "battery";
-        internal const string _FuelMessage = "fuel"; 
-        internal const string k_BaMessage = "battery";
-        internal const string k_FuelMessa = "fuel";
-
+        internal const string k_ExitMessage = "Exit program...";
+        internal const string k_NotValidLicensePlateMessage = "Invalid Input. please enter your licence plate:";
+        internal const string k_VehicleNotRegisteredMessage = "Sorry the given vehicle is not in the garage."; 
+        internal const string k_NotValidBatteryMessage = "Invalid input. Please enter how much battery to fill:";
+        internal const string k_BatteryToChargeMessage = "Please enter how much battery to fill:";
+        internal const string k_RefuelAmountMessage = "Please enter how much fuel to fill:";
+        internal const string k_NotValidRefuelAmountMessage = "Invalid input. Please enter how much fuel to fill:";      
+        internal const string k_GetNewStatusMessage = "What would you like the new status to be?";
+        internal const string k_FilterByStatusMessage = "Do you want to filter by status? Enter 1 for yes, 0 for no";
+        internal const string k_NotValidFilterByStatusMessage = "Invalid input. Do you want to filter by status? Enter 1 for yes, 0 for no";
+        internal const string k_GetStatusFilterMessage = "Please enter the wanted status to display";
+        internal const string k_GetWheelMakerMessage = "Please enter the name of your wheel maker:";
+        internal const string k_NotValidWheelMakerMessage = "Invalid input. Please enter the name of your wheel maker:";
+        internal const string k_GetCurrentAirPressureMessage = "Please enter the currnet air pressure in your wheels (maximum {0}):";
+        internal const string k_InvalidAirPressureMessage = "Invalid air pressure input";
+        internal const string k_AirPressureAboveMAximumMessage = "You have entered a number above the maximum air pressure";
+        internal const string k_0OR1Message = "{0}. {1}";
+        internal const string k_ChooseVehicleMessage = "Type in the corresponding number to your vehicle please.{0}";
 
     }
 }
