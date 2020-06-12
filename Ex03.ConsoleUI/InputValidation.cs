@@ -10,12 +10,11 @@ namespace Ex03.ConsoleUI
 {
     public static class InputValidation
     {
-        private const char k_OneLengthInput = '1';
-        private const char k_ZeroChar = '0';
-        private const char k_OneChar = '1';
-        private const int k_ZeroInt = 0;
-        private const float k_ZeroFloat = 0f;
-        private const int k_OneInt = 1;
+        internal const char k_ZeroChar = '0';
+        internal const char k_OneChar = '1';
+        internal const int k_ZeroInt = 0;
+        internal const float k_ZeroFloat = 0f;
+        internal const int k_OneInt = 1;
 
         public static bool IsValidEnumInput(string i_UserInput, int i_EnumLength, out int i_ValidUserInput)
         {
@@ -48,7 +47,11 @@ namespace Ex03.ConsoleUI
 
         public static bool IsValidEngineVolume(string i_EngineVolume, out int i_ValidEngineVolume)
         {
-            return int.TryParse(i_EngineVolume, out i_ValidEngineVolume) && isPositiveNumber(i_ValidEngineVolume);
+            if (int.TryParse(i_EngineVolume, out i_ValidEngineVolume))
+            {
+                throw new FormatException(MessagesEnglish.k_InvalidInputMessage);
+            }
+            return isPositiveNumber(i_ValidEngineVolume);
         }
 
         public static bool IsValidPhoneNumber(string i_PhoneNumber)
@@ -101,7 +104,7 @@ namespace Ex03.ConsoleUI
         {
             bool isValidStatusFliter = false;
 
-            if(i_StatusInput.Length == k_OneLengthInput)
+            if(i_StatusInput.Length == k_OneInt)
             {
                 if(i_StatusInput[0].Equals(k_ZeroChar) || i_StatusInput[0].Equals(k_OneChar))
                 {

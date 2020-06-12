@@ -11,8 +11,12 @@ namespace Ex03.ConsoleUI
 {
     class UIManager
     {
+        private const float k_CarMaxFuel = 60f;
+        private const float k_ElectricCarMaxBattery = 2.1f;
+        private const float k_ElectricMotorcycleMaxBattery = 1.2f;
+        private const float k_MotorcycleMaxFuel = 7f;
+        private const float k_TruckMaxFuel = 120f;
 
-        private const bool k_FirstTimeLicencePlateInput = true;
         public static void Welcome()
         {
             Console.WriteLine(MessagesEnglish.k_GarageHelloMessage, Environment.NewLine);
@@ -24,6 +28,7 @@ namespace Ex03.ConsoleUI
         {
             string userInput;
             int validOption;
+            string licencePlate = string.Empty;
             Console.WriteLine(MessagesEnglish.k_GarageOptionsMessage);
             userInput = Console.ReadLine();
             Ex02.ConsoleUtils.Screen.Clear();
@@ -38,28 +43,33 @@ namespace Ex03.ConsoleUI
 
             eMenu userOption = (eMenu) validOption;
 
+            if(!userInput.Equals(eMenu.DisplayVehiclesInGarage))
+            {
+                licencePlate = EnterLicencePlate();
+            }
+
             switch (userOption)
             {
                 case eMenu.AddNewVehicle:
-                    AddNewVehicle();
+                    AddNewVehicle(licencePlate);
                     break;
                 case eMenu.DisplayVehiclesInGarage:
                     DisplayVehiclesInGarage();
                     break;
                 case eMenu.ChangeCarStatus:
-                    ChangeVehicleStatus();
+                    ChangeVehicleStatus(licencePlate);
                     break;
                 case eMenu.FillAir:
-                    FillAir();
+                    FillAir(licencePlate);
                     break;
                 case eMenu.Refuel:
-                    ReFuel(k_FirstTimeLicencePlateInput);
+                    ReFuel(licencePlate);
                     break;
                 case eMenu.Recharge:
-                    FillBattery(k_FirstTimeLicencePlateInput);
+                    FillBattery(licencePlate);
                     break;
                 case eMenu.DisplayVehicleDetails:
-                    DisplayVehicleDetails();
+                    DisplayVehicleDetails(licencePlate);
                     break;
                 case eMenu.Exit:
                     ExitProgram();
@@ -70,20 +80,15 @@ namespace Ex03.ConsoleUI
             }
         }
 
-        public static void AddNewVehicle()
+        public static void AddNewVehicle(string i_LicencePlate)
         {
             eVehicles userVehicle;
             string vehicleModel;
-            string licencePlate;
-            float energyLeft = 0f; //can be fuel or battery
             bool isElectricVehicle;
             string ownerName;
             string ownerPhoneNumber;
 
-
-
-            licencePlate = EnterLicencePlate();
-            if (GarageManager.VehiclesStatusDictionary.ContainsKey(licencePlate))
+            if (GarageManager.VehiclesStatusDictionary.ContainsKey(i_LicencePlate))
             {
                 Console.WriteLine(MessagesEnglish.k_VehicleIsRegistered, Environment.NewLine); 
                 Thread.Sleep(1200);
@@ -116,22 +121,22 @@ namespace Ex03.ConsoleUI
                 {
                     case eVehicles.Car:
                         isElectricVehicle = false;
-                        CreateCar(isElectricVehicle, vehicleModel, licencePlate, owner, eVehicles.Car);
+                        CreateCar(isElectricVehicle, vehicleModel, i_LicencePlate, owner, eVehicles.Car);
                         break;
                     case eVehicles.ElectricCar:
                         isElectricVehicle = true;
-                        CreateCar(isElectricVehicle, vehicleModel, licencePlate, owner, eVehicles.ElectricCar);
+                        CreateCar(isElectricVehicle, vehicleModel, i_LicencePlate, owner, eVehicles.ElectricCar);
                         break;
                     case eVehicles.Motorcycle:
                         isElectricVehicle = false;
-                        CreateMotorcycle(isElectricVehicle, vehicleModel, licencePlate, owner, eVehicles.Motorcycle);
+                        CreateMotorcycle(isElectricVehicle, vehicleModel, i_LicencePlate, owner, eVehicles.Motorcycle);
                         break;
                     case eVehicles.ElectricMotorcycle:
                         isElectricVehicle = true;
-                        CreateMotorcycle(isElectricVehicle, vehicleModel, licencePlate, owner, eVehicles.ElectricMotorcycle);
+                        CreateMotorcycle(isElectricVehicle, vehicleModel, i_LicencePlate, owner, eVehicles.ElectricMotorcycle);
                         break;
                     case eVehicles.Truck:
-                        CreateTruck(vehicleModel, licencePlate, owner, eVehicles.Truck);
+                        CreateTruck(vehicleModel, i_LicencePlate, owner, eVehicles.Truck);
                         break;
                     default:
                         //invalid input, need to handle.......
@@ -152,7 +157,7 @@ namespace Ex03.ConsoleUI
             float wheelsCurrentAirPressure;
             string wheelMaker;
 
-            energyLeft = EnterFuellOrEnergyLeft(i_IsElectric, vehicle);
+            energyLeft = EnterFuellOrEnergyLeft(i_IsElectric, vehicle, i_IsElectric ? k_ElectricCarMaxBattery : k_CarMaxFuel);
 
             Console.WriteLine(MessagesEnglish.k_GetColorMessage);
             color = (eCarColors) DisplayEnumOptions(typeof(eCarColors));
@@ -163,7 +168,8 @@ namespace Ex03.ConsoleUI
             GetWheelInformation(out wheelMaker, out wheelsCurrentAirPressure, GarageManager.m_CarMaxAirPressure);
             if (i_IsElectric)
             {
-                ElectricCar newElectricCar = CreateVehicle.CreateElectricCar(i_CarModel, i_LicencePlate, energyLeft, color, numOfDoors, wheelMaker, wheelsCurrentAirPressure, i_VehicleOwner);
+                ElectricCar newElectricCar = CreateVehicle.CreateElectricCar(i_CarModel, i_LicencePlate, energyLeft, color,
+                    numOfDoors, wheelMaker, wheelsCurrentAirPressure, i_VehicleOwner);
                 GarageManager.AddVehicleToGarage(newElectricCar);
             }
             else
@@ -177,13 +183,12 @@ namespace Ex03.ConsoleUI
         private static void CreateMotorcycle(bool i_IsElectric, string i_MotorcycleModel, string i_LicencePlate, VehicleOwner i_VehicleOwner, eVehicles i_Vehicle)
         {
             float energyLeft;
-            string validLicenceType = string.Empty;
             int validEngineVolume;
             float wheelsCurrentAirPressure;
             string wheelMaker;
             eMotorcycleLicenceType licenceType;
 
-            energyLeft = EnterFuellOrEnergyLeft(i_IsElectric, i_Vehicle);
+            energyLeft = EnterFuellOrEnergyLeft(i_IsElectric, i_Vehicle, i_IsElectric ? k_ElectricMotorcycleMaxBattery : k_MotorcycleMaxFuel);
 
             Console.WriteLine(MessagesEnglish.k_GetLicenseTypeMessage);
             licenceType = (eMotorcycleLicenceType) DisplayEnumOptions(typeof(eMotorcycleLicenceType));
@@ -194,12 +199,14 @@ namespace Ex03.ConsoleUI
 
             if (i_IsElectric)
             {
-                ElectricMotorcycle newElectricMotorcycle = CreateVehicle.CreateElectricMotorcycle(i_MotorcycleModel, i_LicencePlate, energyLeft, validLicenceType, validEngineVolume, wheelMaker, wheelsCurrentAirPressure, i_VehicleOwner);
+                ElectricMotorcycle newElectricMotorcycle = CreateVehicle.CreateElectricMotorcycle(i_MotorcycleModel, i_LicencePlate, energyLeft, licenceType,
+                    validEngineVolume, wheelMaker, wheelsCurrentAirPressure, i_VehicleOwner);
                 GarageManager.AddVehicleToGarage(newElectricMotorcycle);
             }
             else
             {
-                Motorcycle newMotorcycle = CreateVehicle.CreateMotorcycle(i_MotorcycleModel, i_LicencePlate, energyLeft, validLicenceType, validEngineVolume, wheelMaker, wheelsCurrentAirPressure, i_VehicleOwner);
+                Motorcycle newMotorcycle = CreateVehicle.CreateMotorcycle(i_MotorcycleModel, i_LicencePlate, energyLeft, licenceType,
+                    validEngineVolume, wheelMaker, wheelsCurrentAirPressure, i_VehicleOwner);
                 GarageManager.AddVehicleToGarage(newMotorcycle);
             }
         }
@@ -213,7 +220,7 @@ namespace Ex03.ConsoleUI
             string wheelMaker;
             bool isElectric = false;
 
-            fuelLeft = EnterFuellOrEnergyLeft(isElectric, i_Vehicle);
+            fuelLeft = EnterFuellOrEnergyLeft(isElectric, i_Vehicle, k_TruckMaxFuel);
 
             dangerousMaterials = EnterDangerousMaterialsInput();
 
@@ -225,14 +232,14 @@ namespace Ex03.ConsoleUI
             GarageManager.AddVehicleToGarage(newTruck);
         }
 
-        private static float EnterFuellOrEnergyLeft(bool i_IsElectric, eVehicles i_Vehicle)
+        private static float EnterFuellOrEnergyLeft(bool i_IsElectric, eVehicles i_Vehicle, float i_MaxEnergyOrFuelLeft)
         {
             string energyLeftInput;
             float energyLeft;
 
             Console.WriteLine(MessagesEnglish.k_GetFuelOrEnergyLeftMessage, i_IsElectric ? MessagesEnglish.k_BatteryMessage : MessagesEnglish.k_FuelMessage, i_Vehicle);
             energyLeftInput = Console.ReadLine();
-            while (!InputValidation.IsValidFloatInput(energyLeftInput, out energyLeft) || (i_IsElectric && energyLeft > 2.1) || (!i_IsElectric && energyLeft < 60))
+            while (!InputValidation.IsValidFloatInput(energyLeftInput, out energyLeft) || (energyLeft > i_MaxEnergyOrFuelLeft))
             {
                 Console.WriteLine(MessagesEnglish.k_NotValidFuelOrEnergyLeftMessage, i_IsElectric ? MessagesEnglish.k_BatteryMessage : MessagesEnglish.k_FuelMessage, i_Vehicle);
                 energyLeftInput = Console.ReadLine();
@@ -243,15 +250,25 @@ namespace Ex03.ConsoleUI
         private static int EnterEngineVolume()
         {
             string engineVolumeInput;
-            int validEngineVolume;
+            int validEngineVolume = 0;
 
             Console.WriteLine(MessagesEnglish.k_GetEngineVolumeMessage);
             engineVolumeInput = Console.ReadLine();
-            while (!InputValidation.IsValidEngineVolume(engineVolumeInput, out validEngineVolume))
+
+            try
             {
-                Console.WriteLine(MessagesEnglish.k_NotValidEngineVolumeMessage);
-                engineVolumeInput = Console.ReadLine();
+                while (!InputValidation.IsValidEngineVolume(engineVolumeInput, out validEngineVolume))
+                {
+                    Console.WriteLine("Not a valid input. Please enter the engine's volume (in Cc):");
+                    engineVolumeInput = Console.ReadLine();
+                }
             }
+            catch(FormatException fe)
+            {
+                Console.WriteLine(fe.Message);
+                EnterEngineVolume();
+            }
+
             return validEngineVolume;
         }
 
@@ -278,7 +295,7 @@ namespace Ex03.ConsoleUI
 
             Console.WriteLine(MessagesEnglish.k_GetCargoVolumeMessage);
             cargoVolumeInput = Console.ReadLine();
-            //need to change the while to isvalidtruckcargo from isvalidfuelinput
+
             while (!InputValidation.IsValidFloatInput(cargoVolumeInput, out validCargoVolume))
             {
                 Console.WriteLine(MessagesEnglish.k_NotValidCargoVolumeMessage);
@@ -374,7 +391,7 @@ namespace Ex03.ConsoleUI
 
             Ex02.ConsoleUtils.Screen.Clear();
 
-            if (userInput[0].Equals('0'))
+            if (userInput[0].Equals(InputValidation.k_ZeroChar))
             {
                 GarageManager.PrintVehiclesInGarage();
             }
@@ -389,12 +406,10 @@ namespace Ex03.ConsoleUI
             GarageOptionsForCustomer();
         }
 
-        public static void ChangeVehicleStatus()
+        public static void ChangeVehicleStatus(string i_LicencePlate)
         {
-            string licencePlate;
 
-            licencePlate = EnterLicencePlate();
-            if (GarageManager.CheckIfVehicleInGarage(licencePlate) == GarageManager.k_NotInGarage)
+            if (GarageManager.CheckIfVehicleInGarage(i_LicencePlate) == GarageManager.k_NotInGarage)
             {
                 Console.WriteLine(MessagesEnglish.k_VehicleNotRegisteredMessage);
                 Thread.Sleep(1500);
@@ -402,41 +417,35 @@ namespace Ex03.ConsoleUI
             else
             {
                 Console.WriteLine(MessagesEnglish.k_GetNewStatusMessage);
-                GarageManager.ChangeVehicleStatus(licencePlate, (eVehicleStatus)DisplayEnumOptions(typeof(eVehicleStatus)));
+                GarageManager.ChangeVehicleStatus(i_LicencePlate, (eVehicleStatus)DisplayEnumOptions(typeof(eVehicleStatus)));
             }
             Ex02.ConsoleUtils.Screen.Clear();
             GarageOptionsForCustomer();
         }
 
-        private static void FillAir()
+        private static void FillAir(string i_LicencePlate)
         {
-            string licencePlate;
 
-            licencePlate = EnterLicencePlate();
-            if (GarageManager.CheckIfVehicleInGarage(licencePlate) == GarageManager.k_NotInGarage)
+            if (GarageManager.CheckIfVehicleInGarage(i_LicencePlate) == GarageManager.k_NotInGarage)
             {
                 Console.WriteLine(MessagesEnglish.k_VehicleNotRegisteredMessage);
             }
             else
             {
-                GarageManager.FillAir(licencePlate);
+                GarageManager.FillAir(i_LicencePlate);
             }
             Thread.Sleep(1000);
             Ex02.ConsoleUtils.Screen.Clear();
             GarageOptionsForCustomer();
         }
-        private static void ReFuel( bool i_FirstTimeLicencePlateInput)
+
+        private static void ReFuel(string i_LicencePlate)
         {
-            string licencePlate = string.Empty;
             string LittersOfFuelToFiil;
             float ValidLittersOfFuelToAdd;
             eFuelTypes fuelType;
-            if(i_FirstTimeLicencePlateInput)
-            {
-                licencePlate = EnterLicencePlate();
-            }
 
-            if (GarageManager.CheckIfVehicleInGarage(licencePlate) == GarageManager.k_NotInGarage)
+            if (GarageManager.CheckIfVehicleInGarage(i_LicencePlate) == GarageManager.k_NotInGarage)
             {
                 Console.WriteLine(MessagesEnglish.k_VehicleNotRegisteredMessage);
             }
@@ -454,42 +463,31 @@ namespace Ex03.ConsoleUI
 
                 try
                 {
-                    GarageManager.Refuel(licencePlate, ValidLittersOfFuelToAdd, fuelType);
+                    GarageManager.Refuel(i_LicencePlate, ValidLittersOfFuelToAdd, fuelType);
                 }
                 catch (ValueOutOfRangeException vore)
                 {
                     Console.WriteLine(vore.Message);
-                    i_FirstTimeLicencePlateInput = false;
-                    ReFuel(i_FirstTimeLicencePlateInput);
+                    Thread.Sleep(2000);
+                    ReFuel(i_LicencePlate);
                 }
                 catch (ArgumentException ae)
                 {
                     Console.WriteLine(ae.Message);
-                    i_FirstTimeLicencePlateInput = false;
-                    ReFuel(i_FirstTimeLicencePlateInput);
+                    Thread.Sleep(2000);
+                    ReFuel(i_LicencePlate);
                 }
             }
             Thread.Sleep(1000);
             Ex02.ConsoleUtils.Screen.Clear();
             GarageOptionsForCustomer();
         }
-        private static void FillBattery(bool i_FirstTimeLicencePlateInput)
+        private static void FillBattery(string i_LicencePlate)
         {
-            string licencePlate;
             string batteryHoursInput;
             float ValidBatteryHours;
 
-            if (i_FirstTimeLicencePlateInput)
-            {
-                licencePlate = EnterLicencePlate();
-            }
-            else
-            {
-                Console.WriteLine(MessagesEnglish.k_NotValidBatteryMessage);
-                licencePlate = Console.ReadLine(); //need to make invalidinput for this line!
-            }
-
-            if (GarageManager.CheckIfVehicleInGarage(licencePlate) == GarageManager.k_NotInGarage)
+            if (GarageManager.CheckIfVehicleInGarage(i_LicencePlate) == GarageManager.k_NotInGarage)
             {
                 Console.WriteLine(MessagesEnglish.k_VehicleNotRegisteredMessage);
             }
@@ -505,17 +503,19 @@ namespace Ex03.ConsoleUI
 
                 try
                 {
-                    GarageManager.FillBattery(licencePlate, ValidBatteryHours);
+                    GarageManager.FillBattery(i_LicencePlate, ValidBatteryHours);
                 }
                 catch (ValueOutOfRangeException vore)
                 {
                     Console.WriteLine(vore.Message);
-                    i_FirstTimeLicencePlateInput = false;
-                    ReFuel(i_FirstTimeLicencePlateInput);
+                    Thread.Sleep(2000);
+                    FillBattery(i_LicencePlate);
                 }
                 catch (ArgumentException ae)
                 {
                     Console.WriteLine(ae.Message);
+                    Thread.Sleep(2000);
+                    FillBattery(i_LicencePlate);
                 }
             }
             Thread.Sleep(1000);
@@ -523,11 +523,10 @@ namespace Ex03.ConsoleUI
             GarageOptionsForCustomer();
         }
 
-        private static void DisplayVehicleDetails()
+        private static void DisplayVehicleDetails(string i_LicencePlate)
         {
-            string licencePlate;
-            licencePlate = EnterLicencePlate();
-            if (GarageManager.CheckIfVehicleInGarage(licencePlate) == GarageManager.k_NotInGarage)
+
+            if (GarageManager.CheckIfVehicleInGarage(i_LicencePlate) == GarageManager.k_NotInGarage)
             {
                 Console.WriteLine(MessagesEnglish.k_VehicleNotRegisteredMessage);
                 Thread.Sleep(2000);
@@ -537,7 +536,7 @@ namespace Ex03.ConsoleUI
             else
             {
                 Ex02.ConsoleUtils.Screen.Clear();
-                GarageManager.PrintVehicleDetails(licencePlate);
+                GarageManager.PrintVehicleDetails(i_LicencePlate);
             }
             Thread.Sleep(8000);
             Ex02.ConsoleUtils.Screen.Clear();
