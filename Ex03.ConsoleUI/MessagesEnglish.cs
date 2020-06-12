@@ -27,7 +27,7 @@ Type in the corresponding number to your visit purpose please{0}";
         internal const string k_NotValidPhoneNumberMessage = "Not a valid input. Please enter your phone number:"; 
         internal const string k_GetVehicleModelMessage = "Please enter your vehicle's model:";
         internal const string k_NotValidVehicleModelMessage = "Not a valid input. Please enter your vehicle's model:";
-        internal const string k_GetFuelOrEnergyLeftMessage = "Please enter how much {0} left in your car:";
+        internal const string k_GetFuelOrEnergyLeftMessage = "Please enter how much {0} left in your {1}:";
         internal const string k_BatteryMessage = "battery";
         internal const string k_FuelMessage = "fuel";
         internal const string k_NotValidFuelOrEnergyLeftMessage = "Not a valid input. Please enter how much {0} left in your car:";
