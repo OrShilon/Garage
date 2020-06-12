@@ -52,6 +52,14 @@ Type in the corresponding number to your visit purpose please{0}";
         internal const string k_AirPressureAboveMAximumMessage = "You have entered a number above the maximum air pressure";
         internal const string k_0OR1Message = "{0}. {1}";
         internal const string k_ChooseVehicleMessage = "Type in the corresponding number to your vehicle please.{0}";
+        internal const string k_GetCargoVolumeMessage = "Please enter your truck's cargo volume:";
+        internal const string k_NotValidCargoVolumeMessage = "Not a valid input. Please enter your truck's cargo volume:";
+        internal const string k_DangerMaterialMessage = "Is there any dangerous materials in your truck? Enter 1 for yes, 0 for no.";
+        internal const string k_NotValidDangerMaterialMessage = "Not a valid input. Please enter the color of your car:";
+        internal const string k_GetEngineVolumeMessage = "Please enter your engine's volume (in Cc):";
+        internal const string k_NotValidEngineVolumeMessage = "Not a valid input. Please enter the engine's volume (in Cc):";
+        internal const string k_GetLicenseTypeMessage = "Please enter your licence type:";
+
 
     }
 }
