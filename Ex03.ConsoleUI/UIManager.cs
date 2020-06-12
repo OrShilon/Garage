@@ -62,7 +62,7 @@ namespace Ex03.ConsoleUI
                     DisplayVehicleDetails();
                     break;
                 case eMenu.Exit:
-                    //exit program.....
+                    ExitProgram();
                     break;
                 default:
                     //invalid input, need to handle.......
@@ -116,22 +116,22 @@ namespace Ex03.ConsoleUI
                 {
                     case eVehicles.Car:
                         isElectricVehicle = false;
-                        CreateCar(isElectricVehicle, vehicleModel, licencePlate, energyLeft, owner);
+                        CreateCar(isElectricVehicle, vehicleModel, licencePlate, owner, eVehicles.Car);
                         break;
                     case eVehicles.ElectricCar:
                         isElectricVehicle = true;
-                        CreateCar(isElectricVehicle, vehicleModel, licencePlate, energyLeft, owner);
+                        CreateCar(isElectricVehicle, vehicleModel, licencePlate, owner, eVehicles.ElectricCar);
                         break;
                     case eVehicles.Motorcycle:
                         isElectricVehicle = false;
-                        CreateMotorcycle(isElectricVehicle, vehicleModel, licencePlate, energyLeft, owner);
+                        CreateMotorcycle(isElectricVehicle, vehicleModel, licencePlate, owner, eVehicles.Motorcycle);
                         break;
                     case eVehicles.ElectricMotorcycle:
                         isElectricVehicle = true;
-                        CreateMotorcycle(isElectricVehicle, vehicleModel, licencePlate, energyLeft, owner);
+                        CreateMotorcycle(isElectricVehicle, vehicleModel, licencePlate, owner, eVehicles.ElectricMotorcycle);
                         break;
                     case eVehicles.Truck:
-                        CreateTruck(vehicleModel, licencePlate, energyLeft, owner);
+                        CreateTruck(vehicleModel, licencePlate, owner, eVehicles.Truck);
                         break;
                     default:
                         //invalid input, need to handle.......
@@ -144,125 +144,121 @@ namespace Ex03.ConsoleUI
         }
 
         // there is another method name CreateCar in GarageLogic! need to check if it is ok
-        private static Vehicle CreateCar(bool i_IsElectric, string i_CarModel, string i_LicencePlate, float i_EnergyLeft, VehicleOwner i_VehicleOwner)
+        private static void CreateCar(bool i_IsElectric, string i_CarModel, string i_LicencePlate, VehicleOwner i_VehicleOwner, eVehicles vehicle)
         {
-            Vehicle vehicle;
-            string energyLeftInput; //can be fuel or battery
+            float energyLeft;
             eCarColors color;
             eNumOfDoors numOfDoors;
             float wheelsCurrentAirPressure;
             string wheelMaker;
 
-            Console.WriteLine(MessagesEnglish.k_GetFuelOrEnergyLeftMessage, i_IsElectric ? MessagesEnglish.k_BatteryMessage : MessagesEnglish.k_FuelMessage);
-            energyLeftInput = Console.ReadLine();
-            while (!InputValidation.IsValidFloatInput(energyLeftInput, out i_EnergyLeft) || (i_IsElectric && i_EnergyLeft > 2.1) || (!i_IsElectric && i_EnergyLeft < 60))
-            {
-                Console.WriteLine(MessagesEnglish.k_NotValidFuelOrEnergyLeftMessage, i_IsElectric ? MessagesEnglish.k_BatteryMessage : MessagesEnglish.k_FuelMessage);
-                energyLeftInput = Console.ReadLine();
-            }
+            energyLeft = EnterFuellOrEnergyLeft(i_IsElectric, vehicle);
+
             Console.WriteLine(MessagesEnglish.k_GetColorMessage);
             color = (eCarColors) DisplayEnumOptions(typeof(eCarColors));
+
             Console.WriteLine(MessagesEnglish.k_GetNumDoorsMessage);
             numOfDoors = (eNumOfDoors)DisplayEnumOptions(typeof(eNumOfDoors));
 
             GetWheelInformation(out wheelMaker, out wheelsCurrentAirPressure, GarageManager.m_CarMaxAirPressure);
             if (i_IsElectric)
             {
-                ElectricCar newElectricCar = CreateVehicle.CreateElectricCar(i_CarModel, i_LicencePlate, i_EnergyLeft, color, numOfDoors, wheelMaker, wheelsCurrentAirPressure, i_VehicleOwner);
+                ElectricCar newElectricCar = CreateVehicle.CreateElectricCar(i_CarModel, i_LicencePlate, energyLeft, color, numOfDoors, wheelMaker, wheelsCurrentAirPressure, i_VehicleOwner);
                 GarageManager.AddVehicleToGarage(newElectricCar);
-                vehicle = newElectricCar;
             }
             else
             {
-                Car newCar = CreateVehicle.CreateCar(i_CarModel, i_LicencePlate, i_EnergyLeft, color, numOfDoors, wheelMaker, wheelsCurrentAirPressure, i_VehicleOwner);
+                Car newCar = CreateVehicle.CreateCar(i_CarModel, i_LicencePlate, energyLeft, color, numOfDoors, wheelMaker, wheelsCurrentAirPressure, i_VehicleOwner);
                 GarageManager.AddVehicleToGarage(newCar);
-                vehicle = newCar;
             }
-
-            return vehicle;
         }
 
-        private static void CreateMotorcycle(bool i_IsElectric, string i_MotorcycleModel, string i_LicencePlate, float i_EnergyLeft, VehicleOwner i_VehicleOwner)
+
+        private static void CreateMotorcycle(bool i_IsElectric, string i_MotorcycleModel, string i_LicencePlate, VehicleOwner i_VehicleOwner, eVehicles i_Vehicle)
         {
-            string energyLeftInput; //can be fuel or battery
-            string licenceTypeInput;
+            float energyLeft;
             string validLicenceType = string.Empty;
-            string engineVolume = string.Empty;
             int validEngineVolume;
             float wheelsCurrentAirPressure;
             string wheelMaker;
             eMotorcycleLicenceType licenceType;
 
-            Console.WriteLine("Please enter how much {0} left in your motorcycle:", i_IsElectric ? "battery" : "fuel");//already have same message for car
-            energyLeftInput = Console.ReadLine();
-            while (!InputValidation.IsValidFloatInput(energyLeftInput, out i_EnergyLeft) || (i_IsElectric && i_EnergyLeft > 1.2) || (!i_IsElectric && i_EnergyLeft < 7))
-            {
-                Console.WriteLine("Not a valid input. Please enter how much {0} left in your motorcycle:", i_IsElectric ? "battery" : "fuel");
-                energyLeftInput = Console.ReadLine();
-            }
+            energyLeft = EnterFuellOrEnergyLeft(i_IsElectric, i_Vehicle);
 
             Console.WriteLine("Please enter your licence type:");
             licenceType = (eMotorcycleLicenceType) DisplayEnumOptions(typeof(eMotorcycleLicenceType));
 
-            switch (licenceType)
-            {
-                case eMotorcycleLicenceType.A:
-                    validLicenceType = "A";
-                    break;
-                case eMotorcycleLicenceType.A1:
-                    validLicenceType = "A1";
-                    break;
-                case eMotorcycleLicenceType.AA:
-                    validLicenceType = "AA";
-                    break;
-                case eMotorcycleLicenceType.B:
-                    validLicenceType = "B";
-                    break;
-                default:
-                    //exeption??? ----> need to check what to do here, because we will never get here!
-                    break;
-
-            }
-
-            Console.WriteLine("Please enter your engine's volume (in Cc):");
-            engineVolume = Console.ReadLine();
-            while (!InputValidation.IsValidEngineVolume(engineVolume, out validEngineVolume))
-            {
-                Console.WriteLine("Not a valid input. Please enter the engine's volume (in Cc): your Motorcycle has:");
-                engineVolume = Console.ReadLine();
-            }
+            validEngineVolume = EnterEngineVolume();
 
             GetWheelInformation(out wheelMaker, out wheelsCurrentAirPressure, GarageManager.m_CarMaxAirPressure);
 
             if (i_IsElectric)
             {
-                ElectricMotorcycle newElectricMotorcycle = CreateVehicle.CreateElectricMotorcycle(i_MotorcycleModel, i_LicencePlate, i_EnergyLeft, validLicenceType, validEngineVolume, wheelMaker, wheelsCurrentAirPressure, i_VehicleOwner);
+                ElectricMotorcycle newElectricMotorcycle = CreateVehicle.CreateElectricMotorcycle(i_MotorcycleModel, i_LicencePlate, energyLeft, validLicenceType, validEngineVolume, wheelMaker, wheelsCurrentAirPressure, i_VehicleOwner);
                 GarageManager.AddVehicleToGarage(newElectricMotorcycle);
             }
             else
             {
-                Motorcycle newMotorcycle = CreateVehicle.CreateMotorcycle(i_MotorcycleModel, i_LicencePlate, i_EnergyLeft, validLicenceType, validEngineVolume, wheelMaker, wheelsCurrentAirPressure, i_VehicleOwner);
+                Motorcycle newMotorcycle = CreateVehicle.CreateMotorcycle(i_MotorcycleModel, i_LicencePlate, energyLeft, validLicenceType, validEngineVolume, wheelMaker, wheelsCurrentAirPressure, i_VehicleOwner);
                 GarageManager.AddVehicleToGarage(newMotorcycle);
             }
         }
 
-        private static void CreateTruck(string i_TruckModel, string i_LicencePlate, float i_FuelLeft, VehicleOwner i_VehicleOwner)
+        private static void CreateTruck(string i_TruckModel, string i_LicencePlate, VehicleOwner i_VehicleOwner, eVehicles i_Vehicle)
         {
-            string fuelLeftInput;
-            string cargoVolume;
-            float validCargoVolume;
-            string dangerousMaterialsInput;
+            float fuelLeft;
+            float CargoVolume;
             bool dangerousMaterials;
             float wheelsCurrentAirPressure;
             string wheelMaker;
+            bool isElectric = false;
 
-            Console.WriteLine("Please enter how much fuel left in your truck:");
-            fuelLeftInput = Console.ReadLine();
-            while (!InputValidation.IsValidFloatInput(fuelLeftInput, out i_FuelLeft))
+            fuelLeft = EnterFuellOrEnergyLeft(isElectric, i_Vehicle);
+
+            dangerousMaterials = EnterDangerousMaterialsInput();
+
+            CargoVolume = EnterCargoVolume();
+
+            GetWheelInformation(out wheelMaker, out wheelsCurrentAirPressure, GarageManager.m_TruckMaxAirPressure);
+
+            Truck newTruck = CreateVehicle.CreateTruck(i_TruckModel, i_LicencePlate, fuelLeft, dangerousMaterials, CargoVolume, wheelMaker, wheelsCurrentAirPressure, i_VehicleOwner);
+            GarageManager.AddVehicleToGarage(newTruck);
+        }
+
+        private static float EnterFuellOrEnergyLeft(bool i_IsElectric, eVehicles i_Vehicle)
+        {
+            string energyLeftInput;
+            float energyLeft;
+
+            Console.WriteLine(MessagesEnglish.k_GetFuelOrEnergyLeftMessage, i_IsElectric ? MessagesEnglish.k_BatteryMessage : MessagesEnglish.k_FuelMessage, i_Vehicle);
+            energyLeftInput = Console.ReadLine();
+            while (!InputValidation.IsValidFloatInput(energyLeftInput, out energyLeft) || (i_IsElectric && energyLeft > 2.1) || (!i_IsElectric && energyLeft < 60))
             {
-                Console.WriteLine("Not a valid input. Please enter how much fuel left in your truck:");
-                fuelLeftInput = Console.ReadLine();
+                Console.WriteLine(MessagesEnglish.k_NotValidFuelOrEnergyLeftMessage, i_IsElectric ? MessagesEnglish.k_BatteryMessage : MessagesEnglish.k_FuelMessage, i_Vehicle);
+                energyLeftInput = Console.ReadLine();
             }
+            return energyLeft;
+        }
+
+        private static int EnterEngineVolume()
+        {
+            string engineVolumeInput;
+            int validEngineVolume;
+
+            Console.WriteLine("Please enter your engine's volume (in Cc):");
+            engineVolumeInput = Console.ReadLine();
+            while (!InputValidation.IsValidEngineVolume(engineVolumeInput, out validEngineVolume))
+            {
+                Console.WriteLine("Not a valid input. Please enter the engine's volume (in Cc):");
+                engineVolumeInput = Console.ReadLine();
+            }
+            return validEngineVolume;
+        }
+
+        private static bool EnterDangerousMaterialsInput()
+        {
+            string dangerousMaterialsInput;
+            bool dangerousMaterials;
 
             Console.WriteLine("Is there any dangerous materials in your truck? Enter 1 for yes, 0 for no.");
             dangerousMaterialsInput = Console.ReadLine();
@@ -272,21 +268,25 @@ namespace Ex03.ConsoleUI
                 dangerousMaterialsInput = Console.ReadLine();
             }
 
-            Console.WriteLine("Please enter your truck's cargo volume:");
-            cargoVolume = Console.ReadLine();
-            //need to change the while to isvalidtruckcargo from isvalidfuelinput
-            while (!InputValidation.IsValidFloatInput(cargoVolume, out validCargoVolume))
-            {
-                Console.WriteLine("Not a valid input. Please enter the number of doors your car has:");
-                cargoVolume = Console.ReadLine();
-            }
-
-            GetWheelInformation(out wheelMaker, out wheelsCurrentAirPressure, GarageManager.m_TruckMaxAirPressure);
-
-            Truck newTruck = CreateVehicle.CreateTruck(i_TruckModel, i_LicencePlate, i_FuelLeft, dangerousMaterials, validCargoVolume, wheelMaker, wheelsCurrentAirPressure, i_VehicleOwner);
-            GarageManager.AddVehicleToGarage(newTruck);
+            return dangerousMaterials;
         }
 
+        private static float EnterCargoVolume()
+        {
+            string cargoVolumeInput;
+            float validCargoVolume;
+
+            Console.WriteLine("Please enter your truck's cargo volume:");
+            cargoVolumeInput = Console.ReadLine();
+            //need to change the while to isvalidtruckcargo from isvalidfuelinput
+            while (!InputValidation.IsValidFloatInput(cargoVolumeInput, out validCargoVolume))
+            {
+                Console.WriteLine("Not a valid input. Please enter your truck's cargo volume:");
+                cargoVolumeInput = Console.ReadLine();
+            }
+
+            return validCargoVolume;
+        }
 
         public static int DisplayEnumOptions(Type i_Enum)
         {

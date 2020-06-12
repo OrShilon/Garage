@@ -8,9 +8,9 @@ namespace Ex03.GarageLogic
 {
     public class Motorcycle : FuelVehicle
     {
-        internal string m_LicenseType;
+        internal eMotorcycleLicenceType m_LicenseType;
         internal int m_EngineVolume;
-        public Motorcycle(string i_VehicleModel, string i_LicencePlate, float i_FuelLeft, float i_MaxFuel, byte i_NumOfWheels, string i_LicenseType, int i_EngineVolume, VehicleOwner i_Owner) :
+        public Motorcycle(string i_VehicleModel, string i_LicencePlate, float i_FuelLeft, float i_MaxFuel, byte i_NumOfWheels, eMotorcycleLicenceType i_LicenseType, int i_EngineVolume, VehicleOwner i_Owner) :
             base(i_VehicleModel, i_LicencePlate, i_FuelLeft, i_MaxFuel, i_NumOfWheels, eFuelTypes.Octan96, i_Owner)
         {
             m_LicenseType = i_LicenseType;
