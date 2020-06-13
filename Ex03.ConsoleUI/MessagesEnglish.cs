@@ -22,10 +22,11 @@ Type in the corresponding number to your visit purpose please";
         internal const string k_InvalidInputMessage = "Invalid input.";
         internal const string k_InvalidInputAndNewLineMessage = "Invalid input.{0}";
         internal const string k_LicensePlateRequestMessage = "please enter your licence plate:";
-        internal const string k_VehicleIsRegistered = "Your vehicle is already in our garage!{0}";
+        internal const string k_VehicleIsRegistered = "Your vehicle is already in our garage!";
         internal const string k_GetNameMessage = "Please enter you name:";
         internal const string k_GetPhoneNumberMessage = "Please enter your phone number:";
         internal const string k_NotValidPhoneNumberMessage = "Not a valid input. Please enter your phone number:"; 
+        internal const string k_GetVehicleTypeMessage = "Please enter your vehicle type:"; 
         internal const string k_GetVehicleModelMessage = "Please enter your vehicle's model:";
         internal const string k_NotValidVehicleModelMessage = "Not a valid input. Please enter your vehicle's model:";
         internal const string k_GetFuelOrEnergyLeftMessage = "Please enter how much {0} left in your {1}:";
@@ -65,6 +66,9 @@ Type in the corresponding number to your visit purpose please";
         internal const string k_IsRechargedMessage = "Your vehicle has been recharged.";
         internal const string k_WheelsInflatedMessage = "Your car wheels have been inflated properly. ";
 
+        internal const string k_StatusChangedMessage = "Your status has been changed. ";
+
+        internal const string k_AddedNewCarMessage = "Your vehicle has been added properly.";
 
 
     }

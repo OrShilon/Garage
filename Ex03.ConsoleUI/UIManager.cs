@@ -47,7 +47,7 @@ namespace Ex03.ConsoleUI
               
                 eMenu userOption = (eMenu)validOption;
 
-                if (!userInput.Equals(eMenu.DisplayVehiclesInGarage))
+                if (!userOption.Equals(eMenu.DisplayVehiclesInGarage))
                 {
                     licencePlate = EnterLicencePlate();
                 }
@@ -93,7 +93,7 @@ namespace Ex03.ConsoleUI
             }
             catch (ArgumentException ae)
             {
-                Console.WriteLine(ae.Message + Environment.NewLine + "going back to main menu.");
+                Console.WriteLine(ae.Message + Environment.NewLine + MessagesEnglish.k_GoingBackToMainMenuMessage);
                 Thread.Sleep(2000);
                 Ex02.ConsoleUtils.Screen.Clear();
             }
@@ -109,7 +109,8 @@ namespace Ex03.ConsoleUI
 
             if (GarageManager.VehiclesStatusDictionary.ContainsKey(i_LicencePlate))
             {
-                Console.WriteLine(MessagesEnglish.k_VehicleIsRegistered, Environment.NewLine); 
+                Console.WriteLine(MessagesEnglish.k_VehicleIsRegistered);
+                Console.WriteLine(MessagesEnglish.k_GoingBackToMainMenuMessage);
             }
             else
             {
@@ -123,6 +124,7 @@ namespace Ex03.ConsoleUI
                     ownerPhoneNumber = Console.ReadLine();
                 }
                 VehicleOwner owner = new VehicleOwner(ownerName, ownerPhoneNumber);
+                Console.WriteLine(MessagesEnglish.k_GetVehicleTypeMessage);
                 userVehicle = (eVehicles) DisplayEnumOptions(typeof(eVehicles));
 
                 Console.WriteLine(MessagesEnglish.k_GetVehicleModelMessage);
@@ -158,10 +160,12 @@ namespace Ex03.ConsoleUI
                         //invalid input, need to handle.......
                         break;
                 }
-
-                Thread.Sleep(1000);
-                Ex02.ConsoleUtils.Screen.Clear();
+                Console.WriteLine(MessagesEnglish.k_AddedNewCarMessage);
+                Console.WriteLine(MessagesEnglish.k_GoingBackToMainMenuMessage);
             }
+
+            Thread.Sleep(3000);
+            Ex02.ConsoleUtils.Screen.Clear();
         }
 
         private static void CreateCar(bool i_IsElectric, string i_CarModel, string i_LicencePlate, VehicleOwner i_VehicleOwner, eVehicles vehicle)
@@ -436,7 +440,7 @@ namespace Ex03.ConsoleUI
             {
                 Console.WriteLine(MessagesEnglish.k_GetNewStatusMessage);
                 GarageManager.ChangeVehicleStatus(i_LicencePlate, (eVehicleStatus)DisplayEnumOptions(typeof(eVehicleStatus)));
-                Console.WriteLine("Your stats has been changed. " + MessagesEnglish.k_GoingBackToMainMenuMessage);
+                Console.WriteLine(MessagesEnglish.k_StatusChangedMessage + MessagesEnglish.k_GoingBackToMainMenuMessage);
                 Thread.Sleep(1500);
             }
             Ex02.ConsoleUtils.Screen.Clear();

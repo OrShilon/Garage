@@ -12,22 +12,34 @@ namespace Ex03.GarageLogic
         private static List<Vehicle> m_AllVehiclesInGarage = new List<Vehicle>();
         private static readonly Dictionary<string, eVehicleStatus> VehiclesInGarageStatus = new Dictionary<string, eVehicleStatus>();
         public const int k_NotInGarage = -1;
-        public const int k_MinValue = 0;
+        public const int k_Zero = 0;
         public const float m_CarMaxAirPressure = 32f;
         public const float m_MotorcycleMaxAirPressure = 30f;
         public const float m_TruckMaxAirPressure = 28f;
+        private static int m_CountInRepair = 0;
+        private static int m_CountFixed = 0;
+        private static int m_CountPayed = 0;
 
         public static void AddVehicleToGarage(Vehicle i_Vehicle)
         {
+            bool isInGarage = false;
             foreach(Vehicle vehicle in m_AllVehiclesInGarage)
             {
                 if (vehicle.Equals(i_Vehicle))
                 {
-
+                    Console.WriteLine("Your vehicle has already been registered before.");
+                    ChangeVehicleStatus(i_Vehicle.m_LicencePlate, eVehicleStatus.InRepair);
+                    isInGarage = true;
+                    break;
                 }
             }
-            VehiclesInGarageStatus.Add(i_Vehicle.m_LicencePlate, eVehicleStatus.InRepair);
-            m_AllVehiclesInGarage.Add(i_Vehicle);
+            if (!isInGarage)
+            {
+                VehiclesInGarageStatus.Add(i_Vehicle.m_LicencePlate, eVehicleStatus.InRepair);
+                m_AllVehiclesInGarage.Add(i_Vehicle);
+                m_CountInRepair++;
+            }
+     
         }
 
 
@@ -46,9 +58,31 @@ namespace Ex03.GarageLogic
             }
         }
 
+
+        private static int VehicleStatusToCounter(eVehicleStatus i_VehicleStatus)
+        {
+            int countStatusType;
+            switch (i_VehicleStatus)
+            {
+                case eVehicleStatus.InRepair:
+                    countStatusType = m_CountInRepair;
+                    break;    
+                case eVehicleStatus.Fixed:
+                    countStatusType = m_CountFixed;
+                    break;           
+                case eVehicleStatus.Payed:
+                    countStatusType = m_CountPayed;
+                    break;
+                default:
+                    countStatusType = k_Zero;
+                    break;
+            }
+
+            return countStatusType;
+        }
         public static void PrintVehiclesInGarage()
         {
-            if (VehiclesInGarageStatus.Count == k_MinValue)
+            if (VehiclesInGarageStatus.Count == k_Zero)
             {
                 Console.WriteLine("Sorry but there are no vehicles in the garage currently");
             }
@@ -60,9 +94,9 @@ namespace Ex03.GarageLogic
 
         public static void PrintVehiclesInGarage(eVehicleStatus i_status)
         {
-            if (VehiclesInGarageStatus.Count == k_MinValue)
+            if (VehicleStatusToCounter(i_status) < 1)
             {
-                Console.WriteLine("Sorry but there are no vehicles in the garage currently");
+                Console.WriteLine("Sorry but there are no vehicles with this status in the garage currently");
             }
             else
             {
@@ -83,7 +117,35 @@ namespace Ex03.GarageLogic
             {
                 throw new ArgumentException("Vehicle is NOT in garage");
             }
-            VehiclesInGarageStatus[i_LicensePlateNumber] = i_NewVehicleStatus;
+            eVehicleStatus oldStatus = VehiclesInGarageStatus[i_LicensePlateNumber];
+            if (!oldStatus.Equals(i_NewVehicleStatus))
+            {
+                switch (oldStatus)
+                {
+                    case eVehicleStatus.InRepair:
+                        m_CountInRepair--;
+                        break;
+                    case eVehicleStatus.Fixed:
+                        m_CountFixed--;
+                        break;
+                    case eVehicleStatus.Payed:
+                        m_CountPayed--;
+                        break;
+                }
+                switch (i_NewVehicleStatus)
+                {
+                    case eVehicleStatus.InRepair:
+                        m_CountInRepair++;
+                        break;
+                    case eVehicleStatus.Fixed:
+                        m_CountFixed++;
+                        break;
+                    case eVehicleStatus.Payed:
+                        m_CountPayed++;
+                        break;
+                }
+                VehiclesInGarageStatus[i_LicensePlateNumber] = i_NewVehicleStatus;
+            } 
         }
 
         public static void PrintVehicleDetails(string i_LicencePlate)
@@ -133,7 +195,7 @@ namespace Ex03.GarageLogic
             float calculatedMaximumBatteryHours = customerVehicle.m_BatteryHourCapacity - customerVehicle.m_BatteryLeft;
             if (newBatteryLeft > customerVehicle.m_BatteryHourCapacity)
             {
-                throw new ValueOutOfRangeException(calculatedMaximumBatteryHours, k_MinValue);
+                throw new ValueOutOfRangeException(calculatedMaximumBatteryHours, k_Zero);
             }
            
             customerVehicle.m_BatteryLeft = newBatteryLeft;//צריך לבדוק האם לעשות GET וSET m_FuelOrBatteryLeftל
@@ -155,7 +217,7 @@ namespace Ex03.GarageLogic
             float calculatedMaximumFuelCapacity = customerVehicle.m_FuelTankCapacity - customerVehicle.m_FuelLeft;
             if (newFuelLeft > customerVehicle.m_FuelTankCapacity)
             {
-                throw new ValueOutOfRangeException(calculatedMaximumFuelCapacity, k_MinValue);
+                throw new ValueOutOfRangeException(calculatedMaximumFuelCapacity, k_Zero);
             }
             if (i_FuelType != customerVehicle.m_FuelType)//צריך לדרוס פונקצית == וגם !=
             {
