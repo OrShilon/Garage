@@ -259,7 +259,7 @@ namespace Ex03.ConsoleUI
             {
                 while (!InputValidation.IsValidEngineVolume(engineVolumeInput, out validEngineVolume))
                 {
-                    Console.WriteLine("Not a valid input. Please enter the engine's volume (in Cc):");
+                    Console.WriteLine(MessagesEnglish.k_NotValidEngineVolumeMessage);
                     engineVolumeInput = Console.ReadLine();
                 }
             }
@@ -401,7 +401,7 @@ namespace Ex03.ConsoleUI
                 userStatus = (eVehicleStatus) DisplayEnumOptions(typeof(eVehicleStatus));
                 GarageManager.PrintVehiclesInGarage(userStatus);
             }
-            Console.WriteLine("{0}Press any button to go back to the menu.", Environment.NewLine);
+            Console.WriteLine(Environment.NewLine + MessagesEnglish.k_PressButtonToGoToMainMenuMessage);
             Console.ReadLine();
             Ex02.ConsoleUtils.Screen.Clear();
             GarageOptionsForCustomer();
@@ -414,14 +414,14 @@ namespace Ex03.ConsoleUI
             {
                 Console.WriteLine(MessagesEnglish.k_VehicleNotRegisteredMessage);
                 Thread.Sleep(1000);
-                Console.WriteLine("going back to the main menu.");
+                Console.WriteLine(MessagesEnglish.k_GoingBackToMainMenuMessage);
                 Thread.Sleep(1500);
             }
             else
             {
                 Console.WriteLine(MessagesEnglish.k_GetNewStatusMessage);
                 GarageManager.ChangeVehicleStatus(i_LicencePlate, (eVehicleStatus)DisplayEnumOptions(typeof(eVehicleStatus)));
-                Console.WriteLine("Your stats has been changed. going back to the main menu.");
+                Console.WriteLine("Your stats has been changed. " + MessagesEnglish.k_GoingBackToMainMenuMessage);
                 Thread.Sleep(1500);
             }
             Ex02.ConsoleUtils.Screen.Clear();
@@ -435,13 +435,13 @@ namespace Ex03.ConsoleUI
             {
                 Console.WriteLine(MessagesEnglish.k_VehicleNotRegisteredMessage);
                 Thread.Sleep(1000);
-                Console.WriteLine("going back to the main menu.");
+                Console.WriteLine(MessagesEnglish.k_GoingBackToMainMenuMessage);
                 Thread.Sleep(1000);
             }
             else
             {
                 GarageManager.FillAir(i_LicencePlate);
-                Console.WriteLine("Your car wheels have been inflated properly. going back to the main menu.");
+                Console.WriteLine(MessagesEnglish.k_WheelsInflatedMessage + MessagesEnglish.k_GoingBackToMainMenuMessage);
                 Thread.Sleep(1000);
             }
             Thread.Sleep(1000);
@@ -459,7 +459,7 @@ namespace Ex03.ConsoleUI
             {
                 Console.WriteLine(MessagesEnglish.k_VehicleNotRegisteredMessage);
                 Thread.Sleep(1000);
-                Console.WriteLine("going back to the main menu.");
+                Console.WriteLine(MessagesEnglish.k_GoingBackToMainMenuMessage);
                 Thread.Sleep(1000);
             }
             else
@@ -478,7 +478,7 @@ namespace Ex03.ConsoleUI
                 try
                 {
                     GarageManager.Refuel(i_LicencePlate, ValidLittersOfFuelToAdd, fuelType);
-                    Console.WriteLine("Your vehicle has been refueled. going back to the main menu.");
+                    Console.WriteLine(MessagesEnglish.k_IsRefueledMessage + MessagesEnglish.k_GoingBackToMainMenuMessage);
                     Thread.Sleep(1000);
                 }
                 catch (ValueOutOfRangeException vore)
@@ -490,7 +490,7 @@ namespace Ex03.ConsoleUI
                 }
                 catch (ArgumentException ae)
                 {
-                    Console.WriteLine(ae.Message + "{0}going back to the main menu.", Environment.NewLine);
+                    Console.WriteLine(ae.Message + Environment.NewLine + MessagesEnglish.k_GoingBackToMainMenuMessage);
                     Thread.Sleep(1000);
                 }
             }
@@ -507,7 +507,7 @@ namespace Ex03.ConsoleUI
             {
                 Console.WriteLine(MessagesEnglish.k_VehicleNotRegisteredMessage);
                 Thread.Sleep(1000);
-                Console.WriteLine("going back to the main menu.");
+                Console.WriteLine(MessagesEnglish.k_GoingBackToMainMenuMessage);
                 Thread.Sleep(1000);
             }
             else
@@ -523,7 +523,7 @@ namespace Ex03.ConsoleUI
                 try
                 {
                     GarageManager.FillBattery(i_LicencePlate, ValidBatteryHours);
-                    Console.WriteLine("Your vehicle has been refueled. going back to the main menu.");
+                    Console.WriteLine(MessagesEnglish.k_IsRechargedMessage + MessagesEnglish.k_GoingBackToMainMenuMessage);
                     Thread.Sleep(1000);
                 }
                 catch (ValueOutOfRangeException vore)
@@ -535,7 +535,7 @@ namespace Ex03.ConsoleUI
                 }
                 catch (ArgumentException ae)
                 {
-                    Console.WriteLine(ae.Message + "{0}going back to the main menu.", Environment.NewLine);
+                    Console.WriteLine(ae.Message + Environment.NewLine + MessagesEnglish.k_GoingBackToMainMenuMessage);
                     Thread.Sleep(1000);
                 }
             }
@@ -551,7 +551,7 @@ namespace Ex03.ConsoleUI
             {
                 Console.WriteLine(MessagesEnglish.k_VehicleNotRegisteredMessage);
                 Thread.Sleep(1000);
-                Console.WriteLine("going back to the main menu.");
+                Console.WriteLine(MessagesEnglish.k_GoingBackToMainMenuMessage);
                 Thread.Sleep(1500);
                 Ex02.ConsoleUtils.Screen.Clear();
                 GarageOptionsForCustomer();
@@ -560,7 +560,7 @@ namespace Ex03.ConsoleUI
             {
                 Ex02.ConsoleUtils.Screen.Clear();
                 GarageManager.PrintVehicleDetails(i_LicencePlate);
-                Console.WriteLine("{0}Press any button to go back to the menu.", Environment.NewLine);
+                Console.WriteLine(Environment.NewLine + MessagesEnglish.k_PressButtonToGoToMainMenuMessage);
                 Console.ReadLine();
                 Ex02.ConsoleUtils.Screen.Clear();
                 GarageOptionsForCustomer();
