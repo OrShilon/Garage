@@ -401,7 +401,8 @@ namespace Ex03.ConsoleUI
                 userStatus = (eVehicleStatus) DisplayEnumOptions(typeof(eVehicleStatus));
                 GarageManager.PrintVehiclesInGarage(userStatus);
             }
-            Thread.Sleep(8000);
+            Console.WriteLine("{0}Press any button to go back to the menu.", Environment.NewLine);
+            Console.ReadLine();
             Ex02.ConsoleUtils.Screen.Clear();
             GarageOptionsForCustomer();
         }
@@ -412,12 +413,16 @@ namespace Ex03.ConsoleUI
             if (GarageManager.CheckIfVehicleInGarage(i_LicencePlate) == GarageManager.k_NotInGarage)
             {
                 Console.WriteLine(MessagesEnglish.k_VehicleNotRegisteredMessage);
+                Thread.Sleep(1000);
+                Console.WriteLine("going back to the main menu.");
                 Thread.Sleep(1500);
             }
             else
             {
                 Console.WriteLine(MessagesEnglish.k_GetNewStatusMessage);
                 GarageManager.ChangeVehicleStatus(i_LicencePlate, (eVehicleStatus)DisplayEnumOptions(typeof(eVehicleStatus)));
+                Console.WriteLine("Your stats has been changed. going back to the main menu.");
+                Thread.Sleep(1500);
             }
             Ex02.ConsoleUtils.Screen.Clear();
             GarageOptionsForCustomer();
@@ -429,10 +434,15 @@ namespace Ex03.ConsoleUI
             if (GarageManager.CheckIfVehicleInGarage(i_LicencePlate) == GarageManager.k_NotInGarage)
             {
                 Console.WriteLine(MessagesEnglish.k_VehicleNotRegisteredMessage);
+                Thread.Sleep(1000);
+                Console.WriteLine("going back to the main menu.");
+                Thread.Sleep(1000);
             }
             else
             {
                 GarageManager.FillAir(i_LicencePlate);
+                Console.WriteLine("Your car wheels have been inflated properly. going back to the main menu.");
+                Thread.Sleep(1000);
             }
             Thread.Sleep(1000);
             Ex02.ConsoleUtils.Screen.Clear();
@@ -448,6 +458,9 @@ namespace Ex03.ConsoleUI
             if (GarageManager.CheckIfVehicleInGarage(i_LicencePlate) == GarageManager.k_NotInGarage)
             {
                 Console.WriteLine(MessagesEnglish.k_VehicleNotRegisteredMessage);
+                Thread.Sleep(1000);
+                Console.WriteLine("going back to the main menu.");
+                Thread.Sleep(1000);
             }
             else
             {
@@ -464,16 +477,19 @@ namespace Ex03.ConsoleUI
                 try
                 {
                     GarageManager.Refuel(i_LicencePlate, ValidLittersOfFuelToAdd, fuelType);
+                    Console.WriteLine("Your vehicle has been refueled. going back to the main menu.");
+                    Thread.Sleep(1000);
                 }
                 catch (ValueOutOfRangeException vore)
                 {
                     Console.WriteLine(vore.Message);
                     Thread.Sleep(2000);
+                    Ex02.ConsoleUtils.Screen.Clear();
                     ReFuel(i_LicencePlate);
                 }
                 catch (ArgumentException ae)
                 {
-                    Console.WriteLine(ae.Message);
+                    Console.WriteLine(ae.Message + "{0}going back to the main menu.", Environment.NewLine);
                     Thread.Sleep(1000);
                 }
             }
@@ -489,6 +505,9 @@ namespace Ex03.ConsoleUI
             if (GarageManager.CheckIfVehicleInGarage(i_LicencePlate) == GarageManager.k_NotInGarage)
             {
                 Console.WriteLine(MessagesEnglish.k_VehicleNotRegisteredMessage);
+                Thread.Sleep(1000);
+                Console.WriteLine("going back to the main menu.");
+                Thread.Sleep(1000);
             }
             else
             {
@@ -503,17 +522,20 @@ namespace Ex03.ConsoleUI
                 try
                 {
                     GarageManager.FillBattery(i_LicencePlate, ValidBatteryHours);
+                    Console.WriteLine("Your vehicle has been refueled. going back to the main menu.");
+                    Thread.Sleep(1000);
                 }
                 catch (ValueOutOfRangeException vore)
                 {
                     Console.WriteLine(vore.Message);
                     Thread.Sleep(2000);
+                    Ex02.ConsoleUtils.Screen.Clear();
                     FillBattery(i_LicencePlate);
                 }
                 catch (ArgumentException ae)
                 {
-                    Console.WriteLine(ae.Message);
-            Thread.Sleep(1000);
+                    Console.WriteLine(ae.Message + "{0}going back to the main menu.", Environment.NewLine);
+                    Thread.Sleep(1000);
                 }
             }
             Thread.Sleep(1000);
@@ -527,7 +549,9 @@ namespace Ex03.ConsoleUI
             if (GarageManager.CheckIfVehicleInGarage(i_LicencePlate) == GarageManager.k_NotInGarage)
             {
                 Console.WriteLine(MessagesEnglish.k_VehicleNotRegisteredMessage);
-                Thread.Sleep(2000);
+                Thread.Sleep(1000);
+                Console.WriteLine("going back to the main menu.");
+                Thread.Sleep(1500);
                 Ex02.ConsoleUtils.Screen.Clear();
                 GarageOptionsForCustomer();
             }
@@ -535,10 +559,11 @@ namespace Ex03.ConsoleUI
             {
                 Ex02.ConsoleUtils.Screen.Clear();
                 GarageManager.PrintVehicleDetails(i_LicencePlate);
+                Console.WriteLine("{0}Press any button to go back to the menu.", Environment.NewLine);
+                Console.ReadLine();
+                Ex02.ConsoleUtils.Screen.Clear();
+                GarageOptionsForCustomer();
             }
-            Thread.Sleep(8000);
-            Ex02.ConsoleUtils.Screen.Clear();
-            GarageOptionsForCustomer();
         }
 
         private static string EnterLicencePlate()
