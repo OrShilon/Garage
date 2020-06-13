@@ -59,26 +59,26 @@ namespace Ex03.GarageLogic
         }
 
 
-        private static int VehicleStatusToCounter(eVehicleStatus i_VehicleStatus)
+        private static int ConvertEnunStatusToInt(eVehicleStatus i_VehicleStatus)
         {
-            int countStatusType;
+            int convertedStatus;
             switch (i_VehicleStatus)
             {
                 case eVehicleStatus.InRepair:
-                    countStatusType = m_CountInRepair;
+                    convertedStatus = m_CountInRepair;
                     break;    
                 case eVehicleStatus.Fixed:
-                    countStatusType = m_CountFixed;
+                    convertedStatus = m_CountFixed;
                     break;           
                 case eVehicleStatus.Payed:
-                    countStatusType = m_CountPayed;
+                    convertedStatus = m_CountPayed;
                     break;
                 default:
-                    countStatusType = k_Zero;
+                    convertedStatus = k_Zero;
                     break;
             }
 
-            return countStatusType;
+            return convertedStatus;
         }
         public static void PrintVehiclesInGarage()
         {
@@ -94,7 +94,7 @@ namespace Ex03.GarageLogic
 
         public static void PrintVehiclesInGarage(eVehicleStatus i_status)
         {
-            if (VehicleStatusToCounter(i_status) < 1)
+            if (ConvertEnunStatusToInt(i_status) < 1)
             {
                 Console.WriteLine("Sorry but there are no vehicles with this status in the garage currently");
             }

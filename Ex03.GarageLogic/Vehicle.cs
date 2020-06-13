@@ -10,7 +10,7 @@ namespace Ex03.GarageLogic
     {
         internal string m_VehicleModel;
         public string m_LicencePlate;
-        internal Wheel[] m_Wheels;
+        public Wheel[] m_Wheels;
         VehicleOwner owner;
 
         public Vehicle(string i_VehicleModel, string i_LicencePlate, byte i_NumOfWheels, VehicleOwner i_Owner)

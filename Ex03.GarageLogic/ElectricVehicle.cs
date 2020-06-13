@@ -8,8 +8,8 @@ namespace Ex03.GarageLogic
 {
     public abstract class ElectricVehicle : Vehicle
     {
-        internal float m_BatteryLeft;
-        internal float m_BatteryHourCapacity;
+        public float m_BatteryLeft;
+        public float m_BatteryHourCapacity;
 
         public ElectricVehicle(string i_VehicleModel, string i_LicencePlate, float i_BatteryLeft, float i_BatteryHourCapacity, byte i_NumOfWheels, VehicleOwner i_Owner) :
             base(i_VehicleModel, i_LicencePlate, i_NumOfWheels, i_Owner)
