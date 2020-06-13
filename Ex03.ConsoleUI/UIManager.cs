@@ -214,7 +214,7 @@ namespace Ex03.ConsoleUI
 
             validEngineVolume = EnterEngineVolume();
 
-            GetWheelInformation(out wheelMaker, out wheelsCurrentAirPressure, GarageManager.m_CarMaxAirPressure);
+            GetWheelInformation(out wheelMaker, out wheelsCurrentAirPressure, GarageManager.m_MotorcycleMaxAirPressure);
 
             if (i_IsElectric)
             {
