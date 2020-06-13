@@ -39,7 +39,9 @@ namespace Ex03.ConsoleUI
                 while (!InputValidation.IsValidEnumInput(userInput, Enum.GetNames(typeof(eMenu)).Length, out validOption))
                 {
                     Console.WriteLine(MessagesEnglish.k_InvalidInputMessage);
-                    Thread.Sleep(1000);
+                    Console.WriteLine(MessagesEnglish.k_GoingBackToMainMenuMessage);
+                    Thread.Sleep(2000);
+                    Ex02.ConsoleUtils.Screen.Clear();
                     Console.WriteLine(MessagesEnglish.k_GarageOptionsMessage);
                     userInput = Console.ReadLine();
                     Ex02.ConsoleUtils.Screen.Clear();
@@ -47,7 +49,7 @@ namespace Ex03.ConsoleUI
               
                 eMenu userOption = (eMenu)validOption;
 
-                if (!userOption.Equals(eMenu.DisplayVehiclesInGarage))
+                if (!(userOption.Equals(eMenu.DisplayVehiclesInGarage) || userOption.Equals(eMenu.Exit)))
                 {
                     licencePlate = EnterLicencePlate();
                 }
@@ -120,7 +122,8 @@ namespace Ex03.ConsoleUI
                 ownerPhoneNumber = Console.ReadLine();
                 while(!InputValidation.IsValidPhoneNumber(ownerPhoneNumber))
                 {
-                    Console.WriteLine(MessagesEnglish.k_NotValidPhoneNumberMessage);
+                    Console.WriteLine(MessagesEnglish.k_InvalidInputMessage);
+                    Console.WriteLine(MessagesEnglish.k_GetPhoneNumberMessage);
                     ownerPhoneNumber = Console.ReadLine();
                 }
                 VehicleOwner owner = new VehicleOwner(ownerName, ownerPhoneNumber);
@@ -131,7 +134,8 @@ namespace Ex03.ConsoleUI
                 vehicleModel = Console.ReadLine();
                 while (InputValidation.IsEmptyInput(vehicleModel))
                 {
-                    Console.WriteLine(MessagesEnglish.k_NotValidVehicleModelMessage);
+                    Console.WriteLine(MessagesEnglish.k_InvalidInputMessage);
+                    Console.WriteLine(MessagesEnglish.k_GetVehicleTypeMessage);
                     vehicleModel = Console.ReadLine();
                 }
 
@@ -256,11 +260,12 @@ namespace Ex03.ConsoleUI
             string energyLeftInput;
             float energyLeft;
 
-            Console.WriteLine(MessagesEnglish.k_GetFuelOrEnergyLeftMessage, i_IsElectric ? MessagesEnglish.k_BatteryMessage : MessagesEnglish.k_FuelMessage, i_Vehicle);
+            Console.WriteLine(MessagesEnglish.k_GetFuelOrEnergyLeftMessage, i_IsElectric ? MessagesEnglish.k_BatteryMessage : MessagesEnglish.k_FuelMessage, i_Vehicle, i_MaxEnergyOrFuelLeft);
             energyLeftInput = Console.ReadLine();
             while (!InputValidation.IsValidFloatInput(energyLeftInput, out energyLeft) || (energyLeft > i_MaxEnergyOrFuelLeft))
             {
-                Console.WriteLine(MessagesEnglish.k_NotValidFuelOrEnergyLeftMessage, i_IsElectric ? MessagesEnglish.k_BatteryMessage : MessagesEnglish.k_FuelMessage, i_Vehicle);
+                Console.WriteLine(MessagesEnglish.k_InvalidInputMessage);
+                Console.WriteLine(MessagesEnglish.k_GetFuelOrEnergyLeftMessage, i_IsElectric ? MessagesEnglish.k_BatteryMessage : MessagesEnglish.k_FuelMessage, i_Vehicle, i_MaxEnergyOrFuelLeft);
                 energyLeftInput = Console.ReadLine();
             }
             return energyLeft;
@@ -278,7 +283,8 @@ namespace Ex03.ConsoleUI
             {
                 while (!InputValidation.IsValidEngineVolume(engineVolumeInput, out validEngineVolume))
                 {
-                    Console.WriteLine(MessagesEnglish.k_NotValidEngineVolumeMessage);
+                    Console.WriteLine(MessagesEnglish.k_InvalidInputMessage);
+                    Console.WriteLine(MessagesEnglish.k_GetEngineVolumeMessage);
                     engineVolumeInput = Console.ReadLine();
                 }
             }
@@ -300,7 +306,8 @@ namespace Ex03.ConsoleUI
             dangerousMaterialsInput = Console.ReadLine();
             while (!InputValidation.IsValidDangerousMaterialsInput(dangerousMaterialsInput, out dangerousMaterials))
             {
-                Console.WriteLine(MessagesEnglish.k_NotValidDangerMaterialMessage);
+                Console.WriteLine(MessagesEnglish.k_InvalidInputMessage);
+                Console.WriteLine(MessagesEnglish.k_DangerMaterialMessage);
                 dangerousMaterialsInput = Console.ReadLine();
             }
 
@@ -317,7 +324,8 @@ namespace Ex03.ConsoleUI
 
             while (!InputValidation.IsValidFloatInput(cargoVolumeInput, out validCargoVolume))
             {
-                Console.WriteLine(MessagesEnglish.k_NotValidCargoVolumeMessage);
+                Console.WriteLine(MessagesEnglish.k_InvalidInputMessage);
+                Console.WriteLine(MessagesEnglish.k_GetCargoVolumeMessage);
                 cargoVolumeInput = Console.ReadLine();
             }
 
@@ -339,7 +347,7 @@ namespace Ex03.ConsoleUI
                     index = 1;
                     if (!isValidInput)
                     {
-                        Console.WriteLine(MessagesEnglish.k_InvalidInputAndNewLineMessage, Environment.NewLine);
+                        Console.WriteLine(MessagesEnglish.k_InvalidInputMessage + Environment.NewLine);
                     }
 
                     foreach (string item in i_Enum.GetEnumNames())
@@ -348,7 +356,7 @@ namespace Ex03.ConsoleUI
                         index++;
                     }
 
-                    Console.WriteLine(MessagesEnglish.k_ChooseVehicleMessage, Environment.NewLine);
+                    Console.WriteLine(MessagesEnglish.k_ChooseVehicleMessage + Environment.NewLine);
                     userInput = Console.ReadLine();
 
                     if (!InputValidation.IsValidEnumInput(userInput, length, out validUerInput))
@@ -381,7 +389,8 @@ namespace Ex03.ConsoleUI
             o_WheelMaker = Console.ReadLine();
             while(InputValidation.IsEmptyInput(o_WheelMaker))
             {
-                Console.WriteLine(MessagesEnglish.k_NotValidWheelMakerMessage);
+                Console.WriteLine(MessagesEnglish.k_InvalidInputMessage);
+                Console.WriteLine(MessagesEnglish.k_GetWheelMakerMessage);
                 o_WheelMaker = Console.ReadLine();
             }
 
@@ -389,7 +398,7 @@ namespace Ex03.ConsoleUI
             currentAirPressureInput = Console.ReadLine();
             while (!InputValidation.IsValidFloatInput(currentAirPressureInput, out o_CurrentAirPressure) || i_MaxAirPressure < o_CurrentAirPressure)
             {
-                Console.WriteLine(i_MaxAirPressure < o_CurrentAirPressure ? MessagesEnglish.k_AirPressureAboveMAximumMessage : MessagesEnglish.k_InvalidAirPressureMessage);
+                Console.WriteLine(i_MaxAirPressure < o_CurrentAirPressure ? MessagesEnglish.k_InvalidInputMessage : MessagesEnglish.k_InvalidInputMessage);
                 Console.WriteLine(MessagesEnglish.k_GetCurrentAirPressureMessage, i_MaxAirPressure);
                 currentAirPressureInput = Console.ReadLine();
             }
@@ -404,7 +413,8 @@ namespace Ex03.ConsoleUI
             userInput = Console.ReadLine();
             while(!InputValidation.IsValidStatusFilterInput(userInput))
             {
-                Console.WriteLine(MessagesEnglish.k_NotValidFilterByStatusMessage);
+                Console.WriteLine(MessagesEnglish.k_InvalidInputMessage);
+                Console.WriteLine(MessagesEnglish.k_FilterByStatusMessage);
                 userInput = Console.ReadLine();
             }
 
@@ -459,7 +469,8 @@ namespace Ex03.ConsoleUI
             else
             {
                 GarageManager.FillAir(i_LicencePlate);
-                Console.WriteLine(MessagesEnglish.k_WheelsInflatedMessage + MessagesEnglish.k_GoingBackToMainMenuMessage);
+                Console.WriteLine(MessagesEnglish.k_WheelsInflatedMessage);
+                Console.WriteLine(MessagesEnglish.k_GoingBackToMainMenuMessage);
                 Thread.Sleep(1000);
             }
             Thread.Sleep(1000);
@@ -492,7 +503,8 @@ namespace Ex03.ConsoleUI
                 LittersOfFuelToFiil = Console.ReadLine();
                 while (!InputValidation.IsValidFloatInput(LittersOfFuelToFiil, out ValidLittersOfFuelToAdd))
                 {
-                    Console.WriteLine(MessagesEnglish.k_NotValidRefuelAmountMessage);
+                    Console.WriteLine(MessagesEnglish.k_InvalidInputMessage);
+                    Console.WriteLine(MessagesEnglish.k_RefuelAmountMessage);
                     LittersOfFuelToFiil = Console.ReadLine();
                 }
 
@@ -501,7 +513,8 @@ namespace Ex03.ConsoleUI
                 try
                 {
                     GarageManager.Refuel(i_LicencePlate, ValidLittersOfFuelToAdd, fuelType);
-                    Console.WriteLine(MessagesEnglish.k_IsRefueledMessage + MessagesEnglish.k_GoingBackToMainMenuMessage);
+                    Console.WriteLine(MessagesEnglish.k_IsRefueledMessage);
+                    Console.WriteLine(MessagesEnglish.k_GoingBackToMainMenuMessage);
                     Thread.Sleep(1000);
                 }
                 catch (ValueOutOfRangeException vore)
@@ -544,14 +557,16 @@ namespace Ex03.ConsoleUI
                 batteryHoursInput = Console.ReadLine();
                 while (!InputValidation.IsValidFloatInput(batteryHoursInput, out ValidBatteryHours))
                 {
-                    Console.WriteLine(MessagesEnglish.k_NotValidBatteryMessage);
+                    Console.WriteLine(MessagesEnglish.k_InvalidInputMessage);
+                    Console.WriteLine(MessagesEnglish.k_BatteryToChargeMessage);
                     batteryHoursInput = Console.ReadLine();
                 }
 
                 try
                 {
                     GarageManager.FillBattery(i_LicencePlate, ValidBatteryHours);
-                    Console.WriteLine(MessagesEnglish.k_IsRechargedMessage + MessagesEnglish.k_GoingBackToMainMenuMessage);
+                    Console.WriteLine(MessagesEnglish.k_IsRechargedMessage);
+                    Console.WriteLine(MessagesEnglish.k_GoingBackToMainMenuMessage);
                     Thread.Sleep(1000);
                 }
                 catch (ValueOutOfRangeException vore)
@@ -601,7 +616,8 @@ namespace Ex03.ConsoleUI
             licencePlate = Console.ReadLine();
             while(InputValidation.IsEmptyInput(licencePlate))
             {
-                Console.WriteLine(MessagesEnglish.k_NotValidLicensePlateMessage);
+                Console.WriteLine(MessagesEnglish.k_InvalidInputMessage);
+                Console.WriteLine(MessagesEnglish.k_LicensePlateRequestMessage);
                 licencePlate = Console.ReadLine();
             }
             return licencePlate;
