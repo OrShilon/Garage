@@ -38,6 +38,13 @@ namespace Ex03.GarageLogic
                 return VehiclesInGarageStatus;
             }
         }
+        public static List<Vehicle> VehiclesInGarage
+        {
+            get
+            {
+                return m_AllVehiclesInGarage;
+            }
+        }
 
         public static void PrintVehiclesInGarage()
         {
@@ -119,7 +126,7 @@ namespace Ex03.GarageLogic
             ElectricVehicle customerVehicle = m_AllVehiclesInGarage[vehicleLocation] as ElectricVehicle;
             if(customerVehicle == null)
             {
-                throw new ArgumentException("NOT a battery vehicle");
+                throw new ArgumentException("NOT an Electric vehicle");
             }
 
             float newBatteryLeft = customerVehicle.m_BatteryLeft + i_HowMuchToFill;
