@@ -43,7 +43,7 @@ namespace Ex03.ConsoleUI
 
             eMenu userOption = (eMenu) validOption;
 
-            if(!userInput.Equals(eMenu.DisplayVehiclesInGarage))
+            if(!userOption.Equals(eMenu.DisplayVehiclesInGarage))
             {
                 licencePlate = EnterLicencePlate();
             }
