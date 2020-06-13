@@ -464,6 +464,7 @@ namespace Ex03.ConsoleUI
             }
             else
             {
+
                 Console.WriteLine(MessagesEnglish.k_RefuelAmountMessage);
                 LittersOfFuelToFiil = Console.ReadLine();
                 while (!InputValidation.IsValidFloatInput(LittersOfFuelToFiil, out ValidLittersOfFuelToAdd))
