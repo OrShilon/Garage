@@ -59,6 +59,12 @@ Type in the corresponding number to your visit purpose please";
         internal const string k_GetEngineVolumeMessage = "Please enter your engine's volume (in Cc):";
         internal const string k_NotValidEngineVolumeMessage = "Not a valid input. Please enter the engine's volume (in Cc):";
         internal const string k_GetLicenseTypeMessage = "Please enter your licence type:";
+        internal const string k_PressButtonToGoToMainMenuMessage = "Press any button to go back to the main menu.";
+        internal const string k_GoingBackToMainMenuMessage = "going back to the main menu.";
+        internal const string k_IsRefueledMessage = "Your vehicle has been refueled.";
+        internal const string k_IsRechargedMessage = "Your vehicle has been recharged.";
+        internal const string k_WheelsInflatedMessage = "Your car wheels have been inflated properly. ";
+
 
 
     }
