@@ -47,7 +47,7 @@ namespace Ex03.ConsoleUI
 
         public static bool IsValidEngineVolume(string i_EngineVolume, out int i_ValidEngineVolume)
         {
-            if (int.TryParse(i_EngineVolume, out i_ValidEngineVolume))
+            if (!int.TryParse(i_EngineVolume, out i_ValidEngineVolume))
             {
                 throw new FormatException(MessagesEnglish.k_InvalidInputMessage);
             }
