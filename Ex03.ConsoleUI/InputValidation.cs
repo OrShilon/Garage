@@ -23,28 +23,6 @@ namespace Ex03.ConsoleUI
             return i_ValidUserInput <= i_EnumLength && isPositiveNumber(i_ValidUserInput);
         }
 
-        /*public static bool IsValidVehicleChoice(string i_UserChoice)
-        {
-            bool isValidInput = false;
-
-            if (i_UserChoice.Length == 1)
-            {
-                //צריך לשנות את '0' ו '6' להיות קונסט כי אי אפשר לשים רק מספר
-                if (i_UserChoice[0] > '0' && i_UserChoice[0] < '6')
-                {
-                    isValidInput = true;
-                }
-            }
-
-            return isValidInput;
-        }*/
-
-
-        /*public static bool IsValidVehicleModel(string i_VehicleModel)
-        {
-            return !i_VehicleModel.Equals(string.Empty);
-        }*/
-
         public static bool IsValidEngineVolume(string i_EngineVolume, out int i_ValidEngineVolume)
         {
             if (!int.TryParse(i_EngineVolume, out i_ValidEngineVolume))

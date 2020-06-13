@@ -18,7 +18,7 @@ namespace Ex03.ConsoleUI
 6. Recharge my vehicle
 7. Display my vehicle details
 8. Exit program
-Type in the corresponding number to your visit purpose please{0}";
+Type in the corresponding number to your visit purpose please";
         internal const string k_InvalidInputMessage = "Invalid input.";
         internal const string k_InvalidInputAndNewLineMessage = "Invalid input.{0}";
         internal const string k_LicensePlateRequestMessage = "please enter your licence plate:";
