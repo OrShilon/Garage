@@ -474,8 +474,7 @@ namespace Ex03.ConsoleUI
                 catch (ArgumentException ae)
                 {
                     Console.WriteLine(ae.Message);
-                    Thread.Sleep(2000);
-                    ReFuel(i_LicencePlate);
+                    Thread.Sleep(1000);
                 }
             }
             Thread.Sleep(1000);
@@ -514,8 +513,7 @@ namespace Ex03.ConsoleUI
                 catch (ArgumentException ae)
                 {
                     Console.WriteLine(ae.Message);
-                    Thread.Sleep(2000);
-                    FillBattery(i_LicencePlate);
+            Thread.Sleep(1000);
                 }
             }
             Thread.Sleep(1000);
