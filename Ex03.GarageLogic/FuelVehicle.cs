@@ -8,8 +8,8 @@ namespace Ex03.GarageLogic
 {
     public abstract class FuelVehicle : Vehicle
     {
-        internal float m_FuelLeft;
-        internal float m_FuelTankCapacity;
+        public float m_FuelLeft;
+        public float m_FuelTankCapacity;
         public eFuelTypes m_FuelType;
 
         public FuelVehicle(string i_VehicleModel, string i_LicencePlate, float i_FuelLeft, float i_FuelTankCapacity, byte i_NumOfWheels, eFuelTypes i_FuelType,VehicleOwner i_Owner) :

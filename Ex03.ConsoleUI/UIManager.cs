@@ -118,6 +118,13 @@ namespace Ex03.ConsoleUI
             {
                 Console.WriteLine(MessagesEnglish.k_GetNameMessage);
                 ownerName = Console.ReadLine();
+                while(InputValidation.IsEmptyInput(ownerName))
+                {
+                    Console.WriteLine(MessagesEnglish.k_InvalidInputMessage);
+                    Console.WriteLine(MessagesEnglish.k_GetNameMessage);
+                    ownerName = Console.ReadLine();
+                }
+
                 Console.WriteLine(MessagesEnglish.k_GetPhoneNumberMessage);
                 ownerPhoneNumber = Console.ReadLine();
                 while(!InputValidation.IsValidPhoneNumber(ownerPhoneNumber))
@@ -126,9 +133,9 @@ namespace Ex03.ConsoleUI
                     Console.WriteLine(MessagesEnglish.k_GetPhoneNumberMessage);
                     ownerPhoneNumber = Console.ReadLine();
                 }
+
                 VehicleOwner owner = new VehicleOwner(ownerName, ownerPhoneNumber);
-                Console.WriteLine(MessagesEnglish.k_GetVehicleTypeMessage);
-                userVehicle = (eVehicles) DisplayEnumOptions(typeof(eVehicles));
+                userVehicle = (eVehicles) DisplayEnumOptions(typeof(eVehicles), MessagesEnglish.k_GetVehicleTypeMessage);
 
                 Console.WriteLine(MessagesEnglish.k_GetVehicleModelMessage);
                 vehicleModel = Console.ReadLine();
@@ -181,12 +188,9 @@ namespace Ex03.ConsoleUI
             string wheelMaker;
 
             energyLeft = EnterFuellOrEnergyLeft(i_IsElectric, vehicle, i_IsElectric ? k_ElectricCarMaxBattery : k_CarMaxFuel);
+            color = (eCarColors) DisplayEnumOptions(typeof(eCarColors), MessagesEnglish.k_GetColorMessage);
 
-            Console.WriteLine(MessagesEnglish.k_GetColorMessage);
-            color = (eCarColors) DisplayEnumOptions(typeof(eCarColors));
-
-            Console.WriteLine(MessagesEnglish.k_GetNumDoorsMessage);
-            numOfDoors = (eNumOfDoors)DisplayEnumOptions(typeof(eNumOfDoors));
+            numOfDoors = (eNumOfDoors)DisplayEnumOptions(typeof(eNumOfDoors), MessagesEnglish.k_GetNumDoorsMessage);
 
             GetWheelInformation(out wheelMaker, out wheelsCurrentAirPressure, GarageManager.m_CarMaxAirPressure);
             if (i_IsElectric)
@@ -213,8 +217,7 @@ namespace Ex03.ConsoleUI
 
             energyLeft = EnterFuellOrEnergyLeft(i_IsElectric, i_Vehicle, i_IsElectric ? k_ElectricMotorcycleMaxBattery : k_MotorcycleMaxFuel);
 
-            Console.WriteLine(MessagesEnglish.k_GetLicenseTypeMessage);
-            licenceType = (eMotorcycleLicenceType) DisplayEnumOptions(typeof(eMotorcycleLicenceType));
+            licenceType = (eMotorcycleLicenceType) DisplayEnumOptions(typeof(eMotorcycleLicenceType), MessagesEnglish.k_GetLicenseTypeMessage);
 
             validEngineVolume = EnterEngineVolume();
 
@@ -332,43 +335,44 @@ namespace Ex03.ConsoleUI
             return validCargoVolume;
         }
 
-        public static int DisplayEnumOptions(Type i_Enum)
+        public static int DisplayEnumOptions(Type i_Enum, string i_EnumMessage)
         {
-            int length = i_Enum.GetEnumNames().Length;
             int index;
             string userInput;
-            bool isValidInput = true; //true means that the input by the user was invalid
+            bool isInvalidInput = false; //true means that the input by the user was invalid
             int validUerInput;
 
             if (i_Enum.IsEnum)
             {
+                int length = i_Enum.GetEnumNames().Length;
                 do
                 {
                     index = 1;
-                    if (!isValidInput)
+                    if (isInvalidInput)
                     {
-                        Console.WriteLine(MessagesEnglish.k_InvalidInputMessage + Environment.NewLine);
+                        Console.WriteLine(MessagesEnglish.k_InvalidInputMessage);
                     }
 
+                    Console.WriteLine(i_EnumMessage);
                     foreach (string item in i_Enum.GetEnumNames())
                     {
-                        Console.WriteLine(MessagesEnglish.k_0OR1Message, index, item);
+                        Console.WriteLine(MessagesEnglish.k_DisplayEnumLine, index, item);
                         index++;
                     }
 
-                    Console.WriteLine(MessagesEnglish.k_ChooseVehicleMessage + Environment.NewLine);
+                    Console.WriteLine(MessagesEnglish.k_ChooseVehicleMessage);
                     userInput = Console.ReadLine();
 
                     if (!InputValidation.IsValidEnumInput(userInput, length, out validUerInput))
                     {
-                        isValidInput = false;
+                        isInvalidInput = true;
                     }
                     else
                     {
-                        isValidInput = true;
+                        isInvalidInput = false;
                     }
 
-                } while (!isValidInput);
+                } while (isInvalidInput);
             }
             else
             {
@@ -426,8 +430,7 @@ namespace Ex03.ConsoleUI
             }
             else
             {
-                Console.WriteLine(MessagesEnglish.k_GetStatusFilterMessage);
-                userStatus = (eVehicleStatus) DisplayEnumOptions(typeof(eVehicleStatus));
+                userStatus = (eVehicleStatus) DisplayEnumOptions(typeof(eVehicleStatus), MessagesEnglish.k_GetStatusFilterMessage);
                 GarageManager.PrintVehiclesInGarage(userStatus);
             }
           
@@ -448,8 +451,7 @@ namespace Ex03.ConsoleUI
             }
             else
             {
-                Console.WriteLine(MessagesEnglish.k_GetNewStatusMessage);
-                GarageManager.ChangeVehicleStatus(i_LicencePlate, (eVehicleStatus)DisplayEnumOptions(typeof(eVehicleStatus)));
+                GarageManager.ChangeVehicleStatus(i_LicencePlate, (eVehicleStatus) DisplayEnumOptions(typeof(eVehicleStatus), MessagesEnglish.k_GetNewStatusMessage));
                 Console.WriteLine(MessagesEnglish.k_StatusChangedMessage + MessagesEnglish.k_GoingBackToMainMenuMessage);
                 Thread.Sleep(1500);
             }
@@ -458,8 +460,8 @@ namespace Ex03.ConsoleUI
 
         private static void FillAir(string i_LicencePlate)
         {
-
-            if (GarageManager.CheckIfVehicleInGarage(i_LicencePlate) == GarageManager.k_NotInGarage)
+            int indexOfVehicleInGarage;
+            if ((indexOfVehicleInGarage = GarageManager.CheckIfVehicleInGarage(i_LicencePlate)) == GarageManager.k_NotInGarage)
             {
                 Console.WriteLine(MessagesEnglish.k_VehicleNotRegisteredMessage);
                 Thread.Sleep(1000);
@@ -468,11 +470,23 @@ namespace Ex03.ConsoleUI
             }
             else
             {
-                GarageManager.FillAir(i_LicencePlate);
-                Console.WriteLine(MessagesEnglish.k_WheelsInflatedMessage);
-                Console.WriteLine(MessagesEnglish.k_GoingBackToMainMenuMessage);
-                Thread.Sleep(1000);
+                float WheelsMaxAirPressure = GarageManager.VehiclesInGarage[indexOfVehicleInGarage].m_Wheels[0].m_MaxAirPressure;
+                float WheelsCurrentAirPressure = GarageManager.VehiclesInGarage[indexOfVehicleInGarage].m_Wheels[0].m_CurrentAirPressure;
+                if (WheelsMaxAirPressure.Equals(WheelsCurrentAirPressure))
+                {
+                    Console.WriteLine(MessagesEnglish.k_MaxAirPressureInWheelsMessage);
+                    Console.WriteLine(MessagesEnglish.k_GoingBackToMainMenuMessage);
+                    Thread.Sleep(2000);
+                }
+                else
+                {
+                    GarageManager.FillAir(i_LicencePlate);
+                    Console.WriteLine(MessagesEnglish.k_WheelsInflatedMessage);
+                    Console.WriteLine(MessagesEnglish.k_GoingBackToMainMenuMessage);
+                    Thread.Sleep(1000);
+                }
             }
+
             Thread.Sleep(1000);
             Ex02.ConsoleUtils.Screen.Clear();
         }
@@ -499,35 +513,45 @@ namespace Ex03.ConsoleUI
                     throw new ArgumentException("NOT a fuel vehicle");
                 }
 
-                Console.WriteLine(MessagesEnglish.k_RefuelAmountMessage);
-                LittersOfFuelToFiil = Console.ReadLine();
-                while (!InputValidation.IsValidFloatInput(LittersOfFuelToFiil, out ValidLittersOfFuelToAdd))
+                FuelVehicle feulVehicle = GarageManager.VehiclesInGarage[indexOfVehicleInGarage] as FuelVehicle;
+                if (feulVehicle.m_FuelTankCapacity.Equals(feulVehicle.m_FuelLeft))
                 {
-                    Console.WriteLine(MessagesEnglish.k_InvalidInputMessage);
+                    Console.WriteLine(MessagesEnglish.k_FullTankMessage);
+                    Console.WriteLine(MessagesEnglish.k_GoingBackToMainMenuMessage);
+                    Thread.Sleep(1500);
+                }
+                else
+                {
                     Console.WriteLine(MessagesEnglish.k_RefuelAmountMessage);
                     LittersOfFuelToFiil = Console.ReadLine();
-                }
+                    while (!InputValidation.IsValidFloatInput(LittersOfFuelToFiil, out ValidLittersOfFuelToAdd))
+                    {
+                        Console.WriteLine(MessagesEnglish.k_InvalidInputMessage);
+                        Console.WriteLine(MessagesEnglish.k_RefuelAmountMessage);
+                        LittersOfFuelToFiil = Console.ReadLine();
+                    }
 
-                fuelType = (eFuelTypes)DisplayEnumOptions(typeof(eFuelTypes));
+                    fuelType = (eFuelTypes)DisplayEnumOptions(typeof(eFuelTypes), MessagesEnglish.k_GetFuelTypeMessage);
 
-                try
-                {
-                    GarageManager.Refuel(i_LicencePlate, ValidLittersOfFuelToAdd, fuelType);
-                    Console.WriteLine(MessagesEnglish.k_IsRefueledMessage);
-                    Console.WriteLine(MessagesEnglish.k_GoingBackToMainMenuMessage);
-                    Thread.Sleep(1000);
-                }
-                catch (ValueOutOfRangeException vore)
-                {
-                    Console.WriteLine(vore.Message);
-                    Thread.Sleep(3000);
-                    Ex02.ConsoleUtils.Screen.Clear();
-                    ReFuel(i_LicencePlate);
-                }
-                catch (ArgumentException ae)
-                {
-                    Console.WriteLine(ae.Message + Environment.NewLine + MessagesEnglish.k_GoingBackToMainMenuMessage);
-                    Thread.Sleep(1000);
+                    try
+                    {
+                        GarageManager.Refuel(i_LicencePlate, ValidLittersOfFuelToAdd, fuelType);
+                        Console.WriteLine(MessagesEnglish.k_IsRefueledMessage);
+                        Console.WriteLine(MessagesEnglish.k_GoingBackToMainMenuMessage);
+                        Thread.Sleep(1000);
+                    }
+                    catch (ValueOutOfRangeException vore)
+                    {
+                        Console.WriteLine(vore.Message);
+                        Thread.Sleep(3000);
+                        Ex02.ConsoleUtils.Screen.Clear();
+                        ReFuel(i_LicencePlate);
+                    }
+                    catch (ArgumentException ae)
+                    {
+                        Console.WriteLine(ae.Message + Environment.NewLine + MessagesEnglish.k_GoingBackToMainMenuMessage);
+                        Thread.Sleep(1000);
+                    }
                 }
             }
 
@@ -553,33 +577,44 @@ namespace Ex03.ConsoleUI
                     throw new ArgumentException("NOT an Electric vehicle");
                 }
 
-                Console.WriteLine(MessagesEnglish.k_BatteryToChargeMessage);
-                batteryHoursInput = Console.ReadLine();
-                while (!InputValidation.IsValidFloatInput(batteryHoursInput, out ValidBatteryHours))
+                ElectricVehicle electricVehicle = GarageManager.VehiclesInGarage[indexOfVehicleInGarage] as ElectricVehicle;
+                if(electricVehicle.m_BatteryHourCapacity.Equals(electricVehicle.m_BatteryLeft))
                 {
-                    Console.WriteLine(MessagesEnglish.k_InvalidInputMessage);
+                    Console.WriteLine(MessagesEnglish.k_BatteryFullyChargedMessage);
+                    Console.WriteLine(MessagesEnglish.k_GoingBackToMainMenuMessage);
+                    Thread.Sleep(1500);
+                }
+                else
+                {
+
                     Console.WriteLine(MessagesEnglish.k_BatteryToChargeMessage);
                     batteryHoursInput = Console.ReadLine();
-                }
+                    while (!InputValidation.IsValidFloatInput(batteryHoursInput, out ValidBatteryHours))
+                    {
+                        Console.WriteLine(MessagesEnglish.k_InvalidInputMessage);
+                        Console.WriteLine(MessagesEnglish.k_BatteryToChargeMessage);
+                        batteryHoursInput = Console.ReadLine();
+                    }
 
-                try
-                {
-                    GarageManager.FillBattery(i_LicencePlate, ValidBatteryHours);
-                    Console.WriteLine(MessagesEnglish.k_IsRechargedMessage);
-                    Console.WriteLine(MessagesEnglish.k_GoingBackToMainMenuMessage);
-                    Thread.Sleep(1000);
-                }
-                catch (ValueOutOfRangeException vore)
-                {
-                    Console.WriteLine(vore.Message);
-                    Thread.Sleep(3000);
-                    Ex02.ConsoleUtils.Screen.Clear();
-                    FillBattery(i_LicencePlate);
-                }
-                catch (ArgumentException ae)
-                {
-                    Console.WriteLine(ae.Message + Environment.NewLine + MessagesEnglish.k_GoingBackToMainMenuMessage);
-                    Thread.Sleep(1000);
+                    try
+                    {
+                        GarageManager.FillBattery(i_LicencePlate, ValidBatteryHours);
+                        Console.WriteLine(MessagesEnglish.k_IsRechargedMessage);
+                        Console.WriteLine(MessagesEnglish.k_GoingBackToMainMenuMessage);
+                        Thread.Sleep(1000);
+                    }
+                    catch (ValueOutOfRangeException vore)
+                    {
+                        Console.WriteLine(vore.Message);
+                        Thread.Sleep(3000);
+                        Ex02.ConsoleUtils.Screen.Clear();
+                        FillBattery(i_LicencePlate);
+                    }
+                    catch (ArgumentException ae)
+                    {
+                        Console.WriteLine(ae.Message + Environment.NewLine + MessagesEnglish.k_GoingBackToMainMenuMessage);
+                        Thread.Sleep(1000);
+                    }
                 }
             }
 

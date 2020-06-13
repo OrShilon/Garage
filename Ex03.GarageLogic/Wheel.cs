@@ -8,9 +8,9 @@ namespace Ex03.GarageLogic
 {
     public struct Wheel
     {
-        internal string m_WheelMaker;
-        internal float m_CurrentAirPressure;
-        internal float m_MaxAirPressure;
+        public string m_WheelMaker;
+        public float m_CurrentAirPressure;
+        public float m_MaxAirPressure;
 
         public Wheel(string i_WheelMaker, float i_CurrentAirPressure, float i_MaxAirPressure)
         {
