@@ -135,7 +135,7 @@ namespace Ex03.ConsoleUI
                 while (InputValidation.IsEmptyInput(vehicleModel))
                 {
                     Console.WriteLine(MessagesEnglish.k_InvalidInputMessage);
-                    Console.WriteLine(MessagesEnglish.k_GetVehicleTypeMessage);
+                    Console.WriteLine(MessagesEnglish.k_GetVehicleModelMessage);
                     vehicleModel = Console.ReadLine();
                 }
 
@@ -520,7 +520,7 @@ namespace Ex03.ConsoleUI
                 catch (ValueOutOfRangeException vore)
                 {
                     Console.WriteLine(vore.Message);
-                    Thread.Sleep(2000);
+                    Thread.Sleep(3000);
                     Ex02.ConsoleUtils.Screen.Clear();
                     ReFuel(i_LicencePlate);
                 }
@@ -572,7 +572,7 @@ namespace Ex03.ConsoleUI
                 catch (ValueOutOfRangeException vore)
                 {
                     Console.WriteLine(vore.Message);
-                    Thread.Sleep(2000);
+                    Thread.Sleep(3000);
                     Ex02.ConsoleUtils.Screen.Clear();
                     FillBattery(i_LicencePlate);
                 }
