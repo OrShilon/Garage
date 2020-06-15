@@ -9,7 +9,7 @@ namespace Ex03.GarageLogic
     public class VehicleOwner
     {
         public string m_Name;
-        public string m_PhoneNumber;
+        Public string m_PhoneNumber;
 
         public VehicleOwner(string i_Name, string i_PhoneNumber)
         {
