@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Ex03.ConsoleUI
 {
-    public static class InputValidation
+    public class InputValidation
     {
         internal const char k_ZeroChar = '0';
         internal const char k_OneChar = '1';
