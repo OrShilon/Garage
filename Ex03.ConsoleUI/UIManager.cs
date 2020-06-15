@@ -360,7 +360,7 @@ namespace Ex03.ConsoleUI
             bool isInvalidInput = false; //true means that the input by the user was invalid
             int validUerInput;
 
-            if (i_Enum.IsEnum)
+                if (i_Enum.IsEnum)
             {
                 int length = i_Enum.GetEnumNames().Length;
                 do
@@ -464,10 +464,7 @@ namespace Ex03.ConsoleUI
 
             if (GarageManager.CheckIfVehicleInGarage(i_LicencePlate) == GarageManager.k_NotInGarage)
             {
-                Console.WriteLine(MessagesEnglish.k_VehicleNotRegisteredMessage);
-                Thread.Sleep(1000);
-                Console.WriteLine(MessagesEnglish.k_GoingBackToMainMenuMessage);
-                Thread.Sleep(1500);
+                NotRegisteredVehiclesMessage();
             }
             else
             {
@@ -483,10 +480,7 @@ namespace Ex03.ConsoleUI
             int indexOfVehicleInGarage;
             if ((indexOfVehicleInGarage = GarageManager.CheckIfVehicleInGarage(i_LicencePlate)) == GarageManager.k_NotInGarage)
             {
-                Console.WriteLine(MessagesEnglish.k_VehicleNotRegisteredMessage);
-                Thread.Sleep(1000);
-                Console.WriteLine(MessagesEnglish.k_GoingBackToMainMenuMessage);
-                Thread.Sleep(500);
+                NotRegisteredVehiclesMessage();
             }
             else
             {
@@ -513,17 +507,13 @@ namespace Ex03.ConsoleUI
 
         private static void ReFuel(string i_LicencePlate)
         {
-            string LittersOfFuelToFiil;
             float ValidLittersOfFuelToAdd;
             eFuelTypes fuelType;
             int indexOfVehicleInGarage;
 
             if ((indexOfVehicleInGarage = GarageManager.CheckIfVehicleInGarage(i_LicencePlate)) == GarageManager.k_NotInGarage)
             {
-                Console.WriteLine(MessagesEnglish.k_VehicleNotRegisteredMessage);
-                Thread.Sleep(1000);
-                Console.WriteLine(MessagesEnglish.k_GoingBackToMainMenuMessage);
-                Thread.Sleep(500);
+                NotRegisteredVehiclesMessage();
             }
             else
             {
@@ -542,17 +532,8 @@ namespace Ex03.ConsoleUI
                 }
                 else
                 {
-                    Console.WriteLine(MessagesEnglish.k_RefuelAmountMessage);
-                    LittersOfFuelToFiil = Console.ReadLine();
-                    while (!InputValidation.IsValidFloatInput(LittersOfFuelToFiil, out ValidLittersOfFuelToAdd))
-                    {
-                        Console.WriteLine(MessagesEnglish.k_InvalidInputMessage);
-                        Console.WriteLine(MessagesEnglish.k_RefuelAmountMessage);
-                        LittersOfFuelToFiil = Console.ReadLine();
-                    }
-
+                    ValidLittersOfFuelToAdd = EnterEnergyToFill(MessagesEnglish.k_RefuelAmountMessage);
                     fuelType = (eFuelTypes)DisplayEnumOptions(typeof(eFuelTypes), MessagesEnglish.k_GetFuelTypeMessage);
-
                     try
                     {
                         GarageManager.Refuel(i_LicencePlate, ValidLittersOfFuelToAdd, fuelType);
@@ -580,15 +561,11 @@ namespace Ex03.ConsoleUI
         }
         private static void FillBattery(string i_LicencePlate)
         {
-            string batteryHoursInput;
             float ValidBatteryHours;
             int indexOfVehicleInGarage;
             if ((indexOfVehicleInGarage = GarageManager.CheckIfVehicleInGarage(i_LicencePlate)) == GarageManager.k_NotInGarage)
             {
-                Console.WriteLine(MessagesEnglish.k_VehicleNotRegisteredMessage);
-                Thread.Sleep(1000);
-                Console.WriteLine(MessagesEnglish.k_GoingBackToMainMenuMessage);
-                Thread.Sleep(500);
+                NotRegisteredVehiclesMessage();
             }
             else
             {
@@ -607,14 +584,7 @@ namespace Ex03.ConsoleUI
                 else
                 {
 
-                    Console.WriteLine(MessagesEnglish.k_BatteryToChargeMessage);
-                    batteryHoursInput = Console.ReadLine();
-                    while (!InputValidation.IsValidFloatInput(batteryHoursInput, out ValidBatteryHours))
-                    {
-                        Console.WriteLine(MessagesEnglish.k_InvalidInputMessage);
-                        Console.WriteLine(MessagesEnglish.k_BatteryToChargeMessage);
-                        batteryHoursInput = Console.ReadLine();
-                    }
+                    ValidBatteryHours = EnterEnergyToFill(MessagesEnglish.k_BatteryToChargeMessage);
 
                     try
                     {
@@ -647,10 +617,7 @@ namespace Ex03.ConsoleUI
 
             if (GarageManager.CheckIfVehicleInGarage(i_LicencePlate) == GarageManager.k_NotInGarage)
             {
-                Console.WriteLine(MessagesEnglish.k_VehicleNotRegisteredMessage);
-                Thread.Sleep(1000);
-                Console.WriteLine(MessagesEnglish.k_GoingBackToMainMenuMessage);
-                Thread.Sleep(500);
+                NotRegisteredVehiclesMessage();
             }
             else
             {
@@ -683,6 +650,32 @@ namespace Ex03.ConsoleUI
             Console.WriteLine(MessagesEnglish.k_ExitMessage);
             Thread.Sleep(1500);
             Environment.Exit(0);
+        }
+
+        private static void NotRegisteredVehiclesMessage()
+        {
+            Console.WriteLine(MessagesEnglish.k_VehicleNotRegisteredMessage);
+            Thread.Sleep(1000);
+            Console.WriteLine(MessagesEnglish.k_GoingBackToMainMenuMessage);
+            Thread.Sleep(500);
+        }
+
+        // Energy can be fuel or battery
+        private static float EnterEnergyToFill(string i_BatteryOrFuelMessage)
+        {
+            string energyToFill;
+            float validEnergyInput;
+
+            Console.WriteLine(i_BatteryOrFuelMessage);
+            energyToFill = Console.ReadLine();
+            while (!InputValidation.IsValidFloatInput(energyToFill, out validEnergyInput))
+            {
+                Console.WriteLine(MessagesEnglish.k_InvalidInputMessage);
+                Console.WriteLine(i_BatteryOrFuelMessage);
+                energyToFill = Console.ReadLine();
+            }
+
+            return validEnergyInput;
         }
     }
 }
