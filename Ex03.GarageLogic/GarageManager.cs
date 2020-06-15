@@ -9,7 +9,7 @@ namespace Ex03.GarageLogic
 {
     public static class GarageManager
     {
-        private static List<Vehicle> m_AllVehiclesInGarage = new List<Vehicle>();
+        private static readonly List<Vehicle> m_AllVehiclesInGarage = new List<Vehicle>();
         private static readonly Dictionary<string, eVehicleStatus> VehiclesInGarageStatus = new Dictionary<string, eVehicleStatus>();
         public const int k_NotInGarage = -1;
         public const int k_Zero = 0;
@@ -86,9 +86,12 @@ namespace Ex03.GarageLogic
             {
                 Console.WriteLine("Sorry but there are no vehicles in the garage currently");
             }
-            foreach (KeyValuePair<string, eVehicleStatus> pair in VehiclesInGarageStatus)
+            else
             {
-                Console.WriteLine("License plate number: " + pair.Key + ", status: " + pair.Value);
+                foreach (KeyValuePair<string, eVehicleStatus> vehicle in VehiclesInGarageStatus)
+                {
+                    Console.WriteLine("License plate number: " + vehicle.Key + ", status: " + vehicle.Value);
+                }
             }
         }
 
@@ -100,11 +103,11 @@ namespace Ex03.GarageLogic
             }
             else
             {
-                foreach (KeyValuePair<string, eVehicleStatus> pair in VehiclesInGarageStatus)
+                foreach (KeyValuePair<string, eVehicleStatus> vehicle in VehiclesInGarageStatus)
                 {
-                    if (pair.Value.Equals(i_status))
+                    if (vehicle.Value.Equals(i_status))
                     {
-                        Console.WriteLine("License plate number: " + pair.Key + ", status: " + pair.Value);
+                        Console.WriteLine("License plate number: " + vehicle.Key + ", status: " + vehicle.Value);
                     }
                 }
             }
@@ -132,6 +135,7 @@ namespace Ex03.GarageLogic
                         m_CountPayed--;
                         break;
                 }
+
                 switch (i_NewVehicleStatus)
                 {
                     case eVehicleStatus.InRepair:
@@ -226,18 +230,18 @@ namespace Ex03.GarageLogic
             customerVehicle.m_FuelLeft = newFuelLeft;//צריך לבדוק האם לעשות GET וSET m_FuelOrBatteryLeftל
 
         }
-        /**
-         * checks if the given vehicle is in the garage if so returns its location in the list
-         * if not returns -1
-         **/ 
+
+         //checks if the given vehicle is in the garage. If so returns its location in the list, else not returns -1
         public static int CheckIfVehicleInGarage(string i_LicensePlateNumber)
         {
             int vehicleLocation = k_NotInGarage;
+
             for(int i = 0; i < m_AllVehiclesInGarage.Count; i++)
             {
                 if (m_AllVehiclesInGarage[i].m_LicencePlate == i_LicensePlateNumber)
                 {
                     vehicleLocation = i;
+                    break;
                 }
             }
             return vehicleLocation;
