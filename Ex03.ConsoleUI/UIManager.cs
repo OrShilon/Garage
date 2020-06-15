@@ -208,7 +208,7 @@ namespace Ex03.ConsoleUI
 
             numOfDoors = (eNumOfDoors)DisplayEnumOptions(typeof(eNumOfDoors), MessagesEnglish.k_GetNumDoorsMessage);
 
-            GetWheelInformation(out wheelMaker, out wheelsCurrentAirPressure, GarageManager.m_CarMaxAirPressure);
+            GetWheelInformation(out wheelMaker, out wheelsCurrentAirPressure, GarageManager.k_CarMaxAirPressure);
             if (i_IsElectric)
             {
                 ElectricCar newElectricCar = GarageLogic.CreateVehicle.CreateElectricCar(i_CarModel, i_LicencePlate, energyLeft, color,
@@ -237,7 +237,7 @@ namespace Ex03.ConsoleUI
 
             validEngineVolume = EnterEngineVolume();
 
-            GetWheelInformation(out wheelMaker, out wheelsCurrentAirPressure, GarageManager.m_MotorcycleMaxAirPressure);
+            GetWheelInformation(out wheelMaker, out wheelsCurrentAirPressure, GarageManager.k_MotorcycleMaxAirPressure);
 
             if (i_IsElectric)
             {
@@ -268,7 +268,7 @@ namespace Ex03.ConsoleUI
 
             CargoVolume = EnterCargoVolume();
 
-            GetWheelInformation(out wheelMaker, out wheelsCurrentAirPressure, GarageManager.m_TruckMaxAirPressure);
+            GetWheelInformation(out wheelMaker, out wheelsCurrentAirPressure, GarageManager.k_TruckMaxAirPressure);
 
             Truck newTruck = GarageLogic.CreateVehicle.CreateTruck(i_TruckModel, i_LicencePlate, fuelLeft, dangerousMaterials, CargoVolume, wheelMaker, wheelsCurrentAirPressure, i_VehicleOwner);
             GarageManager.AddVehicleToGarage(newTruck);
@@ -478,14 +478,15 @@ namespace Ex03.ConsoleUI
         private static void FillAir(string i_LicencePlate)
         {
             int indexOfVehicleInGarage;
+
             if ((indexOfVehicleInGarage = GarageManager.CheckIfVehicleInGarage(i_LicencePlate)) == GarageManager.k_NotInGarage)
             {
                 NotRegisteredVehiclesMessage();
             }
             else
             {
-                float WheelsMaxAirPressure = GarageManager.VehiclesInGarage[indexOfVehicleInGarage].m_Wheels[0].m_MaxAirPressure;
-                float WheelsCurrentAirPressure = GarageManager.VehiclesInGarage[indexOfVehicleInGarage].m_Wheels[0].m_CurrentAirPressure;
+                float WheelsMaxAirPressure = GarageManager.VehiclesInGarage[indexOfVehicleInGarage].Wheels[0].MaxAirPressure;
+                float WheelsCurrentAirPressure = GarageManager.VehiclesInGarage[indexOfVehicleInGarage].Wheels[0].CurrentAirPressure;
                 if (WheelsMaxAirPressure.Equals(WheelsCurrentAirPressure))
                 {
                     Console.WriteLine(MessagesEnglish.k_MaxAirPressureInWheelsMessage);
@@ -494,7 +495,17 @@ namespace Ex03.ConsoleUI
                 }
                 else
                 {
-                    GarageManager.FillAir(i_LicencePlate);
+                    try
+                    {
+                        GarageManager.FillAir(i_LicencePlate);
+                    }
+                    catch(ValueOutOfRangeException vore)
+                    {
+                        Console.WriteLine(vore.Message);
+                        Thread.Sleep(3000);
+                        Ex02.ConsoleUtils.Screen.Clear();
+                        FillAir(i_LicencePlate);
+                    }
                     Console.WriteLine(MessagesEnglish.k_WheelsInflatedMessage);
                     Console.WriteLine(MessagesEnglish.k_GoingBackToMainMenuMessage);
                     Thread.Sleep(1000);
@@ -524,7 +535,7 @@ namespace Ex03.ConsoleUI
                 }
 
                 FuelVehicle feulVehicle = GarageManager.VehiclesInGarage[indexOfVehicleInGarage] as FuelVehicle;
-                if (feulVehicle.m_FuelTankCapacity.Equals(feulVehicle.m_FuelLeft))
+                if (feulVehicle.FuelTankCapacity.Equals(feulVehicle.FuelLeft))
                 {
                     Console.WriteLine(MessagesEnglish.k_FullTankMessage);
                     Console.WriteLine(MessagesEnglish.k_GoingBackToMainMenuMessage);
@@ -575,7 +586,7 @@ namespace Ex03.ConsoleUI
                 }
 
                 ElectricVehicle electricVehicle = GarageManager.VehiclesInGarage[indexOfVehicleInGarage] as ElectricVehicle;
-                if(electricVehicle.m_BatteryHourCapacity.Equals(electricVehicle.m_BatteryLeft))
+                if(electricVehicle.BatteryHourCapacity.Equals(electricVehicle.BatteryLeft))
                 {
                     Console.WriteLine(MessagesEnglish.k_BatteryFullyChargedMessage);
                     Console.WriteLine(MessagesEnglish.k_GoingBackToMainMenuMessage);

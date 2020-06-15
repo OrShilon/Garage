@@ -8,9 +8,9 @@ namespace Ex03.GarageLogic
 {
     public abstract class FuelVehicle : Vehicle
     {
-        public float m_FuelLeft;
-        public float m_FuelTankCapacity;
-        public eFuelTypes m_FuelType;
+        private float m_FuelLeft;
+        private readonly float m_FuelTankCapacity;
+        private eFuelTypes m_FuelType;
 
         public FuelVehicle(string i_VehicleModel, string i_LicencePlate, float i_FuelLeft, float i_FuelTankCapacity, byte i_NumOfWheels, eFuelTypes i_FuelType,VehicleOwner i_Owner) :
             base(i_VehicleModel, i_LicencePlate, i_NumOfWheels, i_Owner)
@@ -18,6 +18,43 @@ namespace Ex03.GarageLogic
             m_FuelLeft = i_FuelLeft;
             m_FuelTankCapacity = i_FuelTankCapacity;
             m_FuelType = i_FuelType;
+        }
+
+        public float FuelLeft
+        {
+            get
+            {
+                return m_FuelLeft;
+            }
+            set
+            {
+                if (value > 0f)
+                {
+                    m_FuelLeft = value;
+                }
+            }
+        }
+        public float FuelTankCapacity
+        {
+            get
+            {
+                return m_FuelTankCapacity;
+            }
+        }
+
+        public eFuelTypes FuelType
+        {
+            get
+            {
+                return m_FuelType;
+            }
+            set
+            {
+                if (value > 0f)
+                {
+                    m_FuelType = value;
+                }
+            }
         }
         public override string ToString()
         {
