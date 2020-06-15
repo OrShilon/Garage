@@ -8,8 +8,8 @@ namespace Ex03.GarageLogic
 {
     public class VehicleOwner
     {
-        public string m_Name;
-        public string m_PhoneNumber;
+        private string m_Name;
+        private string m_PhoneNumber;
 
         public VehicleOwner(string i_Name, string i_PhoneNumber)
         {
@@ -40,6 +40,7 @@ namespace Ex03.GarageLogic
                 m_PhoneNumber = value;
             }
         }
+
         public override string ToString()
         {
             return String.Format(@"Owners name is: {0}

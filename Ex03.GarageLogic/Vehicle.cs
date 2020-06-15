@@ -21,6 +21,29 @@ namespace Ex03.GarageLogic
             owner = i_Owner;
         }
 
+        public Wheel[] Wheels
+        {
+            get
+            {
+                return m_Wheels;
+            }
+        }
+
+        public void SetWheelPressure(float i_WheelPressure)
+        {
+            if(m_Wheels[0].MaxAirPressure < i_WheelPressure)
+            {
+                throw new ValueOutOfRangeException(m_Wheels[0].MaxAirPressure, GarageManager.k_Zero);
+            }
+            else
+            {
+                for (int i = 0; i < m_Wheels.Length; i++)
+                {
+                    m_Wheels[i].CurrentAirPressure = i_WheelPressure;
+                }
+            }
+        }
+
         public override bool Equals(object obj)
         {
             //Check for null and compare run - time types.
@@ -52,32 +75,6 @@ namespace Ex03.GarageLogic
             return i_LeftVehicle.Equals(i_RightVehicle);
         }
 
-        //private string m_VehicleModel;
-        //private string m_LicencePlate;
-        //private Wheel[] m_Wheels;
-        //private VehicleOwner owner;
-        public Wheel[] Wheels
-        {
-            get
-            {
-                return m_Wheels;
-            }
-        }
-
-        public void SetWheelPressure(float i_WheelPressure)
-        {
-            if(m_Wheels[0].MaxAirPressure < i_WheelPressure)
-            {
-                throw new ValueOutOfRangeException(m_Wheels[0].MaxAirPressure, GarageManager.k_Zero);
-            }
-            else
-            {
-                for (int i = 0; i < m_Wheels.Length; i++)
-                {
-                    m_Wheels[i].CurrentAirPressure = i_WheelPressure;
-                }
-            }
-        }
         public static bool operator !=(Vehicle i_LeftVehicle, Vehicle i_RightVehicle)
         {
             return !(i_LeftVehicle == i_RightVehicle);
@@ -103,6 +100,11 @@ namespace Ex03.GarageLogic
                     m_VehicleModel = value;
                 }
             }
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
 
         public override string ToString()

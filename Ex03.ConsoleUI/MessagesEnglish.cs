@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ex03.ConsoleUI
 {
-    class MessagesEnglish
+    internal class MessagesEnglish
     {
         internal const string k_GarageHelloMessage = "Hello and welcome to Or and Amit's garage.{0}";
         internal const string k_GarageOptionsMessage = @"What is the purpose of your visit?
@@ -54,8 +54,8 @@ Type in the corresponding number to your visit purpose please";
         internal const string k_FullTankMessage = "Your vehicle's tank is full.";
         internal const string k_BatteryFullyChargedMessage = "Your vehicle's battery is fully charged";
         internal const string k_MaxAirPressureInWheelsMessage = "Your vehicle's wheels already have max air pressure";
-        internal const string k_IsRefueledMessage = "Your vehicle has been refueled.";
-        internal const string k_IsRechargedMessage = "Your vehicle has been recharged.";
+        internal const string k_VehicleRefueledMessage = "Your vehicle has been refueled.";
+        internal const string k_VehicleRechargedMessage = "Your vehicle has been recharged.";
         internal const string k_WheelsInflatedMessage = "Your car wheels have been inflated properly. ";
         internal const string k_StatusChangedMessage = "Your status has been changed. ";
         internal const string k_AddedNewCarMessage = "Your vehicle has been added properly.";
