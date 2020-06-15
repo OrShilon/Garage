@@ -10,10 +10,8 @@ namespace Ex03.GarageLogic
     public enum eVehicles
     {
         Car = 1,
-        [Description("Electric car")]
         ElectricCar,
         Motorcycle,
-        [Description("Electric motorcycle")]
         ElectricMotorcycle,
         Truck,
     }

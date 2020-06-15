@@ -9,7 +9,6 @@ namespace Ex03.GarageLogic
 {
     public enum eVehicleStatus
     {
-      [Description("in repair")]
       InRepair = 1,
       Fixed,
       Payed

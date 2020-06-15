@@ -53,6 +53,7 @@ Type in the corresponding number to your visit purpose please";
         //internal const string k_InvalidAirPressureMessage = "Invalid air pressure input";
         internal const string k_AirPressureAboveMAximumMessage = "You have entered a number above the maximum air pressure";
         internal const string k_DisplayEnumLine = "{0}. {1}";
+        internal const string k_NotAnEnumType = "The input type is not an enum";
         internal const string k_ChooseVehicleMessage = "Type in the corresponding number to your vehicle please.";
         internal const string k_GetCargoVolumeMessage = "Please enter your truck's cargo volume:";
         //internal const string k_NotValidCargoVolumeMessage = "Not a valid input. Please enter your truck's cargo volume:";

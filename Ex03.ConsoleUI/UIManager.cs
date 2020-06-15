@@ -89,7 +89,9 @@ namespace Ex03.ConsoleUI
                         ExitProgram();
                         break;
                     default:
-                        //invalid input, need to handle.......
+                        Console.WriteLine(MessagesEnglish.k_InvalidInputMessage);
+                        Console.WriteLine(MessagesEnglish.k_GoingBackToMainMenuMessage);
+                        Thread.Sleep(2000);
                         break;
                 }
             }
@@ -105,7 +107,6 @@ namespace Ex03.ConsoleUI
         {
             eVehicles userVehicle;
             string vehicleModel;
-            bool isElectricVehicle;
             string ownerName;
             string ownerPhoneNumber;
 
@@ -116,67 +117,82 @@ namespace Ex03.ConsoleUI
             }
             else
             {
-                Console.WriteLine(MessagesEnglish.k_GetNameMessage);
-                ownerName = Console.ReadLine();
-                while(InputValidation.IsEmptyInput(ownerName))
-                {
-                    Console.WriteLine(MessagesEnglish.k_InvalidInputMessage);
-                    Console.WriteLine(MessagesEnglish.k_GetNameMessage);
-                    ownerName = Console.ReadLine();
-                }
-
-                Console.WriteLine(MessagesEnglish.k_GetPhoneNumberMessage);
-                ownerPhoneNumber = Console.ReadLine();
-                while(!InputValidation.IsValidPhoneNumber(ownerPhoneNumber))
-                {
-                    Console.WriteLine(MessagesEnglish.k_InvalidInputMessage);
-                    Console.WriteLine(MessagesEnglish.k_GetPhoneNumberMessage);
-                    ownerPhoneNumber = Console.ReadLine();
-                }
-
+                EnterOwnerDetails(out ownerName, out ownerPhoneNumber);
                 VehicleOwner owner = new VehicleOwner(ownerName, ownerPhoneNumber);
                 userVehicle = (eVehicles) DisplayEnumOptions(typeof(eVehicles), MessagesEnglish.k_GetVehicleTypeMessage);
-
-                Console.WriteLine(MessagesEnglish.k_GetVehicleModelMessage);
-                vehicleModel = Console.ReadLine();
-                while (InputValidation.IsEmptyInput(vehicleModel))
-                {
-                    Console.WriteLine(MessagesEnglish.k_InvalidInputMessage);
-                    Console.WriteLine(MessagesEnglish.k_GetVehicleModelMessage);
-                    vehicleModel = Console.ReadLine();
-                }
-
-                switch (userVehicle)
-                {
-                    case eVehicles.Car:
-                        isElectricVehicle = false;
-                        CreateCar(isElectricVehicle, vehicleModel, i_LicencePlate, owner, eVehicles.Car);
-                        break;
-                    case eVehicles.ElectricCar:
-                        isElectricVehicle = true;
-                        CreateCar(isElectricVehicle, vehicleModel, i_LicencePlate, owner, eVehicles.ElectricCar);
-                        break;
-                    case eVehicles.Motorcycle:
-                        isElectricVehicle = false;
-                        CreateMotorcycle(isElectricVehicle, vehicleModel, i_LicencePlate, owner, eVehicles.Motorcycle);
-                        break;
-                    case eVehicles.ElectricMotorcycle:
-                        isElectricVehicle = true;
-                        CreateMotorcycle(isElectricVehicle, vehicleModel, i_LicencePlate, owner, eVehicles.ElectricMotorcycle);
-                        break;
-                    case eVehicles.Truck:
-                        CreateTruck(vehicleModel, i_LicencePlate, owner, eVehicles.Truck);
-                        break;
-                    default:
-                        //invalid input, need to handle.......
-                        break;
-                }
+                EnterVehicleModel(out vehicleModel);
+                CreateVehicle(vehicleModel, i_LicencePlate, owner, userVehicle);
                 Console.WriteLine(MessagesEnglish.k_AddedNewCarMessage);
                 Console.WriteLine(MessagesEnglish.k_GoingBackToMainMenuMessage);
             }
 
             Thread.Sleep(3000);
             Ex02.ConsoleUtils.Screen.Clear();
+        }
+
+        private static void EnterOwnerDetails(out string o_OwnerName, out string o_PhoneNumber)
+        {
+            Console.WriteLine(MessagesEnglish.k_GetNameMessage);
+            o_OwnerName = Console.ReadLine();
+            while (InputValidation.IsEmptyInput(o_OwnerName))
+            {
+                Console.WriteLine(MessagesEnglish.k_InvalidInputMessage);
+                Console.WriteLine(MessagesEnglish.k_GetNameMessage);
+                o_OwnerName = Console.ReadLine();
+            }
+
+            Console.WriteLine(MessagesEnglish.k_GetPhoneNumberMessage);
+            o_PhoneNumber = Console.ReadLine();
+            while (!InputValidation.IsValidPhoneNumber(o_PhoneNumber))
+            {
+                Console.WriteLine(MessagesEnglish.k_InvalidInputMessage);
+                Console.WriteLine(MessagesEnglish.k_GetPhoneNumberMessage);
+                o_PhoneNumber = Console.ReadLine();
+            }
+        }
+
+        private static void EnterVehicleModel(out string o_VehicleModel)
+        {
+            Console.WriteLine(MessagesEnglish.k_GetVehicleModelMessage);
+            o_VehicleModel = Console.ReadLine();
+            while (InputValidation.IsEmptyInput(o_VehicleModel))
+            {
+                Console.WriteLine(MessagesEnglish.k_InvalidInputMessage);
+                Console.WriteLine(MessagesEnglish.k_GetVehicleModelMessage);
+                o_VehicleModel = Console.ReadLine();
+            }
+        }
+
+        private static void CreateVehicle(string i_VehicleModel, string i_LicencePlate, VehicleOwner i_VehicleOwner, eVehicles i_Vehicle)
+        {
+            bool isElectricVehicle;
+            switch (i_Vehicle)
+            {
+                case eVehicles.Car:
+                    isElectricVehicle = false;
+                    CreateCar(isElectricVehicle, i_VehicleModel, i_LicencePlate, i_VehicleOwner, eVehicles.Car);
+                    break;
+                case eVehicles.ElectricCar:
+                    isElectricVehicle = true;
+                    CreateCar(isElectricVehicle, i_VehicleModel, i_LicencePlate, i_VehicleOwner, eVehicles.ElectricCar);
+                    break;
+                case eVehicles.Motorcycle:
+                    isElectricVehicle = false;
+                    CreateMotorcycle(isElectricVehicle, i_VehicleModel, i_LicencePlate, i_VehicleOwner, eVehicles.Motorcycle);
+                    break;
+                case eVehicles.ElectricMotorcycle:
+                    isElectricVehicle = true;
+                    CreateMotorcycle(isElectricVehicle, i_VehicleModel, i_LicencePlate, i_VehicleOwner, eVehicles.ElectricMotorcycle);
+                    break;
+                case eVehicles.Truck:
+                    CreateTruck(i_VehicleModel, i_LicencePlate, i_VehicleOwner, eVehicles.Truck);
+                    break;
+                default:
+                    Console.WriteLine(MessagesEnglish.k_InvalidInputMessage);
+                    Console.WriteLine(MessagesEnglish.k_GoingBackToMainMenuMessage);
+                    Thread.Sleep(2000);
+                    break;
+            }
         }
 
         private static void CreateCar(bool i_IsElectric, string i_CarModel, string i_LicencePlate, VehicleOwner i_VehicleOwner, eVehicles vehicle)
@@ -187,7 +203,7 @@ namespace Ex03.ConsoleUI
             float wheelsCurrentAirPressure;
             string wheelMaker;
 
-            energyLeft = EnterFuellOrEnergyLeft(i_IsElectric, vehicle, i_IsElectric ? k_ElectricCarMaxBattery : k_CarMaxFuel);
+            energyLeft = EnterEnergyLeft(i_IsElectric, vehicle, i_IsElectric ? k_ElectricCarMaxBattery : k_CarMaxFuel);
             color = (eCarColors) DisplayEnumOptions(typeof(eCarColors), MessagesEnglish.k_GetColorMessage);
 
             numOfDoors = (eNumOfDoors)DisplayEnumOptions(typeof(eNumOfDoors), MessagesEnglish.k_GetNumDoorsMessage);
@@ -195,13 +211,13 @@ namespace Ex03.ConsoleUI
             GetWheelInformation(out wheelMaker, out wheelsCurrentAirPressure, GarageManager.m_CarMaxAirPressure);
             if (i_IsElectric)
             {
-                ElectricCar newElectricCar = CreateVehicle.CreateElectricCar(i_CarModel, i_LicencePlate, energyLeft, color,
+                ElectricCar newElectricCar = GarageLogic.CreateVehicle.CreateElectricCar(i_CarModel, i_LicencePlate, energyLeft, color,
                     numOfDoors, wheelMaker, wheelsCurrentAirPressure, i_VehicleOwner);
                 GarageManager.AddVehicleToGarage(newElectricCar);
             }
             else
             {
-                Car newCar = CreateVehicle.CreateCar(i_CarModel, i_LicencePlate, energyLeft, color, numOfDoors, wheelMaker, wheelsCurrentAirPressure, i_VehicleOwner);
+                Car newCar = GarageLogic.CreateVehicle.CreateCar(i_CarModel, i_LicencePlate, energyLeft, color, numOfDoors, wheelMaker, wheelsCurrentAirPressure, i_VehicleOwner);
                 GarageManager.AddVehicleToGarage(newCar);
             }
         }
@@ -215,7 +231,7 @@ namespace Ex03.ConsoleUI
             string wheelMaker;
             eMotorcycleLicenceType licenceType;
 
-            energyLeft = EnterFuellOrEnergyLeft(i_IsElectric, i_Vehicle, i_IsElectric ? k_ElectricMotorcycleMaxBattery : k_MotorcycleMaxFuel);
+            energyLeft = EnterEnergyLeft(i_IsElectric, i_Vehicle, i_IsElectric ? k_ElectricMotorcycleMaxBattery : k_MotorcycleMaxFuel);
 
             licenceType = (eMotorcycleLicenceType) DisplayEnumOptions(typeof(eMotorcycleLicenceType), MessagesEnglish.k_GetLicenseTypeMessage);
 
@@ -225,13 +241,13 @@ namespace Ex03.ConsoleUI
 
             if (i_IsElectric)
             {
-                ElectricMotorcycle newElectricMotorcycle = CreateVehicle.CreateElectricMotorcycle(i_MotorcycleModel, i_LicencePlate, energyLeft, licenceType,
+                ElectricMotorcycle newElectricMotorcycle = GarageLogic.CreateVehicle.CreateElectricMotorcycle(i_MotorcycleModel, i_LicencePlate, energyLeft, licenceType,
                     validEngineVolume, wheelMaker, wheelsCurrentAirPressure, i_VehicleOwner);
                 GarageManager.AddVehicleToGarage(newElectricMotorcycle);
             }
             else
             {
-                Motorcycle newMotorcycle = CreateVehicle.CreateMotorcycle(i_MotorcycleModel, i_LicencePlate, energyLeft, licenceType,
+                Motorcycle newMotorcycle = GarageLogic.CreateVehicle.CreateMotorcycle(i_MotorcycleModel, i_LicencePlate, energyLeft, licenceType,
                     validEngineVolume, wheelMaker, wheelsCurrentAirPressure, i_VehicleOwner);
                 GarageManager.AddVehicleToGarage(newMotorcycle);
             }
@@ -246,7 +262,7 @@ namespace Ex03.ConsoleUI
             string wheelMaker;
             bool isElectric = false;
 
-            fuelLeft = EnterFuellOrEnergyLeft(isElectric, i_Vehicle, k_TruckMaxFuel);
+            fuelLeft = EnterEnergyLeft(isElectric, i_Vehicle, k_TruckMaxFuel);
 
             dangerousMaterials = EnterDangerousMaterialsInput();
 
@@ -254,11 +270,12 @@ namespace Ex03.ConsoleUI
 
             GetWheelInformation(out wheelMaker, out wheelsCurrentAirPressure, GarageManager.m_TruckMaxAirPressure);
 
-            Truck newTruck = CreateVehicle.CreateTruck(i_TruckModel, i_LicencePlate, fuelLeft, dangerousMaterials, CargoVolume, wheelMaker, wheelsCurrentAirPressure, i_VehicleOwner);
+            Truck newTruck = GarageLogic.CreateVehicle.CreateTruck(i_TruckModel, i_LicencePlate, fuelLeft, dangerousMaterials, CargoVolume, wheelMaker, wheelsCurrentAirPressure, i_VehicleOwner);
             GarageManager.AddVehicleToGarage(newTruck);
         }
 
-        private static float EnterFuellOrEnergyLeft(bool i_IsElectric, eVehicles i_Vehicle, float i_MaxEnergyOrFuelLeft)
+        //Energy can be fuel or battery
+        private static float EnterEnergyLeft(bool i_IsElectric, eVehicles i_Vehicle, float i_MaxEnergyOrFuelLeft)
         {
             string energyLeftInput;
             float energyLeft;
@@ -335,6 +352,7 @@ namespace Ex03.ConsoleUI
             return validCargoVolume;
         }
 
+
         public static int DisplayEnumOptions(Type i_Enum, string i_EnumMessage)
         {
             int index;
@@ -362,7 +380,6 @@ namespace Ex03.ConsoleUI
 
                     Console.WriteLine(MessagesEnglish.k_ChooseVehicleMessage);
                     userInput = Console.ReadLine();
-
                     if (!InputValidation.IsValidEnumInput(userInput, length, out validUerInput))
                     {
                         isInvalidInput = true;
@@ -377,11 +394,14 @@ namespace Ex03.ConsoleUI
             else
             {
                 validUerInput = 0;
-                //handle bad Type.... (i dont think we will get here.....)
+                Console.WriteLine(MessagesEnglish.k_NotAnEnumType);
+                Console.WriteLine(MessagesEnglish.k_GoingBackToMainMenuMessage);
+                Thread.Sleep(2000);
+                DisplayGarageMenu();
             }
 
-            Ex02.ConsoleUtils.Screen.Clear();
 
+            Ex02.ConsoleUtils.Screen.Clear();
             return validUerInput;
         }
 
