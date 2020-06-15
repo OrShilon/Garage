@@ -252,5 +252,37 @@ namespace Ex03.GarageLogic
             }
             return vehicleLocation;
         }
+
+        public float CarMaxAirPressure
+        {
+            get
+            {
+                return k_CarMaxAirPressure;
+            }
+        }
+
+        public float MotorcycleMaxAirPressure
+        {
+            get
+            {
+                return k_MotorcycleMaxAirPressure;
+            }
+        }
+
+        public float TruckMaxAirPressure
+        {
+            get
+            {
+                return k_TruckMaxAirPressure;
+            }
+        }
+
+        public int VehicleNotInGarage
+        {
+            get
+            {
+                return k_NotInGarage;
+            }
+        }
     }
 }
