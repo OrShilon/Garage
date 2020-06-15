@@ -40,6 +40,7 @@ namespace Ex03.GarageLogic
                 m_PhoneNumber = value;
             }
         }
+
         public override string ToString()
         {
             return String.Format(@"Owners name is: {0}

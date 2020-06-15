@@ -19,9 +19,7 @@ namespace Ex03.GarageLogic
             m_CurrentAirPressure = i_CurrentAirPressure;
             m_MaxAirPressure = i_MaxAirPressure;
         }
-        //private string m_WheelMaker;
-        //private float m_CurrentAirPressure;
-        //private float m_MaxAirPressure;
+
         public string WheelMaker
         {
             get
@@ -30,7 +28,7 @@ namespace Ex03.GarageLogic
             }
             set
             {
-                if (value.Length != 0)
+                if (value.Length != GarageManager.k_Zero)
                 {
                     m_WheelMaker = value;
                 }
@@ -44,7 +42,7 @@ namespace Ex03.GarageLogic
             }
             set
             {
-                if (value < m_MaxAirPressure)
+                if (value <= m_MaxAirPressure)
                 {
                     m_CurrentAirPressure = value;
                 }
