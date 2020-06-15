@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Ex03.ConsoleUI
 {
-    class UIManager
+    internal class UIManager
     {
         private const float k_CarMaxFuel = 60f;
         private const float k_ElectricCarMaxBattery = 2.1f;
@@ -17,14 +17,14 @@ namespace Ex03.ConsoleUI
         private const float k_MotorcycleMaxFuel = 7f;
         private const float k_TruckMaxFuel = 120f;
 
-        public static void Welcome()
+        internal static void Welcome()
         {
             Console.WriteLine(MessagesEnglish.k_GarageHelloMessage, Environment.NewLine);
             Thread.Sleep(1200);
             DisplayGarageMenu();
         }
 
-        public static void DisplayGarageMenu()
+        internal static void DisplayGarageMenu()
         {
             string userInput;
             int validOption;
@@ -103,7 +103,7 @@ namespace Ex03.ConsoleUI
             }
 
         }
-        public static void AddNewVehicle(string i_LicencePlate)
+        private static void AddNewVehicle(string i_LicencePlate)
         {
             eVehicles userVehicle;
             string vehicleModel;
@@ -353,7 +353,7 @@ namespace Ex03.ConsoleUI
         }
 
 
-        public static int DisplayEnumOptions(Type i_Enum, string i_EnumMessage)
+        private static int DisplayEnumOptions(Type i_Enum, string i_EnumMessage)
         {
             int index;
             string userInput;
@@ -459,7 +459,7 @@ namespace Ex03.ConsoleUI
             Ex02.ConsoleUtils.Screen.Clear();
         }
 
-        public static void ChangeVehicleStatus(string i_LicencePlate)
+        private static void ChangeVehicleStatus(string i_LicencePlate)
         {
 
             if (GarageManager.CheckIfVehicleInGarage(i_LicencePlate) == GarageManager.k_NotInGarage)
