@@ -43,6 +43,7 @@ Type in the corresponding number to your visit purpose please";
         internal const string k_GetCurrentAirPressureMessage = "Please enter the currnet air pressure in your wheels (maximum {0}):";
         internal const string k_AirPressureAboveMAximumMessage = "You have entered a number above the maximum air pressure";
         internal const string k_DisplayEnumLine = "{0}. {1}";
+        internal const string k_NotAnEnumType = "The input type is not an enum";
         internal const string k_ChooseVehicleMessage = "Type in the corresponding number to your vehicle please.";
         internal const string k_GetCargoVolumeMessage = "Please enter your truck's cargo volume:";
         internal const string k_DangerMaterialMessage = "Is there any dangerous materials in your truck? Enter 1 for yes, 0 for no.";
