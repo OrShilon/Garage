@@ -18,8 +18,7 @@ namespace Ex03.GarageLogic
             m_CargoVolume = i_CargoVolume;
         }
 
-
-        internal bool CarryDangerousMaterials
+        public bool CarryDangerousMaterials
         {
             get
             {
@@ -27,7 +26,7 @@ namespace Ex03.GarageLogic
             }
         }
 
-        internal float CargoVolume
+        public float CargoVolume
         {
             get
             {

@@ -8,17 +8,17 @@ namespace Ex03.GarageLogic
 {
     public class CreateVehicle
     {
-        internal const float k_CarMaxFuel = 60f;
-        internal const byte k_CarNumOfWheels = 4;
-        internal const float k_CarMaxBattery = 2.1f;
-        internal const float k_CarMaxWheelPressure = 32;
-        internal const float k_MotorcycleMaxFuel = 7f;
-        internal const byte k_MotorcycleNumOfWheels = 2;
-        internal const float k_MotorcycleMaxBattery = 1.2f;
-        internal const float k_MotorcycleMaxWheelPressure = 30;
-        internal const float k_TruckMaxFuel = 120f;
-        internal const byte k_TruckNumOfWheels = 16;
-        internal const float k_TruckMaxWheelPressure = 28;
+        private const float k_CarMaxFuel = 60f;
+        private const byte k_CarNumOfWheels = 4;
+        private const float k_CarMaxBattery = 2.1f;
+        private const float k_CarMaxWheelPressure = 32;
+        private const float k_MotorcycleMaxFuel = 7f;
+        private const byte k_MotorcycleNumOfWheels = 2;
+        private const float k_MotorcycleMaxBattery = 1.2f;
+        private const float k_MotorcycleMaxWheelPressure = 30;
+        private const float k_TruckMaxFuel = 120f;
+        private const byte k_TruckNumOfWheels = 16;
+        private const float k_TruckMaxWheelPressure = 28;
 
 
         public static Car CreateCar(string i_VehicleModel, string i_LicencePlate, float i_FuelLeft, eCarColors i_Color, eNumOfDoors i_NumOfDoors,

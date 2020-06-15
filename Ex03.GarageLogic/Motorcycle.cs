@@ -17,7 +17,7 @@ namespace Ex03.GarageLogic
             m_EngineVolume = i_EngineVolume;
         }
 
-        internal eMotorcycleLicenceType LicenseType
+        public eMotorcycleLicenceType LicenseType
         {
             get
             {
@@ -25,7 +25,7 @@ namespace Ex03.GarageLogic
             }
         }
 
-        internal int EngineVolume
+        public int EngineVolume
         {
             get
             {
