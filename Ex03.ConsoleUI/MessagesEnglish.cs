@@ -19,6 +19,7 @@ namespace Ex03.ConsoleUI
 7. Display my vehicle details
 8. Exit program
 Type in the corresponding number to your visit purpose please";
+
         internal const string k_InvalidInputMessage = "Invalid input.";
         internal const string k_LicensePlateRequestMessage = "please enter your licence plate:";
         internal const string k_VehicleIsRegistered = "Your vehicle is already in our garage!";
@@ -59,7 +60,5 @@ Type in the corresponding number to your visit purpose please";
         internal const string k_WheelsInflatedMessage = "Your car wheels have been inflated properly. ";
         internal const string k_StatusChangedMessage = "Your status has been changed. ";
         internal const string k_AddedNewCarMessage = "Your vehicle has been added properly.";
-
-
     }
 }
