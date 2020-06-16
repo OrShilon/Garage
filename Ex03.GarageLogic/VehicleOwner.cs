@@ -10,6 +10,7 @@ namespace Ex03.GarageLogic
     {
         private string m_Name;
         private string m_PhoneNumber;
+        private const int k_EmptyPhoneNumber = 0;
 
         public VehicleOwner(string i_Name, string i_PhoneNumber)
         {
@@ -37,7 +38,10 @@ namespace Ex03.GarageLogic
             }
             set
             {
-                m_PhoneNumber = value;
+                if (value.Length > k_EmptyPhoneNumber) 
+                {
+                    m_PhoneNumber = value;
+                }
             }
         }
 
