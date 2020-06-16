@@ -9,14 +9,14 @@ namespace Ex03.GarageLogic
     public abstract class FuelVehicle : Vehicle
     {
         private float m_FuelLeft;
-        private readonly float m_FuelTankCapacity;
+        private float m_MaxFuelTankCapacity;
         private eFuelTypes m_FuelType;
 
-        public FuelVehicle(string i_VehicleModel, string i_LicencePlate, float i_FuelLeft, float i_FuelTankCapacity, byte i_NumOfWheels, eFuelTypes i_FuelType,VehicleOwner i_Owner) :
+        public FuelVehicle(string i_VehicleModel, string i_LicencePlate, float i_FuelLeft, float i_MaxFuelTankCapacity, byte i_NumOfWheels, eFuelTypes i_FuelType,VehicleOwner i_Owner) :
             base(i_VehicleModel, i_LicencePlate, i_NumOfWheels, i_Owner)
         {
             m_FuelLeft = i_FuelLeft;
-            m_FuelTankCapacity = i_FuelTankCapacity;
+            m_MaxFuelTankCapacity = i_MaxFuelTankCapacity;
             m_FuelType = i_FuelType;
         }
 
@@ -34,11 +34,11 @@ namespace Ex03.GarageLogic
                 }
             }
         }
-        public float FuelTankCapacity
+        public float MaxFuelTankCapacity
         {
             get
             {
-                return m_FuelTankCapacity;
+                return m_MaxFuelTankCapacity;
             }
         }
 
@@ -50,17 +50,14 @@ namespace Ex03.GarageLogic
             }
             set
             {
-                if (value > 0f)
-                {
-                    m_FuelType = value;
-                }
+                m_FuelType = value;
             }
         }
         public override string ToString()
         {
             return base.ToString() + Environment.NewLine +  String.Format(@"Vehicle fuel type is: {0}
 Vehicle fuel tank capacity is: {1} liters
-Vehicle fuel left is: {2} liters", m_FuelType, m_FuelTankCapacity, m_FuelLeft);
+Vehicle fuel left is: {2} liters", m_FuelType, m_MaxFuelTankCapacity, m_FuelLeft);
         }
     }
 }

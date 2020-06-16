@@ -11,6 +11,7 @@ namespace Ex03.GarageLogic
         private string m_WheelMaker;
         private float m_CurrentAirPressure;
         private float m_MaxAirPressure;
+        private const int k_EmptyWheelMaker = 0;
 
         public Wheel(string i_WheelMaker, float i_CurrentAirPressure, float i_MaxAirPressure)
         {
@@ -28,7 +29,7 @@ namespace Ex03.GarageLogic
             }
             set
             {
-                if (value.Length != GarageManager.k_Zero)
+                if (value.Length > k_EmptyWheelMaker)
                 {
                     m_WheelMaker = value;
                 }

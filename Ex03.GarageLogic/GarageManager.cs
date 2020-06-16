@@ -15,7 +15,8 @@ namespace Ex03.GarageLogic
         private int m_CountFixed;
         private int m_CountPayed;
         internal const int k_NotInGarage = -1;
-        internal const int k_Zero = 0;
+        internal const int k_MininumRangeValue = 0;
+        internal const int k_InvalidStatusInput = 0;
         internal const float k_CarMaxAirPressure = 32f;
         internal const float k_MotorcycleMaxAirPressure = 30f;
         internal const float k_TruckMaxAirPressure = 28f;
@@ -68,27 +69,6 @@ namespace Ex03.GarageLogic
             }
         }
 
-        private int ConvertEnunStatusToInt(eVehicleStatus i_VehicleStatus)
-        {
-            int convertedStatus;
-            switch (i_VehicleStatus)
-            {
-                case eVehicleStatus.InRepair:
-                    convertedStatus = m_CountInRepair;
-                    break;    
-                case eVehicleStatus.Fixed:
-                    convertedStatus = m_CountFixed;
-                    break;           
-                case eVehicleStatus.Payed:
-                    convertedStatus = m_CountPayed;
-                    break;
-                default:
-                    convertedStatus = k_Zero;
-                    break;
-            }
-
-            return convertedStatus;
-        }
         public void PrintVehiclesInGarage()
         {
             if (VehiclesInGarageStatus.Any())
@@ -106,7 +86,7 @@ namespace Ex03.GarageLogic
 
         public void PrintVehiclesInGarage(eVehicleStatus i_status)
         {
-            if (ConvertEnunStatusToInt(i_status) < 1)
+            if (convertEnunStatusToInt(i_status) <= k_InvalidStatusInput)
             {
                 Console.WriteLine("Sorry but there are no vehicles with this status in the garage currently");
             }
@@ -122,9 +102,33 @@ namespace Ex03.GarageLogic
             }
         }
 
+        private int convertEnunStatusToInt(eVehicleStatus i_VehicleStatus)
+        {
+            int convertedStatus;
+
+            switch (i_VehicleStatus)
+            {
+                case eVehicleStatus.InRepair:
+                    convertedStatus = m_CountInRepair;
+                    break;
+                case eVehicleStatus.Fixed:
+                    convertedStatus = m_CountFixed;
+                    break;
+                case eVehicleStatus.Payed:
+                    convertedStatus = m_CountPayed;
+                    break;
+                default:
+                    convertedStatus = k_InvalidStatusInput;
+                    break;
+            }
+
+            return convertedStatus;
+        }
+
         public void ChangeVehicleStatus(string i_LicensePlateNumber, eVehicleStatus i_NewVehicleStatus)
         {
             int vehicleLocation = CheckIfVehicleInGarage(i_LicensePlateNumber);
+
             if (vehicleLocation == k_NotInGarage)
             {
                 throw new ArgumentException("Vehicle is NOT in garage");
@@ -157,6 +161,7 @@ namespace Ex03.GarageLogic
                         m_CountPayed++;
                         break;
                 }
+
                 VehiclesInGarageStatus[i_LicensePlateNumber] = i_NewVehicleStatus;
             } 
         }
@@ -187,33 +192,10 @@ namespace Ex03.GarageLogic
             customerVehicle.SetWheelPressure(maxAirPressure);
         }
 
-        public void FillBattery(string i_LicensePlateNumber, float i_HowMuchToFill)
-        {
-            int vehicleLocation = CheckIfVehicleInGarage(i_LicensePlateNumber);
-            if (vehicleLocation == k_NotInGarage)
-            {
-                throw new ArgumentException("Vehicle is NOT in garage");
-            }
-
-            ElectricVehicle customerVehicle = m_AllVehiclesInGarage[vehicleLocation] as ElectricVehicle;
-            if(customerVehicle == null)
-            {
-                throw new ArgumentException("NOT an Electric vehicle");
-            }
-
-            float newBatteryLeft = customerVehicle.BatteryLeft + i_HowMuchToFill;
-            float calculatedMaximumBatteryHours = customerVehicle.BatteryHourCapacity - customerVehicle.BatteryLeft;
-            if (newBatteryLeft > customerVehicle.BatteryHourCapacity)
-            {
-                throw new ValueOutOfRangeException(calculatedMaximumBatteryHours, k_Zero);
-            }
-           
-            customerVehicle.BatteryLeft = newBatteryLeft;
-        }
-
         public void Refuel(string i_LicensePlateNumber, float i_HowMuchToFill, eFuelTypes i_FuelType)
         {
             int vehicleLocation = CheckIfVehicleInGarage(i_LicensePlateNumber);
+
             if(vehicleLocation == k_NotInGarage)
             {
                 throw new ArgumentException("Vehicle is NOT in garage");
@@ -224,10 +206,10 @@ namespace Ex03.GarageLogic
                 throw new ArgumentException("NOT a fuel vehicle");
             }
             float newFuelLeft = customerVehicle.FuelLeft + i_HowMuchToFill;
-            float calculatedMaximumFuelCapacity = customerVehicle.FuelTankCapacity - customerVehicle.FuelLeft;
-            if (newFuelLeft > customerVehicle.FuelTankCapacity)
+            float calculatedMaximumFuelCapacity = customerVehicle.MaxFuelTankCapacity - customerVehicle.FuelLeft;
+            if (newFuelLeft > customerVehicle.MaxFuelTankCapacity)
             {
-                throw new ValueOutOfRangeException(calculatedMaximumFuelCapacity, k_Zero);
+                throw new ValueOutOfRangeException(calculatedMaximumFuelCapacity, k_MininumRangeValue);
             }
             if (i_FuelType != customerVehicle.FuelType)
             {
@@ -237,7 +219,32 @@ namespace Ex03.GarageLogic
 
         }
 
-         //checks if the given vehicle is in the garage. If so returns its location in the list, else not returns -1
+        public void Recharge(string i_LicensePlateNumber, float i_HowMuchToFill)
+        {
+            int vehicleLocation = CheckIfVehicleInGarage(i_LicensePlateNumber);
+
+            if (vehicleLocation == k_NotInGarage)
+            {
+                throw new ArgumentException("Vehicle is NOT in garage");
+            }
+
+            ElectricVehicle customerVehicle = m_AllVehiclesInGarage[vehicleLocation] as ElectricVehicle;
+            if (customerVehicle == null)
+            {
+                throw new ArgumentException("NOT an Electric vehicle");
+            }
+
+            float newBatteryLeft = customerVehicle.BatteryLeft + i_HowMuchToFill;
+            float calculatedMaximumBatteryHours = customerVehicle.BatteryHourCapacity - customerVehicle.BatteryLeft;
+            if (newBatteryLeft > customerVehicle.BatteryHourCapacity)
+            {
+                throw new ValueOutOfRangeException(calculatedMaximumBatteryHours, k_MininumRangeValue);
+            }
+
+            customerVehicle.BatteryLeft = newBatteryLeft;
+        }
+
+        //checks if the given vehicle is in the garage. If so returns its location in the list, else not returns -1
         public int CheckIfVehicleInGarage(string i_LicensePlateNumber)
         {
             int vehicleLocation = k_NotInGarage;

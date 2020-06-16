@@ -10,8 +10,9 @@ namespace Ex03.GarageLogic
     {
         private string m_VehicleModel;
         private string m_LicencePlate;
-        private Wheel[] m_Wheels;
+        private readonly Wheel[] m_Wheels;
         private VehicleOwner owner;
+        private const int k_EmptyName = 0;
 
         public Vehicle(string i_VehicleModel, string i_LicencePlate, byte i_NumOfWheels, VehicleOwner i_Owner)
         {
@@ -33,7 +34,7 @@ namespace Ex03.GarageLogic
         {
             if(m_Wheels[0].MaxAirPressure < i_WheelPressure)
             {
-                throw new ValueOutOfRangeException(m_Wheels[0].MaxAirPressure, GarageManager.k_Zero);
+                throw new ValueOutOfRangeException(m_Wheels[0].MaxAirPressure, GarageManager.k_MininumRangeValue);
             }
             else
             {
@@ -95,7 +96,7 @@ namespace Ex03.GarageLogic
             }
             set
             {
-                if (value.Length != 0)
+                if (value.Length != k_EmptyName)
                 {
                     m_VehicleModel = value;
                 }
