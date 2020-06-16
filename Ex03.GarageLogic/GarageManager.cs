@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Ex03.GarageLogic
@@ -11,15 +12,16 @@ namespace Ex03.GarageLogic
     {
         private readonly List<Vehicle> m_AllVehiclesInGarage;
         private readonly Dictionary<string, eVehicleStatus> VehiclesInGarageStatus;
-        private int m_CountInRepair;
-        private int m_CountFixed;
-        private int m_CountPayed;
         internal const int k_NotInGarage = -1;
         internal const int k_MininumRangeValue = 0;
         internal const int k_InvalidStatusInput = 0;
         internal const float k_CarMaxAirPressure = 32f;
         internal const float k_MotorcycleMaxAirPressure = 30f;
         internal const float k_TruckMaxAirPressure = 28f;
+        internal const int k_EmptyGarage = 0;
+        private int m_CountInRepair;
+        private int m_CountFixed;
+        private int m_CountPayed;
 
         public GarageManager()
         {
@@ -71,7 +73,7 @@ namespace Ex03.GarageLogic
 
         public void PrintVehiclesInGarage()
         {
-            if (VehiclesInGarageStatus.Any())
+            if (VehiclesInGarageStatus.Count() == k_EmptyGarage)
             {
                 Console.WriteLine("Sorry but there are no vehicles in the garage currently");
             }
