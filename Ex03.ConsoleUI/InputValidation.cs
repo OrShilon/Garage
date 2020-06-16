@@ -1,10 +1,10 @@
-﻿using Ex03.GarageLogic;
+﻿using System;
 using Microsoft.SqlServer.Server;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Ex03.GarageLogic;
 
 namespace Ex03.ConsoleUI
 {
@@ -31,6 +31,7 @@ namespace Ex03.ConsoleUI
             {
                 throw new FormatException(MessagesEnglish.k_InvalidInputMessage);
             }
+
             return IsPositiveNumber(o_ValidEngineVolume);
         }
 
@@ -91,6 +92,7 @@ namespace Ex03.ConsoleUI
                     isValidStatusFliter = true;
                 }
             }
+
             return isValidStatusFliter;
         }
 

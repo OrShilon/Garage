@@ -1,22 +1,22 @@
-﻿using Ex03.GarageLogic;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Ex03.GarageLogic;
 
 namespace Ex03.ConsoleUI
 {
     internal class UIManager
     {
-        private static GarageManager m_MyGarage = new GarageManager();
         private const float k_CarMaxFuel = 60f;
         private const float k_ElectricCarMaxBattery = 2.1f;
         private const float k_ElectricMotorcycleMaxBattery = 1.2f;
         private const float k_MotorcycleMaxFuel = 7f;
         private const float k_TruckMaxFuel = 120f;
+        private static GarageManager m_MyGarage = new GarageManager();
 
         internal static void Welcome()
         {
@@ -102,8 +102,8 @@ namespace Ex03.ConsoleUI
                 Thread.Sleep(2000);
                 Ex02.ConsoleUtils.Screen.Clear();
             }
-
         }
+
         private static void addNewVehicle(string i_LicencePlate)
         {
             eVehicles userVehicle;
@@ -225,7 +225,6 @@ namespace Ex03.ConsoleUI
             }
         }
 
-
         private static void createMotorcycle(bool i_IsElectric, string i_MotorcycleModel, string i_LicencePlate, VehicleOwner i_VehicleOwner, eVehicles i_Vehicle)
         {
             float energyLeft;
@@ -272,7 +271,7 @@ namespace Ex03.ConsoleUI
             m_MyGarage.AddVehicleToGarage(newTruck);
         }
 
-        //Energy can be fuel or battery
+        // Energy can be fuel or battery
         private static float enterEnergyLeft(bool i_IsElectric, eVehicles i_Vehicle, float i_MaxEnergyLeft)
         {
             string energyLeftInput;
@@ -349,15 +348,14 @@ namespace Ex03.ConsoleUI
             return validCargoVolume;
         }
 
-
         private static int displayEnumOptions(Type i_Enum, string i_EnumMessage)
         {
             int index;
             string userInput;
-            bool isInvalidInput = false; //true means that the input by the user was invalid
+            bool isInvalidInput = false; // True means that the input by the user was invalid
             int validUerInput;
 
-                if (i_Enum.IsEnum)
+            if (i_Enum.IsEnum)
             {
                 int length = i_Enum.GetEnumNames().Length;
                 do
@@ -385,7 +383,8 @@ namespace Ex03.ConsoleUI
                     {
                         isInvalidInput = false;
                     }
-                } while (isInvalidInput);
+                }
+                while (isInvalidInput);
             }
             else
             {
@@ -396,8 +395,8 @@ namespace Ex03.ConsoleUI
                 displayGarageMenu();
             }
 
-
             Ex02.ConsoleUtils.Screen.Clear();
+
             return validUerInput;
         }
 
@@ -456,7 +455,6 @@ namespace Ex03.ConsoleUI
 
         private static void changeVehicleStatus(string i_LicencePlate)
         {
-
             if (m_MyGarage.CheckIfVehicleInGarage(i_LicencePlate) == m_MyGarage.VehicleNotInGarage)
             {
                 notRegisteredVehiclesMessages();
@@ -502,6 +500,7 @@ namespace Ex03.ConsoleUI
                         Ex02.ConsoleUtils.Screen.Clear();
                         fillAir(i_LicencePlate);
                     }
+
                     Console.WriteLine(MessagesEnglish.k_WheelsInflatedMessage);
                     Console.WriteLine(MessagesEnglish.k_GoingBackToMainMenuMessage);
                     Thread.Sleep(1000);
@@ -567,6 +566,7 @@ namespace Ex03.ConsoleUI
             Thread.Sleep(1000);
             Ex02.ConsoleUtils.Screen.Clear();
         }
+
         private static void reCharge(string i_LicencePlate)
         {
             float ValidBatteryHours;
@@ -592,9 +592,7 @@ namespace Ex03.ConsoleUI
                 }
                 else
                 {
-
                     ValidBatteryHours = enterEnergyToFill(MessagesEnglish.k_BatteryToChargeMessage);
-
                     try
                     {
                         m_MyGarage.Recharge(i_LicencePlate, ValidBatteryHours);
@@ -623,7 +621,6 @@ namespace Ex03.ConsoleUI
 
         private static void displayVehicleDetails(string i_LicencePlate)
         {
-
             if (m_MyGarage.CheckIfVehicleInGarage(i_LicencePlate) == m_MyGarage.VehicleNotInGarage)
             {
                 notRegisteredVehiclesMessages();
