@@ -10,8 +10,8 @@ namespace Ex03.GarageLogic
 {
     public class GarageManager
     {
-        private readonly List<Vehicle> m_AllVehiclesInGarage;
-        private readonly Dictionary<string, eVehicleStatus> VehiclesInGarageStatus;
+        private readonly List<Vehicle> r_AllVehiclesInGarage;
+        private readonly Dictionary<string, eVehicleStatus> r_VehiclesInGarageStatus;
         internal const int k_NotInGarage = -1;
         internal const int k_MininumRangeValue = 0;
         internal const int k_InvalidStatusInput = 0;
@@ -25,8 +25,8 @@ namespace Ex03.GarageLogic
 
         public GarageManager()
         {
-            m_AllVehiclesInGarage = new List<Vehicle>();
-            VehiclesInGarageStatus = new Dictionary<string, eVehicleStatus>();
+            r_AllVehiclesInGarage = new List<Vehicle>();
+            r_VehiclesInGarageStatus = new Dictionary<string, eVehicleStatus>();
             m_CountInRepair = 0;
             m_CountFixed = 0;
             m_CountPayed = 0;
@@ -36,7 +36,7 @@ namespace Ex03.GarageLogic
         {
             bool isInGarage = false;
 
-            foreach(Vehicle vehicle in m_AllVehiclesInGarage)
+            foreach(Vehicle vehicle in r_AllVehiclesInGarage)
             {
                 if (vehicle.Equals(i_Vehicle))
                 {
@@ -49,8 +49,8 @@ namespace Ex03.GarageLogic
 
             if (!isInGarage)
             {
-                VehiclesInGarageStatus.Add(i_Vehicle.LicencePlate, eVehicleStatus.InRepair);
-                m_AllVehiclesInGarage.Add(i_Vehicle);
+                r_VehiclesInGarageStatus.Add(i_Vehicle.LicencePlate, eVehicleStatus.InRepair);
+                r_AllVehiclesInGarage.Add(i_Vehicle);
                 m_CountInRepair++;
             }
         }
@@ -59,7 +59,7 @@ namespace Ex03.GarageLogic
         {
             get
             {
-                return VehiclesInGarageStatus;
+                return r_VehiclesInGarageStatus;
             }
         }
 
@@ -67,19 +67,19 @@ namespace Ex03.GarageLogic
         {
             get
             {
-                return m_AllVehiclesInGarage;
+                return r_AllVehiclesInGarage;
             }
         }
 
         public void PrintVehiclesInGarage()
         {
-            if (VehiclesInGarageStatus.Count() == k_EmptyGarage)
+            if (r_VehiclesInGarageStatus.Count() == k_EmptyGarage)
             {
                 Console.WriteLine("Sorry but there are no vehicles in the garage currently");
             }
             else
             {
-                foreach (KeyValuePair<string, eVehicleStatus> vehicle in VehiclesInGarageStatus)
+                foreach (KeyValuePair<string, eVehicleStatus> vehicle in r_VehiclesInGarageStatus)
                 {
                     Console.WriteLine("License plate number: " + vehicle.Key + ", status: " + vehicle.Value);
                 }
@@ -94,7 +94,7 @@ namespace Ex03.GarageLogic
             }
             else
             {
-                foreach (KeyValuePair<string, eVehicleStatus> vehicle in VehiclesInGarageStatus)
+                foreach (KeyValuePair<string, eVehicleStatus> vehicle in r_VehiclesInGarageStatus)
                 {
                     if (vehicle.Value.Equals(i_status))
                     {
@@ -136,7 +136,7 @@ namespace Ex03.GarageLogic
                 throw new ArgumentException("Vehicle is NOT in garage");
             }
 
-            eVehicleStatus oldStatus = VehiclesInGarageStatus[i_LicensePlateNumber];
+            eVehicleStatus oldStatus = r_VehiclesInGarageStatus[i_LicensePlateNumber];
             if (!oldStatus.Equals(i_NewVehicleStatus))
             {
                 switch (oldStatus)
@@ -165,7 +165,7 @@ namespace Ex03.GarageLogic
                         break;
                 }
 
-                VehiclesInGarageStatus[i_LicensePlateNumber] = i_NewVehicleStatus;
+                r_VehiclesInGarageStatus[i_LicensePlateNumber] = i_NewVehicleStatus;
             } 
         }
 
@@ -179,7 +179,7 @@ namespace Ex03.GarageLogic
             }
             else
             {
-                Console.WriteLine(m_AllVehiclesInGarage[vehicleLocation].ToString() + Environment.NewLine + "Vehicle status is: " + VehiclesInGarageStatus[i_LicencePlate]);
+                Console.WriteLine(r_AllVehiclesInGarage[vehicleLocation].ToString() + Environment.NewLine + "Vehicle status is: " + r_VehiclesInGarageStatus[i_LicencePlate]);
             }
         }
 
@@ -192,7 +192,7 @@ namespace Ex03.GarageLogic
                 throw new ArgumentException("Vehicle is NOT in garage");
             }
 
-            Vehicle customerVehicle = m_AllVehiclesInGarage[vehicleLocation];
+            Vehicle customerVehicle = r_AllVehiclesInGarage[vehicleLocation];
             float maxAirPressure = customerVehicle.Wheels[0].MaxAirPressure;
             customerVehicle.SetWheelPressure(maxAirPressure);
         }
@@ -206,7 +206,7 @@ namespace Ex03.GarageLogic
                 throw new ArgumentException("Vehicle is NOT in garage");
             }
 
-            FuelVehicle customerVehicle = m_AllVehiclesInGarage[vehicleLocation] as FuelVehicle;
+            FuelVehicle customerVehicle = r_AllVehiclesInGarage[vehicleLocation] as FuelVehicle;
             if(customerVehicle == null)
             {
                 throw new ArgumentException("NOT a fuel vehicle");
@@ -236,7 +236,7 @@ namespace Ex03.GarageLogic
                 throw new ArgumentException("Vehicle is NOT in garage");
             }
 
-            ElectricVehicle customerVehicle = m_AllVehiclesInGarage[vehicleLocation] as ElectricVehicle;
+            ElectricVehicle customerVehicle = r_AllVehiclesInGarage[vehicleLocation] as ElectricVehicle;
             if (customerVehicle == null)
             {
                 throw new ArgumentException("NOT an Electric vehicle");
@@ -257,9 +257,9 @@ namespace Ex03.GarageLogic
         {
             int vehicleLocation = k_NotInGarage;
 
-            for(int i = 0; i < m_AllVehiclesInGarage.Count; i++)
+            for(int i = 0; i < r_AllVehiclesInGarage.Count; i++)
             {
-                if (m_AllVehiclesInGarage[i].LicencePlate == i_LicensePlateNumber)
+                if (r_AllVehiclesInGarage[i].LicencePlate == i_LicensePlateNumber)
                 {
                     vehicleLocation = i;
                     break;

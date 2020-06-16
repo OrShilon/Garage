@@ -9,38 +9,38 @@ namespace Ex03.GarageLogic
     public abstract class Vehicle
     {
         private const int k_EmptyName = 0;
-        private readonly Wheel[] m_Wheels;
+        private readonly Wheel[] r_Wheels;
         private string m_VehicleModel;
         private string m_LicencePlate;
-        private VehicleOwner owner;
+        private VehicleOwner m_Owner;
 
         public Vehicle(string i_VehicleModel, string i_LicencePlate, byte i_NumOfWheels, VehicleOwner i_Owner)
         {
             m_VehicleModel = i_VehicleModel;
             m_LicencePlate = i_LicencePlate;
-            m_Wheels = new Wheel[i_NumOfWheels];
-            owner = i_Owner;
+            r_Wheels = new Wheel[i_NumOfWheels];
+            m_Owner = i_Owner;
         }
 
         public Wheel[] Wheels
         {
             get
             {
-                return m_Wheels;
+                return r_Wheels;
             }
         }
 
         public void SetWheelPressure(float i_WheelPressure)
         {
-            if(m_Wheels[0].MaxAirPressure < i_WheelPressure)
+            if(r_Wheels[0].MaxAirPressure < i_WheelPressure)
             {
-                throw new ValueOutOfRangeException(m_Wheels[0].MaxAirPressure, GarageManager.k_MininumRangeValue);
+                throw new ValueOutOfRangeException(r_Wheels[0].MaxAirPressure, GarageManager.k_MininumRangeValue);
             }
             else
             {
-                for (int i = 0; i < m_Wheels.Length; i++)
+                for (int i = 0; i < r_Wheels.Length; i++)
                 {
-                    m_Wheels[i].CurrentAirPressure = i_WheelPressure;
+                    r_Wheels[i].CurrentAirPressure = i_WheelPressure;
                 }
             }
         }
@@ -125,7 +125,7 @@ namespace Ex03.GarageLogic
             return string.Format(@"Vehicle model is: {0}
 Vehicle license plate number is: {1}
 {2}
-{3}", m_VehicleModel, m_LicencePlate, owner.ToString(), m_Wheels[0].ToString());
+{3}", m_VehicleModel, m_LicencePlate, m_Owner.ToString(), r_Wheels[0].ToString());
         }
     }    
 }
