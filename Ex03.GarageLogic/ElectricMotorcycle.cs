@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace Ex03.GarageLogic
 {
-    
     public class ElectricMotorcycle : ElectricVehicle
     {
         private eMotorcycleLicenceType m_LicenseType;
@@ -37,9 +36,8 @@ namespace Ex03.GarageLogic
 
         public override string ToString()
         {
-            return base.ToString() + Environment.NewLine + String.Format(@"Vehicle license type is: {0}
+            return base.ToString() + Environment.NewLine + string.Format(@"Vehicle license type is: {0}
 Vehicle engine volume is : {1} cc", m_LicenseType, m_EngineVolume);
         }
     }
-    
 }

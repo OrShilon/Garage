@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ex03.GarageLogic
 {
-   public  enum eFuelTypes
+   public enum eFuelTypes
     {
         Octan95 = 1,
         Octan96,

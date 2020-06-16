@@ -21,7 +21,6 @@ namespace Ex03.GarageLogic
         internal const float k_MotorcycleMaxAirPressure = 30f;
         internal const float k_TruckMaxAirPressure = 28f;
 
-
         public GarageManager()
         {
             m_AllVehiclesInGarage = new List<Vehicle>();
@@ -30,9 +29,11 @@ namespace Ex03.GarageLogic
             m_CountFixed = 0;
             m_CountPayed = 0;
         }
+
         public void AddVehicleToGarage(Vehicle i_Vehicle)
         {
             bool isInGarage = false;
+
             foreach(Vehicle vehicle in m_AllVehiclesInGarage)
             {
                 if (vehicle.Equals(i_Vehicle))
@@ -43,15 +44,14 @@ namespace Ex03.GarageLogic
                     break;
                 }
             }
+
             if (!isInGarage)
             {
                 VehiclesInGarageStatus.Add(i_Vehicle.LicencePlate, eVehicleStatus.InRepair);
                 m_AllVehiclesInGarage.Add(i_Vehicle);
                 m_CountInRepair++;
             }
-     
         }
-
 
         public Dictionary<string, eVehicleStatus> VehiclesStatusDictionary
         {
@@ -133,6 +133,7 @@ namespace Ex03.GarageLogic
             {
                 throw new ArgumentException("Vehicle is NOT in garage");
             }
+
             eVehicleStatus oldStatus = VehiclesInGarageStatus[i_LicensePlateNumber];
             if (!oldStatus.Equals(i_NewVehicleStatus))
             {
@@ -183,10 +184,12 @@ namespace Ex03.GarageLogic
         public void FillAir(string i_LicensePlateNumber)
         {
             int vehicleLocation = CheckIfVehicleInGarage(i_LicensePlateNumber);
+
             if (vehicleLocation == k_NotInGarage)
             {
                 throw new ArgumentException("Vehicle is NOT in garage");
             }
+
             Vehicle customerVehicle = m_AllVehiclesInGarage[vehicleLocation];
             float maxAirPressure = customerVehicle.Wheels[0].MaxAirPressure;
             customerVehicle.SetWheelPressure(maxAirPressure);
@@ -200,23 +203,26 @@ namespace Ex03.GarageLogic
             {
                 throw new ArgumentException("Vehicle is NOT in garage");
             }
+
             FuelVehicle customerVehicle = m_AllVehiclesInGarage[vehicleLocation] as FuelVehicle;
             if(customerVehicle == null)
             {
                 throw new ArgumentException("NOT a fuel vehicle");
             }
+
             float newFuelLeft = customerVehicle.FuelLeft + i_HowMuchToFill;
             float calculatedMaximumFuelCapacity = customerVehicle.MaxFuelTankCapacity - customerVehicle.FuelLeft;
             if (newFuelLeft > customerVehicle.MaxFuelTankCapacity)
             {
                 throw new ValueOutOfRangeException(calculatedMaximumFuelCapacity, k_MininumRangeValue);
             }
+
             if (i_FuelType != customerVehicle.FuelType)
             {
                 throw new ArgumentException("fuel type is NOT valid");
             }
-            customerVehicle.FuelLeft = newFuelLeft;
 
+            customerVehicle.FuelLeft = newFuelLeft;
         }
 
         public void Recharge(string i_LicensePlateNumber, float i_HowMuchToFill)
@@ -244,7 +250,7 @@ namespace Ex03.GarageLogic
             customerVehicle.BatteryLeft = newBatteryLeft;
         }
 
-        //checks if the given vehicle is in the garage. If so returns its location in the list, else not returns -1
+        // Checks if the given vehicle is in the garage. If so returns its location in the list, else not returns -1
         public int CheckIfVehicleInGarage(string i_LicensePlateNumber)
         {
             int vehicleLocation = k_NotInGarage;
@@ -257,6 +263,7 @@ namespace Ex03.GarageLogic
                     break;
                 }
             }
+
             return vehicleLocation;
         }
 
