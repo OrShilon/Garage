@@ -75,7 +75,7 @@ namespace Ex03.GarageLogic
             else if (!object.ReferenceEquals(i_LeftVehicle, null) && object.ReferenceEquals(i_RightVehicle, null))
             {
                 // Both not null, check if the licence plate equals.
-                isEquals = i_LeftVehicle.m_LicencePlate.Equals(i_RightVehicle.m_LicencePlate);
+                isEquals = i_LeftVehicle.Equals(i_RightVehicle);
             }
             else
             {
