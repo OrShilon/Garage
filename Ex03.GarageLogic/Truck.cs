@@ -33,10 +33,10 @@ namespace Ex03.GarageLogic
                 return m_CargoVolume;
             }
         }
+
         public override string ToString()
         {
-            return base.ToString() + Environment.NewLine +
-            String.Format(@"The vehicle cargo volume is: {0}
+            return base.ToString() + Environment.NewLine + string.Format(@"The vehicle cargo volume is: {0}
 The vehicle {1} dangerous materials", m_CargoVolume, m_CarryDangerousMaterials ? "is carrying" : "is NOT carrying");
         }
     }

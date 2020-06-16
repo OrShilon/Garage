@@ -8,6 +8,7 @@ namespace Ex03.GarageLogic
 {
     public abstract class ElectricVehicle : Vehicle
     {
+        private const float k_MinBatteryValue = 0f;
         private float m_BatteryLeft;
         private float m_MaxBatteryHourCapacity;
 
@@ -24,14 +25,16 @@ namespace Ex03.GarageLogic
             {
                 return m_BatteryLeft;
             }
+
             set
             {
-                if(value > 0f)
+                if(value > k_MinBatteryValue && value <= m_MaxBatteryHourCapacity)
                 {
                     m_BatteryLeft = value;
                 }
             }
-        } 
+        }
+
         public float BatteryHourCapacity
         {
             get
@@ -42,9 +45,8 @@ namespace Ex03.GarageLogic
 
         public override string ToString()
         {
-            return base.ToString() + Environment.NewLine + String.Format(@"Vehicle battery hour capacity is: {0} hours
+            return base.ToString() + Environment.NewLine + string.Format(@"Vehicle battery hour capacity is: {0} hours
 Vehicle battery left is: {1} hours", m_MaxBatteryHourCapacity, m_BatteryLeft);
         }
     }
-    
 }

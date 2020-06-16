@@ -8,9 +8,9 @@ namespace Ex03.GarageLogic
 {
     public class VehicleOwner
     {
+        private const int k_EmptyPhoneNumber = 0;
         private string m_Name;
         private string m_PhoneNumber;
-        private const int k_EmptyPhoneNumber = 0;
 
         public VehicleOwner(string i_Name, string i_PhoneNumber)
         {
@@ -24,6 +24,7 @@ namespace Ex03.GarageLogic
             {
                 return m_Name;
             }
+
             set
             {
                 m_Name = value;
@@ -36,6 +37,7 @@ namespace Ex03.GarageLogic
             {
                 return m_PhoneNumber;
             }
+
             set
             {
                 if (value.Length > k_EmptyPhoneNumber) 
@@ -47,7 +49,7 @@ namespace Ex03.GarageLogic
 
         public override string ToString()
         {
-            return String.Format(@"Owners name is: {0}
+            return string.Format(@"Owners name is: {0}
 Owner's phone number is: {1}", m_Name, m_PhoneNumber);
         }
     }

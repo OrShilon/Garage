@@ -8,14 +8,13 @@ namespace Ex03.GarageLogic
 {
     public struct Wheel
     {
+        private const int k_EmptyWheelMaker = 0;
         private string m_WheelMaker;
         private float m_CurrentAirPressure;
         private float m_MaxAirPressure;
-        private const int k_EmptyWheelMaker = 0;
 
         public Wheel(string i_WheelMaker, float i_CurrentAirPressure, float i_MaxAirPressure)
         {
-
             m_WheelMaker = i_WheelMaker;
             m_CurrentAirPressure = i_CurrentAirPressure;
             m_MaxAirPressure = i_MaxAirPressure;
@@ -27,6 +26,7 @@ namespace Ex03.GarageLogic
             {
                 return m_WheelMaker;
             }
+
             set
             {
                 if (value.Length > k_EmptyWheelMaker)
@@ -35,12 +35,14 @@ namespace Ex03.GarageLogic
                 }
             }
         }
+
         public float CurrentAirPressure
         {
             get
             {
                 return m_CurrentAirPressure;
             }
+
             set
             {
                 if (value <= m_MaxAirPressure)
@@ -56,16 +58,16 @@ namespace Ex03.GarageLogic
             {
                 return m_MaxAirPressure;
             }
+
             set
             {
                 m_MaxAirPressure = value;
             }
         }
 
-
         public override string ToString()
         {
-            return String.Format(@"Wheel maker is: {0}
+            return string.Format(@"Wheel maker is: {0}
 Wheels current air pressure is: {1}", m_WheelMaker, m_CurrentAirPressure);
         }
     }
