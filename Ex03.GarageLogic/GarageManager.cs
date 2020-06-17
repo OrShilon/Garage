@@ -91,7 +91,7 @@ namespace Ex03.GarageLogic
         }
         public void PrintVehiclesInGarage()
         {
-            if (VehiclesInGarageStatus.Any())
+            if (!VehiclesInGarageStatus.Any())
             {
                 Console.WriteLine("Sorry but there are no vehicles in the garage currently");
             }
